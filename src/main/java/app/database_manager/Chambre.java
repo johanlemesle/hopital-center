@@ -1,7 +1,5 @@
 package app.database_manager;
 
-import java.util.ArrayList;
-
 /**
  * Chambre
  */
@@ -9,7 +7,7 @@ public class Chambre {
     private int id;
     private Service service;
     private Infirmier surveillant;
-    private ArrayList<Integer> lits;
+    private byte nbLits;
     private Batiment batiment;
 
     public Batiment getBatiment() {
@@ -19,4 +17,30 @@ public class Chambre {
     public int getId() {
         return id;
     }
+
+    public void ajouterLit() {
+        nbLits++;
+    }
+
+    public void enleverLit() {
+        if (nbLits > 0)
+            nbLits--;
+    }
+
+    public void setService(Service s) {
+        this.service = s;
+    }
+
+    public Service getService() {
+        return service;
+    }
+
+    public void setSurveillant(Infirmier inf) {
+        this.surveillant = inf;
+    }
+
+    public Infirmier getInfirmier() {
+        return surveillant;
+    }
+
 }

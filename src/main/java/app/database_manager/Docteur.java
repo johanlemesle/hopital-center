@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class Docteur extends Employe {
     public Docteur(String nom, String prenom, String tel, Adresse adresse) {
         super(nom, prenom, tel, adresse);
-        // TODO Auto-generated constructor stub
     }
 
     enum Specialite {

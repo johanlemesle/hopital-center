@@ -9,7 +9,8 @@ import java.util.HashMap;
 public class Hopital {
 
     private ArrayList<Batiment> batiments = new ArrayList<>();
-    private HashMap<Integer, Employe> employes = new HashMap<>();
+    private HashMap<Integer, Infirmier> infirmiers = new HashMap<>();
+    private HashMap<Integer, Docteur> docteurs = new HashMap<>();
     private HashMap<Integer, Patient> patients = new HashMap<>();
 
     // patientes
@@ -21,13 +22,22 @@ public class Hopital {
         return patients.get(id);
     }
 
-    // employés
-    public void ajouterEmploye(Employe e) {
-        employes.put(e.getId(), e);
+    // docteurs
+    public void ajouterDocteur(Docteur d) {
+        docteurs.put(d.getId(), d);
     }
 
-    public Employe getEmploye(int id) {
-        return employes.get(id);
+    public Docteur getDocteur(int id) {
+        return docteurs.get(id);
+    }
+
+    // infirmiers
+    public void ajouterInfirmier(Infirmier i) {
+        infirmiers.put(i.getId(), i);
+    }
+
+    public Infirmier getInfirmier(int id) {
+        return infirmiers.get(id);
     }
 
     // batiments
@@ -44,8 +54,29 @@ public class Hopital {
         batiments.get(service.getBatiment().getId()).ajouterService(service);
     }
 
+    public Service getService(int id) {
+        for (Batiment batiment : batiments) {
+            Service s = batiment.getService(id);
+            if (s != null) {
+                return s;
+            }
+        }
+        return null;
+    }
+
     // chambres
     public void ajouterChambre(Chambre chambre) {
         batiments.get(chambre.getBatiment().getId()).ajouterChambre(chambre);
+    }
+
+    public Chambre getChambre(int id) {
+        for (Batiment batiment : batiments) {
+            Chambre ch = batiment.getChambre(id);
+            if (ch != null) {
+                return ch;
+            }
+        }
+        return null;
+
     }
 }

@@ -1,5 +1,7 @@
 package app.database_manager;
 
+import java.util.ArrayList;
+
 /**
  * Malade
  */
@@ -8,6 +10,14 @@ public class Patient extends Personne {
         super(nom, prenom, tel, adresse);
     }
 
-    private Mutuelle mutuelle;
+    private String mutuelle;
+    private ArrayList<Docteur> soins = new ArrayList<>();
 
+    public String getMutuelle() {
+        return mutuelle;
+    }
+
+    public ArrayList<Docteur> getSoins() {
+        return soins;
+    }
 }
