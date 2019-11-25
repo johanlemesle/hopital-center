@@ -10,10 +10,6 @@ public class Service {
         return this.id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getNom() {
         return this.nom;
     }

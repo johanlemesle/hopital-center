@@ -53,4 +53,9 @@ public class Personne {
         this.adresse = adresse;
     }
 
+    @Override
+    public String toString() {
+        return "Personne(id : " + id + ", nom : " + nom + ", prenom : " + prenom + ", tel : " + tel + ", adresse : "
+                + adresse + ")";
+    }
 }

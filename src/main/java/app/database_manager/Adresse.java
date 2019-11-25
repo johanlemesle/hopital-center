@@ -14,4 +14,5 @@ public class Adresse {
     public String toString() {
         return numVoie + ", " + typeVoie + " " + nomVoie + ", " + codePostal + " " + commune;
     }
+
 }

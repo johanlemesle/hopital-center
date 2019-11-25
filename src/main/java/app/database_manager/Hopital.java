@@ -79,4 +79,20 @@ public class Hopital {
         return null;
 
     }
+
+    // hospitalisations
+    public void ajouterHospitalisation(Hospitalisation h) {
+        batiments.get(h.getService().getBatiment().getId()).ajouterHospitalisation(h);
+    }
+
+    public Hospitalisation getHospitalisation(int id) {
+        for (Batiment batiment : batiments) {
+            Hospitalisation h = batiment.getHospitalisation(id);
+            if (h != null) {
+                return h;
+            }
+        }
+        return null;
+    }
+
 }
