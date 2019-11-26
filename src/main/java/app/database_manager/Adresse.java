@@ -1,13 +1,11 @@
 package app.database_manager;
 
 public class Adresse {
-    private int numVoie, codePostal;
-
     enum TypeVoie {
         rue, avenue, place, boulevard,
     }
 
-    private String commune, nomVoie;
+    private String commune, nomVoie, numVoie, codePostal;
     private TypeVoie typeVoie;
 
     @Override

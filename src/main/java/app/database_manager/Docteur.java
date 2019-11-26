@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Docteur extends Employe {
     public Docteur(String nom, String prenom, String tel, Adresse adresse, String specialite) {
         super(nom, prenom, tel, adresse);
-        specialite = Util.purge(specialite);
+        specialite = Utils.purge(specialite);
 
         this.specialite = Specialite.valueOf(specialite).toString();
     }

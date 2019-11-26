@@ -12,7 +12,7 @@ public class Batiment {
     private HashMap<Integer, Chambre> chambres;
     private ArrayList<Hospitalisation> hospitalisations;
 
-    public void ajouterService(Service s) {
+    public void addService(Service s) {
         services.put(s.getId(), s);
     }
 
@@ -20,7 +20,7 @@ public class Batiment {
         return services.get(id);
     }
 
-    public void ajouterChambre(Chambre c) {
+    public void addChambre(Chambre c) {
         chambres.put(c.getId(), c);
     }
 
@@ -28,7 +28,7 @@ public class Batiment {
         return chambres.get(id);
     }
 
-    public void ajouterHospitalisation(Hospitalisation h) {
+    public void addHospitalisation(Hospitalisation h) {
         hospitalisations.add(h);
     }
 

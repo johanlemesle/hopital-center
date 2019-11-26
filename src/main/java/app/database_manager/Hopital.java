@@ -1,29 +1,37 @@
 package app.database_manager;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import app.database_manager.Utils;
 
 /**
  * Hopital
  */
 public class Hopital {
 
-    private ArrayList<Batiment> batiments = new ArrayList<>();
-    private HashMap<Integer, Infirmier> infirmiers = new HashMap<>();
-    private HashMap<Integer, Docteur> docteurs = new HashMap<>();
-    private HashMap<Integer, Patient> patients = new HashMap<>();
+    private HashMap<String, Batiment> batiments = new HashMap<>();
+    private HashMap<String, Infirmier> infirmiers = new HashMap<>();
+    private HashMap<String, Docteur> docteurs = new HashMap<>();
+    private HashMap<String, Patient> patients = new HashMap<>();
 
     // patientes
-    public void ajouterPatient(Patient p) {
-        patients.put(p.getId(), p);
+    public void addPatient(Patient p) {
+        patients.put(p.getTel(), p);
     }
 
-    public Patient getPatient(int id) {
+    public Patient getPatient(Integer id) {
         return patients.get(id);
     }
 
+    public HashMap<String, Patient> getPatients() {
+        return patients;
+    }
+
     // docteurs
-    public void ajouterDocteur(Docteur d) {
+    public void addDocteur(Docteur d) {
         docteurs.put(d.getId(), d);
     }
 
@@ -32,7 +40,7 @@ public class Hopital {
     }
 
     // infirmiers
-    public void ajouterInfirmier(Infirmier i) {
+    public void addInfirmier(Infirmier i) {
         infirmiers.put(i.getId(), i);
     }
 
@@ -41,7 +49,7 @@ public class Hopital {
     }
 
     // batiments
-    public void ajouterBatiment(Batiment b) {
+    public void addBatiment(Batiment b) {
         batiments.add(b);
     }
 
@@ -50,8 +58,8 @@ public class Hopital {
     }
 
     // services
-    public void ajouterService(Service service) {
-        batiments.get(service.getBatiment().getId()).ajouterService(service);
+    public void addService(Service service) {
+        batiments.get(service.getBatiment().getId()).addService(service);
     }
 
     public Service getService(int id) {
@@ -65,8 +73,8 @@ public class Hopital {
     }
 
     // chambres
-    public void ajouterChambre(Chambre chambre) {
-        batiments.get(chambre.getBatiment().getId()).ajouterChambre(chambre);
+    public void addChambre(Chambre chambre) {
+        batiments.get(chambre.getBatiment().getId()).addChambre(chambre);
     }
 
     public Chambre getChambre(int id) {
@@ -81,8 +89,8 @@ public class Hopital {
     }
 
     // hospitalisations
-    public void ajouterHospitalisation(Hospitalisation h) {
-        batiments.get(h.getService().getBatiment().getId()).ajouterHospitalisation(h);
+    public void addHospitalisation(Hospitalisation h) {
+        batiments.get(h.getService().getBatiment().getId()).addHospitalisation(h);
     }
 
     public Hospitalisation getHospitalisation(int id) {
