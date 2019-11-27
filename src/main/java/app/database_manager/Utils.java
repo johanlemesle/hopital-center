@@ -3,6 +3,9 @@ package app.database_manager;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,32 +62,57 @@ public class Utils {
     }
 
     public static Object get(String what, Object fromWhere) {
-        ArrayList<String> elems = new ArrayList<String>(Arrays.asList(what.split("\\.")));
-        for (int i = 0; i < elems.size(); i++) {
-            elems.set(i, "get" + capitalize(elems.get(i)));
-        }
 
-        try {
-            return Utils.getRecur(elems, fromWhere);
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
-                | SecurityException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return null;
+        ArrayList<String> levels = new ArrayList<String>(Arrays.asList(what.split("\\.")));
+
+        return Utils.getRecur(levels, fromWhere);
+
     }
 
-    public static Object getRecur(ArrayList<String> elems, Object obj) throws IllegalAccessException,
-            IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+    public static ArrayList<Object> getRecur(ArrayList<String> levels, Object fromWhere) {
 
-        if (!elems.isEmpty()) {
-            String elem = elems.get(0);
-            elems.remove(0);
-            obj = obj.getClass().getMethod(elem).invoke(obj);
+        if (!levels.isEmpty()) {
+            ArrayList<Object> result = new ArrayList<>();
+            String level = levels.get(0);
+            levels.remove(0);
 
-            obj = getRecur(elems, obj);
+            for (String attr : level.split("&")) {
+                ArrayList<Object> collection = getCollection(fromWhere);
+                for (Object object : collection) {
+                    ArrayList<Object> fieldValue = new ArrayList<>();
+                    try {
+                        fieldValue = getRecur(new ArrayList<String>(levels),
+                                object.getClass().getMethod("get" + capitalize(attr)).invoke(object));
+                    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
+                            | NoSuchMethodException | SecurityException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    result.addAll(fieldValue);
+
+                }
+            }
+            return result;
+        } else {
+            return new ArrayList<Object>(Arrays.asList(fromWhere));
         }
-        return obj;
+
+    }
+
+    private static ArrayList<Object> getCollection(Object obj) {
+        ArrayList<Object> result = new ArrayList<>();
+        if (obj instanceof Collection<?>) {
+            for (Object object : (Collection<?>) obj) {
+                result.add(object);
+            }
+        } else if (obj instanceof Map<?, ?>) {
+            for (Object object : ((Map<?, ?>) obj).values()) {
+                result.add(object);
+            }
+        } else {
+            result.add(obj);
+        }
+        return result;
     }
 
     public static Object matchConditions(Object obj, String conditions) {

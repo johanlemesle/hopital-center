@@ -10,7 +10,7 @@ public class Batiment {
     private int id;
     private HashMap<Integer, Service> services;
     private HashMap<Integer, Chambre> chambres;
-    private ArrayList<Hospitalisation> hospitalisations;
+    private ArrayList<Hospitalisation> hospitalisations = new ArrayList<>();
 
     public void addService(Service s) {
         services.put(s.getId(), s);

@@ -11,13 +11,13 @@ public class Patient extends Personne {
     }
 
     private String mutuelle;
-    private ArrayList<Docteur> soins = new ArrayList<>();
+    private ArrayList<Docteur> soinsRecus = new ArrayList<>();
 
     public String getMutuelle() {
         return mutuelle;
     }
 
-    public ArrayList<Docteur> getSoins() {
-        return soins;
+    public ArrayList<Docteur> getSoinsRecus() {
+        return soinsRecus;
     }
 }

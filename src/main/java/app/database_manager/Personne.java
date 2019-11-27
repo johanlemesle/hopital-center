@@ -11,8 +11,8 @@ public class Personne {
 
     public Personne(String nom, String prenom, String tel, Adresse adresse) {
         this.nom = nom;
-        this.prenom = prenom;
-        this.tel = tel;
+        this.prenom = prenom.toUpperCase();
+        this.tel = tel.replace(" ", "");
         this.adresse = adresse;
         this.id = Utils.makeHash(this);
     }

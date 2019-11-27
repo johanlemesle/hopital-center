@@ -5,6 +5,22 @@ import java.util.ArrayList;
 /**
  * Docteur
  */
+enum Specialite {
+    generaliste("Généraliste"), dentiste("Dentiste"), ophtalmologue("Ophtalmologue");
+
+    private String nom;
+
+    Specialite(String s) {
+        this.nom = s;
+    }
+
+    @Override
+    public String toString() {
+        return nom;
+    }
+
+};
+
 public class Docteur extends Employe {
     public Docteur(String nom, String prenom, String tel, Adresse adresse, String specialite) {
         super(nom, prenom, tel, adresse);
@@ -13,24 +29,8 @@ public class Docteur extends Employe {
         this.specialite = Specialite.valueOf(specialite).toString();
     }
 
-    enum Specialite {
-        generaliste("Généraliste"), dentiste("Dentiste"), ophtalmologue("Ophtalmologue");
-
-        private String str;
-
-        Specialite(String s) {
-            this.str = s;
-        }
-
-        @Override
-        public String toString() {
-            return str;
-        }
-
-    };
-
     String specialite;
-    ArrayList<Patient> soins = new ArrayList<>();
+    ArrayList<Patient> patientsSoignes = new ArrayList<>();
 
     @Override
     public String toString() {

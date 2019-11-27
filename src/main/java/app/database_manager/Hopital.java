@@ -12,21 +12,21 @@ import app.database_manager.Utils;
  */
 public class Hopital {
 
-    private HashMap<String, Batiment> batiments = new HashMap<>();
-    private HashMap<String, Infirmier> infirmiers = new HashMap<>();
-    private HashMap<String, Docteur> docteurs = new HashMap<>();
-    private HashMap<String, Patient> patients = new HashMap<>();
+    private HashMap<Integer, Batiment> batiments = new HashMap<>();
+    private HashMap<Integer, Infirmier> infirmiers = new HashMap<>();
+    private HashMap<Integer, Docteur> docteurs = new HashMap<>();
+    private HashMap<Integer, Patient> patients = new HashMap<>();
 
     // patientes
     public void addPatient(Patient p) {
-        patients.put(p.getTel(), p);
+        patients.put(p.getId(), p);
     }
 
     public Patient getPatient(Integer id) {
         return patients.get(id);
     }
 
-    public HashMap<String, Patient> getPatients() {
+    public HashMap<Integer, Patient> getPatients() {
         return patients;
     }
 
@@ -50,7 +50,7 @@ public class Hopital {
 
     // batiments
     public void addBatiment(Batiment b) {
-        batiments.add(b);
+        batiments.put(b.getId(), b);
     }
 
     public Batiment getBatiment(int id) {
@@ -63,8 +63,8 @@ public class Hopital {
     }
 
     public Service getService(int id) {
-        for (Batiment batiment : batiments) {
-            Service s = batiment.getService(id);
+        for (Integer i : batiments.keySet()) {
+            Service s = batiments.get(i).getService(id);
             if (s != null) {
                 return s;
             }
@@ -78,8 +78,8 @@ public class Hopital {
     }
 
     public Chambre getChambre(int id) {
-        for (Batiment batiment : batiments) {
-            Chambre ch = batiment.getChambre(id);
+        for (Integer i : batiments.keySet()) {
+            Chambre ch = batiments.get(i).getChambre(id);
             if (ch != null) {
                 return ch;
             }
@@ -94,8 +94,8 @@ public class Hopital {
     }
 
     public Hospitalisation getHospitalisation(int id) {
-        for (Batiment batiment : batiments) {
-            Hospitalisation h = batiment.getHospitalisation(id);
+        for (Integer i : batiments.keySet()) {
+            Hospitalisation h = batiments.get(i).getHospitalisation(id);
             if (h != null) {
                 return h;
             }
