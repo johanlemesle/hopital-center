@@ -61,42 +61,47 @@ public class Utils {
         return null;
     }
 
-    public static Object get(String what, Object fromWhere) {
-
-        ArrayList<String> levels = new ArrayList<String>(Arrays.asList(what.split("\\.")));
-
-        return Utils.getRecur(levels, fromWhere);
-
+    public static ArrayList<Object> get(String what, Object fromWhere) throws IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+        ArrayList<Object> result = new ArrayList<>();
+        StringBuilder entity = new StringBuilder(10);
+        for (int i = 0; i < what.length(); i++) {
+            if (Character.isLetter(what.charAt(i))) {
+                entity.append(what.charAt(i));
+            } else {
+                ArrayList<Object> collection = getCollection(fromWhere);
+                switch (what.charAt(i)) {
+                case '{':
+                    for (Object object : collection) {
+                        result.addAll(get(what.substring(i + 1), getFieldValue(entity.toString(), object)));
+                    }
+                    break;
+                case '&':
+                    for (Object object : collection) {
+                        result.add(getFieldValue(entity.toString(), object));
+                    }
+                    result.addAll(get(what.substring(i + 1), fromWhere));
+                    break;
+                case '}':
+                    for (Object object : collection) {
+                        result.add(getFieldValue(entity.toString(), object));
+                    }
+                    break;
+                case '*':
+                    result.add(fromWhere);
+                    break;
+                default:
+                    break;
+                }
+                break;
+            }
+        }
+        return result;
     }
 
-    public static ArrayList<Object> getRecur(ArrayList<String> levels, Object fromWhere) {
-
-        if (!levels.isEmpty()) {
-            ArrayList<Object> result = new ArrayList<>();
-            String level = levels.get(0);
-            levels.remove(0);
-
-            for (String attr : level.split("&")) {
-                ArrayList<Object> collection = getCollection(fromWhere);
-                for (Object object : collection) {
-                    ArrayList<Object> fieldValue = new ArrayList<>();
-                    try {
-                        fieldValue = getRecur(new ArrayList<String>(levels),
-                                object.getClass().getMethod("get" + capitalize(attr)).invoke(object));
-                    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
-                            | NoSuchMethodException | SecurityException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                    result.addAll(fieldValue);
-
-                }
-            }
-            return result;
-        } else {
-            return new ArrayList<Object>(Arrays.asList(fromWhere));
-        }
-
+    private static Object getFieldValue(String fieldName, Object parent) throws IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+        return parent.getClass().getMethod("get" + capitalize(fieldName)).invoke(parent);
     }
 
     private static ArrayList<Object> getCollection(Object obj) {

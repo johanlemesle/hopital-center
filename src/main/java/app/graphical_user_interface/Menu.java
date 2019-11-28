@@ -5,6 +5,10 @@ import app.database_manager.Hopital;
 import app.database_manager.Patient;
 import app.database_manager.Utils;
 
+import java.lang.reflect.InvocationTargetException;
+
+import javax.swing.*;
+
 /**
  * menu
  */
@@ -20,10 +24,16 @@ public class Menu {
                 new Adresse("37", "quai", "de grenelle", 75015, "Juvisy sur Marne"));
         h.addPatient(johan);
         h.addPatient(redoine);
-        Object ret2 = Utils.get("patients.soinsRecus&nom&prenom&adresse.nomVoie&numVoie&nom&prenom&specialite", h);
-        Object ret3 = Utils.get("patients{soinsRecus{nom&prenom&specialite}&nom&prenom&adresse{nomVoie&numVoie}}", h);
 
-        System.out.println("lol");
+        try {
+            Object ret4 = Utils.get("patients{adresse&nom&prenom}", h);
+            System.out.println("lol");
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+                | SecurityException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
     }
 
 }
