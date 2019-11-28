@@ -10,8 +10,8 @@ public class Personne {
     protected Adresse adresse;
 
     public Personne(String nom, String prenom, String tel, Adresse adresse) {
-        this.nom = nom;
-        this.prenom = prenom.toUpperCase();
+        this.nom = nom.toUpperCase();
+        this.prenom = prenom;
         this.tel = tel.replace(" ", "");
         this.adresse = adresse;
         this.id = Utils.makeHash(this);

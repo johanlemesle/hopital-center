@@ -1,13 +1,11 @@
 package app.graphical_user_interface;
 
+import java.lang.reflect.InvocationTargetException;
+
 import app.database_manager.Adresse;
 import app.database_manager.Hopital;
 import app.database_manager.Patient;
 import app.database_manager.Utils;
-
-import java.lang.reflect.InvocationTargetException;
-
-import javax.swing.*;
 
 /**
  * menu
@@ -26,7 +24,7 @@ public class Menu {
         h.addPatient(redoine);
 
         try {
-            Object ret4 = Utils.get("patients{adresse&nom&prenom}", h);
+            Object ret4 = Utils.get("patients{nom&prenom}", h);
             System.out.println("lol");
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
                 | SecurityException e) {

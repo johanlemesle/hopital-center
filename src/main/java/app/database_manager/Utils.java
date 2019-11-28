@@ -2,9 +2,7 @@ package app.database_manager;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -69,30 +67,26 @@ public class Utils {
             if (Character.isLetter(what.charAt(i))) {
                 entity.append(what.charAt(i));
             } else {
-                ArrayList<Object> collection = getCollection(fromWhere);
-                switch (what.charAt(i)) {
-                case '{':
-                    for (Object object : collection) {
-                        result.addAll(get(what.substring(i + 1), getFieldValue(entity.toString(), object)));
-                    }
-                    break;
-                case '&':
-                    for (Object object : collection) {
+                for (Object object : getCollection(fromWhere)) {
+                    switch (what.charAt(i)) {
+                    case '{':
+                        result.add(get(what.substring(i + 1), getFieldValue(entity.toString(), object)));
+                        break;
+                    case '&':
+                        // result.add(getFieldValue(entity.toString(), object));
+                        result.add(get(what.substring(i + 1), fromWhere));
+                        break;
+                    case '}':
                         result.add(getFieldValue(entity.toString(), object));
+                        break;
+                    case '*':
+                        result.add(object);
+                        break;
+                    default:
+                        break;
                     }
-                    result.addAll(get(what.substring(i + 1), fromWhere));
-                    break;
-                case '}':
-                    for (Object object : collection) {
-                        result.add(getFieldValue(entity.toString(), object));
-                    }
-                    break;
-                case '*':
-                    result.add(fromWhere);
-                    break;
-                default:
-                    break;
                 }
+                System.out.println();
                 break;
             }
         }
