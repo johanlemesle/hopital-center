@@ -1,6 +1,8 @@
 package app.graphical_user_interface;
 
-import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 import app.database_manager.Adresse;
 import app.database_manager.Hopital;
@@ -12,7 +14,6 @@ import app.database_manager.Utils;
  */
 
 public class Menu {
-
     public static void main(String[] args) {
         Hopital h = new Hopital();
 
@@ -22,16 +23,8 @@ public class Menu {
                 new Adresse("37", "quai", "de grenelle", 75015, "Juvisy sur Marne"));
         h.addPatient(johan);
         h.addPatient(redoine);
-
-        try {
-            Object ret4 = Utils.get("patients{nom&prenom}", h);
-            System.out.println("lol");
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
-                | SecurityException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
+        ArrayList<Pair<String, Object>> ret4 = Utils.get("patients{nom&prenom&adresse{nomVoie&numVoie}}", h);
+        Object obj = Utils.getFieldsNamesRecursively(h, 3, 0);
+        System.out.println("done");
     }
-
 }
