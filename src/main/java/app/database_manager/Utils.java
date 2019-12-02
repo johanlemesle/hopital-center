@@ -44,31 +44,6 @@ public class Utils {
         return str;
     }
 
-    public static ArrayList<Object> getFieldsNamesRecursively(Object root, int maxDepth, int currDepth)
-            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
-            SecurityException {
-        ArrayList<Object> result = new ArrayList<>();
-        if (currDepth > maxDepth) {
-            return null;
-        }
-        for (Field f : getAllFields(new ArrayList<>(), root.getClass())) {
-            Object obj = new Object();
-            if (f.getType().isArray()) {
-                obj = getFieldValue(f.getName(), root);
-            } else if (Map.class.isAssignableFrom(f.getType())) {
-                obj = g
-            } else {
-
-            }
-            if (f.getType().getName().startsWith("app.database_manager")) {
-                result.add(f);
-            } else {
-                result.addAll(getFieldsNamesRecursively(f, maxDepth, currDepth + 1));
-            }
-        }
-        return result;
-    }
-
     public static Object getOne(String what, Object fromWhere, Object... args) {
         String str = "get" + StringUtils.capitalize(what);
         try {

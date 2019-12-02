@@ -1,5 +1,7 @@
 package app.graphical_user_interface;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -24,7 +26,5 @@ public class Menu {
         h.addPatient(johan);
         h.addPatient(redoine);
         ArrayList<Pair<String, Object>> ret4 = Utils.get("patients{nom&prenom&adresse{nomVoie&numVoie}}", h);
-        Object obj = Utils.getFieldsNamesRecursively(h, 3, 0);
-        System.out.println("done");
     }
 }
