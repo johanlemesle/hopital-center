@@ -24,13 +24,15 @@ enum Specialite {
 public class Docteur extends Employe {
     public Docteur(String nom, String prenom, String tel, Adresse adresse, String specialite) {
         super(nom, prenom, tel, adresse);
-        specialite = Utils.purge(specialite);
-
-        this.specialite = Specialite.valueOf(specialite).toString();
+        this.specialite = Specialite.valueOf(Utils.purge(specialite)).toString();
     }
 
-    String specialite;
-    ArrayList<Patient> patientsSoignes = new ArrayList<>();
+    private String specialite;
+    private ArrayList<Patient> patientsSoignes = new ArrayList<>();
+
+    public void addPatientSoigne(Patient p) {
+        patientsSoignes.add(p);
+    }
 
     @Override
     public String toString() {

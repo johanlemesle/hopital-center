@@ -44,16 +44,26 @@ public class Utils {
         return str;
     }
 
+    public static void insert(String what, Object where, Object... args) {
+        String str = "add" + StringUtils.capitalize(what);
+        applyFunction(str, where, args);
+    }
+
     public static Object getOne(String what, Object fromWhere, Object... args) {
         String str = "get" + StringUtils.capitalize(what);
+        return applyFunction(str, fromWhere, args);
+    }
+
+    private static Object applyFunction(String functionName, Object obj, Object... args) {
+        Class<?> paramsTypes[] = new Class[args.length];
+        for (int i = 0; i < paramsTypes.length; i++) {
+            paramsTypes[i] = args[i].getClass();
+        }
         try {
-            Class<?> paramsTypes[] = new Class[args.length];
-            for (int i = 0; i < paramsTypes.length; i++) {
-                paramsTypes[i] = args[i].getClass();
-            }
-            return fromWhere.getClass().getMethod(str, paramsTypes).invoke(fromWhere, args);
+            return obj.getClass().getMethod(functionName, paramsTypes).invoke(obj, args);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
                 | SecurityException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
@@ -193,8 +203,6 @@ public class Utils {
     }
 
     public static Object matchConditions(Object obj, String conditions) {
-
         return conditions;
-
     }
 }

@@ -2,7 +2,18 @@ package app.database_manager;
 
 public class Adresse {
     enum TypeVoie {
-        rue, avenue, place, boulevard
+        rue("rue"), avenue("avenue"), place("place"), boulevard("boulevard");
+
+        private String typeVoieString;
+
+        TypeVoie(String s) {
+            typeVoieString = s;
+        }
+
+        @Override
+        public String toString() {
+            return typeVoieString;
+        }
     }
 
     private String commune, nomVoie, numVoie;
@@ -11,7 +22,7 @@ public class Adresse {
 
     public Adresse(String numVoie, String typeVoie, String nomVoie, int codePostal, String commune) {
         this.numVoie = numVoie;
-        this.typeVoie = typeVoie;
+        this.typeVoie = TypeVoie.valueOf(Utils.purge(typeVoie)).toString();
         this.nomVoie = nomVoie;
         this.codePostal = codePostal;
         this.commune = commune;

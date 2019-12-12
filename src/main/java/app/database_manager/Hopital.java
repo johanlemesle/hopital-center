@@ -1,6 +1,9 @@
 package app.database_manager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * Hopital
@@ -96,6 +99,19 @@ public class Hopital {
             }
         }
         return null;
+    }
+
+    public void addSoin(Docteur d, Patient p) {
+        docteurs.get(d.getId()).addPatientSoigne(p);
+        patients.get(p.getId()).addSoinRecu(d);
+    }
+
+    public ArrayList<Pair<String, Object>> get(String what) {
+        return Utils.get(what, this);
+    }
+
+    public void insert(String what, Object... args) {
+        Utils.insert(what, this, args);
     }
 
 }
