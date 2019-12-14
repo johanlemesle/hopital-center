@@ -2,7 +2,7 @@ package app.database_manager;
 
 public class Adresse {
     enum TypeVoie {
-        rue("rue"), avenue("avenue"), place("place"), boulevard("boulevard");
+        rue("rue"), avenue("avenue"), place("place"), boulevard("boulevard"), quai("quai");
 
         private String typeVoieString;
 

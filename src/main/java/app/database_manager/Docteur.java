@@ -34,6 +34,14 @@ public class Docteur extends Employe {
         patientsSoignes.add(p);
     }
 
+    public String getSpecialite() {
+        return specialite;
+    }
+
+    public ArrayList<Patient> getPatientsSoignes() {
+        return patientsSoignes;
+    }
+
     @Override
     public String toString() {
         return "Docteur(Specialité : " + this.specialite + ")";

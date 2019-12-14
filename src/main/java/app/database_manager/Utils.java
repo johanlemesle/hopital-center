@@ -63,12 +63,17 @@ public class Utils {
             return obj.getClass().getMethod(functionName, paramsTypes).invoke(obj, args);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
                 | SecurityException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
     }
 
+    /**
+     * 
+     * @param what
+     * @param fromWhere
+     * @return
+     */
     public static ArrayList<Pair<String, Object>> get(String what, Object fromWhere) {
         try {
             if (Character.isLetter(what.charAt(what.length() - 1))) {
@@ -82,35 +87,62 @@ public class Utils {
         return null;
     }
 
+    /**
+     * 
+     * @param what      string query with special identifiers : '&', '{', '}', '*',
+     *                  ':'
+     * @param fromWhere object where to pull data from
+     * @return array of pairs (attribute : value)
+     * @throws IllegalAccessException
+     * @throws IllegalArgumentException
+     * @throws InvocationTargetException
+     * @throws NoSuchMethodException
+     * @throws SecurityException
+     */
     private static ArrayList<Pair<String, Object>> getRecur(String what, Object fromWhere)
             throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
             SecurityException {
+
+        // start constructing query from string
         StringBuilder entity = new StringBuilder(10);
         ArrayList<Pair<String, Object>> result = new ArrayList<>();
         for (int i = 0; i < what.length(); i++) {
             char ch = what.charAt(i);
+
+            // check if encountered a seperator
             if (Character.isLetter(ch)) {
                 entity.append(ch);
             } else if (entity.length() > 0) {
                 switch (ch) {
                 case '{':
-                    int idxOfMatchingClosingBrace = indexOfMatchingClosingBrace(what, i);
+                    int idxOfMatchingClosingBrace = indexOfMatchingClosingBrace(what, i); // getMatchingBrace
+
+                    /**
+                     * 1. recursively get the attribute that has been constructed 2. create new
+                     * query according to what is in the braces 3. pass both values to the main get
+                     * function : it can be treated as its own query 4. add it to the array
+                     */
                     result.add(Pair.of(entity.toString(), get(what.substring(i + 1, idxOfMatchingClosingBrace),
                             getRecur(entity.toString(), fromWhere))));
-                    i = idxOfMatchingClosingBrace;
+
+                    i = idxOfMatchingClosingBrace; // update i as what is in the braces has been processed
                     break;
                 case '&':
+                    // simply get the attribute recursively and add it to the result array
                     result.add(Pair.of(entity.toString(), getRecur(entity.toString(), fromWhere)));
                     break;
                 default:
                     break;
                 }
-                entity.setLength(0);
+                entity.setLength(0); // reset the entity variable
             }
         }
         if (result.isEmpty() && what.length() > 0) {
+
+            // iterate over the father object
             for (Object object : getCollection(fromWhere)) {
                 if (object instanceof Pair<?, ?>) {
+                    // only the value interests us if its a pair
                     object = ((Pair<?, ?>) object).getValue();
                 }
                 ArrayList<Pair<String, Object>> tPairs = new ArrayList<>();
@@ -119,7 +151,7 @@ public class Utils {
                         Pair<?, ?> p = (Pair<?, ?>) obj;
                         tPairs.add(Pair.of(p.getKey().toString(), p.getValue()));
                     } else {
-                        result.add(Pair.of(what, obj));
+                        result.add(Pair.of(obj.getClass().getSimpleName(), obj));
                     }
                 }
                 if (!tPairs.isEmpty()) {

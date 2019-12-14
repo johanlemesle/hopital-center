@@ -37,6 +37,10 @@ public class Hopital {
         return docteurs.get(id);
     }
 
+    public HashMap<Integer, Docteur> getDocteurs() {
+        return docteurs;
+    }
+
     // infirmiers
     public void addInfirmier(Infirmier i) {
         infirmiers.put(i.getId(), i);
