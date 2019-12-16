@@ -7,8 +7,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -18,20 +16,33 @@ import org.apache.commons.lang3.tuple.Pair;
  */
 public class Utils {
 
+    /**
+     * Hashes a person object according to nom, prenom, tel fields
+     * 
+     * @param pers person object from which hash will be made
+     * @return hash value for person object
+     */
     public static int makeHash(Personne pers) {
         String str = pers.getNom() + pers.getPrenom() + pers.getTel();
         return str.hashCode();
     }
 
-    public static Object match(Object regex, Object target) {
-        Pattern p = Pattern.compile(regex.toString());
-        Matcher m = p.matcher(target.toString());
-        if (m.matches()) {
-            return target;
-        }
-        return null;
+    public static int makeHash(Chambre chambre) {
+        String str = Integer.toString(chambre.getBatiment()) + Integer.toString(chambre.getId());
+        return str.hashCode();
     }
 
+    public static int makeHash(Service service) {
+        String str = Integer.toString(service.getBatiment()) + Integer.toString(service.getId());
+        return str.hashCode();
+    }
+
+    /**
+     * removes special characetrs and puts string to lower case
+     * 
+     * @param str
+     * @return new string
+     */
     public static String purge(String str) {
         str = str.toLowerCase();
         str = str.replace("é", "e");
@@ -44,17 +55,14 @@ public class Utils {
         return str;
     }
 
-    public static void insert(String what, Object where, Object... args) {
-        String str = "add" + StringUtils.capitalize(what);
-        applyFunction(str, where, args);
+    public static Object extract(String what, Object fromWhere, Object... args) {
+        if (fromWhere instanceof Map<?, ?> || fromWhere instanceof Collection<?>)
+            return invokeFunction("get", fromWhere, args);
+        else
+            return invokeFunction("get" + StringUtils.capitalize(what), fromWhere, args);
     }
 
-    public static Object getOne(String what, Object fromWhere, Object... args) {
-        String str = "get" + StringUtils.capitalize(what);
-        return applyFunction(str, fromWhere, args);
-    }
-
-    private static Object applyFunction(String functionName, Object obj, Object... args) {
+    public static Object invokeFunction(String functionName, Object obj, Object... args) {
         Class<?> paramsTypes[] = new Class[args.length];
         for (int i = 0; i < paramsTypes.length; i++) {
             paramsTypes[i] = args[i].getClass();
@@ -99,9 +107,8 @@ public class Utils {
      * @throws NoSuchMethodException
      * @throws SecurityException
      */
-    private static ArrayList<Pair<String, Object>> getRecur(String what, Object fromWhere)
-            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
-            SecurityException {
+    public static ArrayList<Pair<String, Object>> getRecur(String what, Object fromWhere) throws IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 
         // start constructing query from string
         StringBuilder entity = new StringBuilder(10);
@@ -200,22 +207,8 @@ public class Utils {
             return fArrayList;
 
         } else {
-            return parent.getClass().getMethod("get" + StringUtils.capitalize(fieldName)).invoke(parent);
+            return extract(fieldName, parent);
         }
-    }
-
-    public static ArrayList<Object> normalized(Object obj) {
-        ArrayList<Object> data = new ArrayList<>();
-        for (Object object : getCollection(obj)) {
-            if (object instanceof Collection<?> || object instanceof Map<?, ?>) {
-                data.addAll(normalized(object));
-            } else if (object instanceof Pair<?, ?>) {
-                data.add(((Pair<?, ?>) object).getValue());
-            } else {
-                data.add(object);
-            }
-        }
-        return data;
     }
 
     private static ArrayList<Object> getCollection(Object obj) {

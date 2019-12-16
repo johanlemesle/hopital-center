@@ -3,7 +3,7 @@ package app.database_manager;
 public class Service {
     private int id;
     private String nom;
-    private Batiment batiment;
+    private int batiment;
     private Docteur directeur;
 
     public int getId() {
@@ -18,11 +18,11 @@ public class Service {
         this.nom = nom;
     }
 
-    public Batiment getBatiment() {
+    public int getBatiment() {
         return this.batiment;
     }
 
-    public void setBatiment(Batiment batiment) {
+    public void setBatiment(int batiment) {
         this.batiment = batiment;
     }
 

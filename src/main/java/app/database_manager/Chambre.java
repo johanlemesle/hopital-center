@@ -1,7 +1,5 @@
 package app.database_manager;
 
-import java.util.ArrayList;
-
 /**
  * Chambre
  */
@@ -10,10 +8,9 @@ public class Chambre {
     private Service service;
     private Infirmier surveillant;
     private byte nbLits;
-    private Batiment batiment;
-    ArrayList<Hospitalisation> hospitalisations = new ArrayList<>();
+    private int batiment;
 
-    public Batiment getBatiment() {
+    public int getBatiment() {
         return batiment;
     }
 

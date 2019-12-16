@@ -8,6 +8,7 @@ import app.database_manager.Adresse;
 import app.database_manager.Docteur;
 import app.database_manager.Hopital;
 import app.database_manager.Patient;
+import app.database_manager.Utils;
 
 /**
  * menu
@@ -30,8 +31,8 @@ public class Menu {
                 h.insert("patient", redoine);
                 h.insert("docteur", poulain);
                 h.insert("soin", poulain, redoine);
-                ArrayList<Pair<String, Object>> obj = h
-                                .get("patients{nom&prenom}&docteurs{patientsSoignes{nom&prenom}}");
+                ArrayList<Pair<String, Object>> obj = Utils
+                                .get("patients{nom&prenom}&docteurs{patientsSoignes{nom&prenom}}", h);
                 System.out.println("done");
         }
 }
