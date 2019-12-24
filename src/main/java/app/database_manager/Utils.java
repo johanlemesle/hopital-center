@@ -2,6 +2,7 @@ package app.database_manager;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -230,4 +231,57 @@ public class Utils {
     public static Object matchConditions(Object obj, String conditions) {
         return conditions;
     }
+
+    // fonction qui retourne une list de pair (attribut:type de l'attribut) d'une
+    // classe passée en paramètre
+    // ex. extractFieldNames(Chambre.class) retourne une liste
+    // [(id:int), (service:Service), (surveillant:Infirmier), (nbLits:byte) ... etc]
+    public static List<Pair<Field, Class<?>>> extractFieldNames(Class<?> fromWhere) {
+        List<Pair<Field, Class<?>>> result = new ArrayList<>();
+        List<Field> fields = getAllFields(new ArrayList<Field>(), fromWhere);
+        for (Field field : fields) {
+            System.out.println("attribut trouvé : " + field.getName() + ". Type : " + field.getType().getSimpleName());
+        }
+        // ... a continuer
+        return result;
+    }
+
+    // fonction qui prend en parametre un string en camel case et le retourne
+    // normalisé
+    // ex : "jeSuisPasBlond" devient "je suis pas blond"
+    public String normalizeCamelCase(String str) {
+        String result = "";
+
+        // a coder ..
+        return result;
+    }
+    // ========================================================================\\
+    // HARD:
+
+    // fonction qui prend en parametre un objet et qui retourne ses attributs et les
+    // attributs emboités des objets à l'intérieur
+    // on s'arrête quand on arrive à des types qui ne sont pas définits dans le
+    // modèle objet
+    // la fonction retourne une pair (attribut:type)
+
+    // exemple : extractNestedFields(Chambre.class) retourne :
+    // Chambre:[(id:int),(service:[(id:int),(nom:String),(batiment:int),(directeur:[(nom:String),(prenom:String)])])]
+
+    // tip #1 : le prototype marche car Object peut lui meme etre une
+    // List<Pair<Object,Class<?>>. mais change le à ta maniere
+    // tip #2 : partir sur une implementation recursive
+    // tip #3 : attention, pour l'implementation recursive, il y a des dependances
+    // cycliques : un Patient a Docteur comme attribut, et un docteur a un patient
+    // comme attribut. je te conseil d'ajouter une variable 'maxDepth' qui lui dira
+    // de s'arreter quand il atteint la profondeur maximale de l'arbre
+    // tip #4 : attention, parfois les attributs sont des List, ArrayList, ou
+    // HashMap, auquel cas il faut choper le type qui constitue la
+    // List/ArrayList/Map(si t'as une List<Patient>, il faut choper 'Patient')
+
+    public static List<Pair<Object, Class<?>>> extractNestedFields(Class<?> fromWhere) {
+        List<Pair<Object, Class<?>>> result = new ArrayList<>();
+        // a coder ..
+        return result;
+    }
+
 }
