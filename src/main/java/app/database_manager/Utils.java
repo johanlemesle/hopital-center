@@ -236,12 +236,17 @@ public class Utils {
     // classe passée en paramètre
     // ex. extractFieldNames(Chambre.class) retourne une liste
     // [(id:int), (service:Service), (surveillant:Infirmier), (nbLits:byte) ... etc]
-    public static List<Pair<Field, Class<?>>> extractFieldNames(Class<?> fromWhere) {
+
+    public static List<Pair<Field, Class<?>>> extractFieldNames(Class<?> fromWhere) 
+    {
         List<Pair<Field, Class<?>>> result = new ArrayList<>();
         List<Field> fields = getAllFields(new ArrayList<Field>(), fromWhere);
-        for (Field field : fields) {
+
+        for (Field field : fields) 
+        {
             System.out.println("attribut trouvé : " + field.getName() + ". Type : " + field.getType().getSimpleName());
         }
+
         // ... a continuer
         return result;
     }
@@ -249,12 +254,18 @@ public class Utils {
     // fonction qui prend en parametre un string en camel case et le retourne
     // normalisé
     // ex : "jeSuisPasBlond" devient "je suis pas blond"
-    public String normalizeCamelCase(String str) {
-        String result = "";
 
-        // a coder ..
-        return result;
-    }
+    public String normalizeCamelCase(String str) 
+    {
+        return str.replaceAll(
+           String.format("%s|%s|%s",
+              "(?<=[A-Z])(?=[A-Z][a-z])",
+              "(?<=[^A-Z])(?=[A-Z])",
+              "(?<=[A-Za-z])(?=[^A-Za-z])"
+           ),
+           " "
+        );
+     }
     // ========================================================================\\
     // HARD:
 
