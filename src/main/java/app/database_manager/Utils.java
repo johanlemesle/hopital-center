@@ -250,6 +250,7 @@ public class Utils {
         // ... a continuer
         return result;
     }
+    
 
     // fonction qui prend en parametre un string en camel case et le retourne
     // normalisé
