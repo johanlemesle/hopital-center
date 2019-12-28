@@ -242,11 +242,13 @@ public class Utils {
     {
         List<Pair<Field, Class<?>>> result = new ArrayList<>();
         List<Field> fields = getAllFields(new ArrayList<Field>(), fromWhere);
-
+        
         // remplir la list result de nom/type attribut
 
         for (Field field : fields)
         {
+            System.out.println("attribut : " + field.toString());
+            System.out.println("type : " + field.getClass());
             result.add(Pair.of(field, field.getClass()));
         }
 
@@ -257,7 +259,7 @@ public class Utils {
     // normalisé
     // ex : "jeSuisPasBlond" devient "je suis pas blond"
 
-    public String normalizeCamelCase(String str) 
+    public static String normalizeCamelCase(String str) 
     {
         return str.replaceAll(
            String.format("%s|%s|%s",

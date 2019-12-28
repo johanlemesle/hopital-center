@@ -27,25 +27,12 @@ public class AppTest {
     public void test1() {
         System.out.println("running test");
         Utils.extractFieldNames(Hopital.class);
-        assertTrue(true);
     }
 
     @Test
     public void test2() {
         String str = "JeanMarieLapine" ;
-        normalizeCamelCase(str);
-
-    }
-
-    public String normalizeCamelCase(String str) {
-        return str.replaceAll(
-           String.format("%s|%s|%s",
-              "(?<=[A-Z])(?=[A-Z][a-z])",
-              "(?<=[^A-Z])(?=[A-Z])",
-              "(?<=[A-Za-z])(?=[^A-Za-z])"
-           ),
-           " "
-            );
+        Utils.normalizeCamelCase(str);
     }
 
 }
