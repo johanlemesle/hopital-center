@@ -2,6 +2,7 @@ package app.database_manager;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Member;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -242,16 +243,16 @@ public class Utils {
         List<Pair<Field, Class<?>>> result = new ArrayList<>();
         List<Field> fields = getAllFields(new ArrayList<Field>(), fromWhere);
 
-        for (Field field : fields) 
+        // remplir la list result de nom/type attribut
+
+        for (Field field : fields)
         {
-            System.out.println("attribut trouvé : " + field.getName() + ". Type : " + field.getType().getSimpleName());
+            result.add(Pair.of(field, field.getClass()));
         }
 
-        // ... a continuer
         return result;
     }
     
-
     // fonction qui prend en parametre un string en camel case et le retourne
     // normalisé
     // ex : "jeSuisPasBlond" devient "je suis pas blond"
@@ -293,6 +294,8 @@ public class Utils {
     public static List<Pair<Object, Class<?>>> extractNestedFields(Class<?> fromWhere) {
         List<Pair<Object, Class<?>>> result = new ArrayList<>();
         // a coder ..
+
+
         return result;
     }
 
