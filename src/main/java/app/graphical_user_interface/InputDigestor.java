@@ -1,6 +1,7 @@
 package app.graphical_user_interface;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.swing.JPanel;
 
@@ -32,12 +33,15 @@ public class InputDigestor extends JPanel {
 
     public void addMode() {
         String possibleValues[] = new String[entities.length];
+        HashMap<String, Class<?>> possibleVMap = new HashMap<>();
         int i = 0;
         for (Class<?> cl : entities) {
             possibleValues[i] = cl.getSimpleName();
+            possibleVMap.put(possibleValues[i], cl);
             i++;
         }
-        ListDialog.showDialog(this, this, "Selectionnez le type d'entité que vous souhaitez ajouter",
+        String value = ListDialog.showDialog(this, this, "Selectionnez le type d'entité que vous souhaitez ajouter",
                 "Selection entité", possibleValues, null, null);
+        
     }
 }

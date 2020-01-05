@@ -67,7 +67,11 @@ public class ListDialog extends JDialog implements ActionListener {
             /**
              *
              */
-            private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 8769063294099451503L;
+
+            /**
+             *
+             */
 
             // Subclass JList to workaround bug 4832765, which can cause the
             // scroll pane to not let the user easily scroll up to the beginning

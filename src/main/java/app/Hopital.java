@@ -1,4 +1,4 @@
-package app.entities;
+package app;
 
 import java.util.ArrayList;
 import java.util.HashMap;
