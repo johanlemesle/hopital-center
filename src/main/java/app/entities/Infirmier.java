@@ -1,4 +1,4 @@
-package app.database_manager;
+package app.entities;
 
 public class Infirmier extends Employe {
     public Infirmier(String nom, String prenom, String tel, Adresse adresse) {

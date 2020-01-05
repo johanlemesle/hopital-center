@@ -1,4 +1,6 @@
-package app.database_manager;
+package app.entities;
+
+import app.database_manager.Util;
 
 /**
  * Personne

@@ -1,11 +1,9 @@
-package app.database_manager;
+package app.entities;
+
+import app.enums.TypeVoie;
 
 public class Adresse {
     private int numVoie, codePostal;
-
-    enum TypeVoie {
-        rue, avenue, place, boulevard,
-    }
 
     private String commune, nomVoie;
     private TypeVoie typeVoie;

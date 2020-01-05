@@ -1,4 +1,4 @@
-package app.database_manager;
+package app.entities;
 
 /**
  * Chambre
