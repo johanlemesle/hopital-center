@@ -3,6 +3,14 @@ package app;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import app.entities.Batiment;
+import app.entities.Chambre;
+import app.entities.Docteur;
+import app.entities.Hospitalisation;
+import app.entities.Infirmier;
+import app.entities.Patient;
+import app.entities.Service;
+
 /**
  * Hopital
  */
