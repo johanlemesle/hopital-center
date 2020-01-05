@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import javax.swing.JPanel;
 
-import app.database_manager.Util;
+import app.database_manager.Utils;
 
 /**
  * InputDigester
@@ -22,7 +22,7 @@ public class InputDigestor extends JPanel {
         String entitiesPackagePath = "app.entities";
         Class<?>[] tmp = null;
         try {
-            tmp = Util.getClasses(entitiesPackagePath);
+            tmp = Utils.getClasses(entitiesPackagePath);
         } catch (ClassNotFoundException | IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

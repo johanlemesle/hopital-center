@@ -14,7 +14,7 @@ import app.entities.Personne;
 /**
  * util
  */
-public class Util {
+public class Utils {
 
     public static int makeHash(Personne pers) {
         String str = pers.getNom() + pers.getPrenom() + pers.getTel();

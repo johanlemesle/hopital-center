@@ -1,6 +1,6 @@
 package app.entities;
 
-import app.database_manager.Util;
+import app.database_manager.Utils;
 
 /**
  * Personne
@@ -16,7 +16,7 @@ public class Personne {
         this.prenom = prenom;
         this.tel = tel;
         this.adresse = adresse;
-        this.id = Util.makeHash(this);
+        this.id = Utils.makeHash(this);
     }
 
     public int getId() {
