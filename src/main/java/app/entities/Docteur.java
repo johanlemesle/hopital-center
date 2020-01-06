@@ -1,46 +1,19 @@
-package app.database_manager;
+package app.entities;
 
 import java.util.ArrayList;
+import app.enums.Specialite;;
 
 /**
  * Docteur
  */
-enum Specialite {
-    generaliste("Généraliste"), dentiste("Dentiste"), ophtalmologue("Ophtalmologue");
-
-    private String nom;
-
-    Specialite(String s) {
-        this.nom = s;
-    }
-
-    @Override
-    public String toString() {
-        return nom;
-    }
-
-};
-
 public class Docteur extends Employe {
-    public Docteur(String nom, String prenom, String tel, Adresse adresse, String specialite) {
+    public Docteur(String nom, String prenom, String tel, Adresse adresse, Specialite specialite) {
         super(nom, prenom, tel, adresse);
-        this.specialite = Specialite.valueOf(Utils.purge(specialite)).toString();
+        this.specialite = specialite;
     }
 
-    private String specialite;
-    private ArrayList<Patient> patientsSoignes = new ArrayList<>();
-
-    public void addPatientSoigne(Patient p) {
-        patientsSoignes.add(p);
-    }
-
-    public String getSpecialite() {
-        return specialite;
-    }
-
-    public ArrayList<Patient> getPatientsSoignes() {
-        return patientsSoignes;
-    }
+    private Specialite specialite;
+    ArrayList<Patient> soins = new ArrayList<>();
 
     @Override
     public String toString() {
