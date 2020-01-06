@@ -247,8 +247,6 @@ public class Utils {
 
         for (Field field : fields)
         {
-            System.out.println("attribut : " + field.toString());
-            System.out.println("type : " + field.getClass());
             result.add(Pair.of(field, field.getClass()));
         }
 
@@ -294,11 +292,31 @@ public class Utils {
     // List/ArrayList/Map(si t'as une List<Patient>, il faut choper 'Patient')
 
     public static List<Pair<Object, Class<?>>> extractNestedFields(Class<?> fromWhere) {
+       
         List<Pair<Object, Class<?>>> result = new ArrayList<>();
-        // a coder ..
+        
+        List<Pair<Field,Class<?>>> tmp = extractFieldNames(fromWhere);
+
+
+
 
 
         return result;
+    }
+
+    //Méthode permettant de savoir si l'attribut est simple ou non , elle retourne vraie si le type passé en paramètre 
+    //est issu de la library java standard 
+    
+    public static boolean verifyAttrib(Class<?> fromWhere)
+    {  
+
+        if(fromWhere.getCanonicalName().startsWith("java.") || fromWhere.getCanonicalName().startsWith("javax.") || fromWhere.getCanonicalName().startsWith("org."))
+        {   
+            return true;
+        }
+        
+        else
+        return false;
     }
 
 }
