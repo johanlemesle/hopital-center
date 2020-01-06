@@ -1,4 +1,4 @@
-package app.database_manager;
+package app.entities;
 
 public class Service {
     private int id;

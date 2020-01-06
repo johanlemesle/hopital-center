@@ -1,8 +1,11 @@
-package app.database_manager;
+package app;
 
 import java.util.HashMap;
 
 import org.apache.commons.lang3.StringUtils;
+
+import app.database_manager.Utils;
+import app.entities.*;
 
 /**
  * Hopital

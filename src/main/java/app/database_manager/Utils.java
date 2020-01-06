@@ -1,16 +1,24 @@
 package app.database_manager;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
+
+import app.entities.Chambre;
+import app.entities.Personne;
+import app.entities.Service;
 
 /**
  * util
@@ -284,7 +292,7 @@ public class Utils {
         return result;
     }
 
-     /**
+    /**
      * Scans all classes accessible from the context class loader which belong to
      * the given package and subpackages.
      *
@@ -335,5 +343,5 @@ public class Utils {
             }
         }
         return classes;
-
+    }
 }

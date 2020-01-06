@@ -2,6 +2,7 @@ package graphical_user_interface;
 
 import org.junit.Test;
 
+import app.Hopital;
 import app.database_manager.*;
 
 import static org.junit.Assert.*;
