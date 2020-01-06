@@ -1,4 +1,4 @@
-package app.enums;
+package app.database_manager;
 
 public enum Specialite {
     generaliste("Généraliste"), dentiste("Dentiste"), ophtalmologue("Ophtalmologue");

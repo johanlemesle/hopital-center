@@ -1,4 +1,4 @@
-package app.enums;
+package app.database_manager;
 
 public enum Rotation {
     Jour, Nuit

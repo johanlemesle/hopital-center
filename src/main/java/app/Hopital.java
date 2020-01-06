@@ -5,7 +5,12 @@ import java.util.HashMap;
 import org.apache.commons.lang3.StringUtils;
 
 import app.database_manager.Utils;
-import app.entities.*;
+import app.database_manager.entities.Chambre;
+import app.database_manager.entities.Docteur;
+import app.database_manager.entities.Hospitalisation;
+import app.database_manager.entities.Infirmier;
+import app.database_manager.entities.Patient;
+import app.database_manager.entities.Service;
 
 /**
  * Hopital

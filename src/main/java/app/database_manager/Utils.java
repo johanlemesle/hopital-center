@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,9 +15,9 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
-import app.entities.Chambre;
-import app.entities.Personne;
-import app.entities.Service;
+import app.database_manager.entities.Chambre;
+import app.database_manager.entities.Personne;
+import app.database_manager.entities.Service;
 
 /**
  * util

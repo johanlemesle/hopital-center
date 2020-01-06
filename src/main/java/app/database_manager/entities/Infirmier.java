@@ -1,6 +1,7 @@
-package app.entities;
+package app.database_manager.entities;
 
-import app.enums.Rotation;
+import app.database_manager.Adresse;
+import app.database_manager.Rotation;
 
 public class Infirmier extends Employe {
     public Infirmier(String nom, String prenom, String tel, Adresse adresse) {

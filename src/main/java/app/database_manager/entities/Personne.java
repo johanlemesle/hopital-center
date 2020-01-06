@@ -1,5 +1,6 @@
-package app.entities;
+package app.database_manager.entities;
 
+import app.database_manager.Adresse;
 import app.database_manager.Utils;
 
 /**

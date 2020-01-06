@@ -1,6 +1,4 @@
-package app.entities;
-
-import app.enums.TypeVoie;
+package app.database_manager;
 
 public class Adresse {
     private String numVoie, codePostal;

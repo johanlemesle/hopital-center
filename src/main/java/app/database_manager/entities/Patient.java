@@ -1,6 +1,8 @@
-package app.entities;
+package app.database_manager.entities;
 
 import java.util.ArrayList;
+
+import app.database_manager.Adresse;
 
 /**
  * Malade

@@ -1,7 +1,9 @@
-package app.entities;
+package app.database_manager.entities;
 
 import java.util.ArrayList;
-import app.enums.Specialite;;
+
+import app.database_manager.Adresse;
+import app.database_manager.Specialite;;
 
 /**
  * Docteur
