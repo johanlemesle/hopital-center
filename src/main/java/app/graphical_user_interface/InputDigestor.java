@@ -24,7 +24,6 @@ public class InputDigestor extends JPanel {
         try {
             tmp = Utils.getClasses(entitiesPackagePath);
         } catch (ClassNotFoundException | IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             System.exit(1);
         }
@@ -42,6 +41,6 @@ public class InputDigestor extends JPanel {
         }
         String value = ListDialog.showDialog(this, this, "Selectionnez le type d'entité que vous souhaitez ajouter",
                 "Selection entité", possibleValues, null, null);
-        
+
     }
 }

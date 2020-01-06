@@ -1,10 +1,12 @@
 package app;
 
+import app.graphical_user_interface.Window;
+
 /**
  * menu
  */
 
-public class TestForDataBase {
+public class App {
         public static void main(String[] args) {
                 /*
                  * Hopital h = new Hopital();
@@ -21,6 +23,6 @@ public class TestForDataBase {
                  * poulain, redoine); ArrayList<Pair<String, Object>> obj = Utils
                  * .get("patients{nom&prenom}&docteurs{patientsSoignes{nom&prenom}}", h);
                  */
-                System.out.println("done");
+                Window w = new Window();
         }
 }
