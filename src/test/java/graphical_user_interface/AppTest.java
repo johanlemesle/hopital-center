@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import app.Hopital;
 import app.database_manager.*;
+import app.database_manager.entities.Infirmier;
 
 import static org.junit.Assert.*;
 
@@ -30,6 +31,7 @@ public class AppTest {
 
     @Test
     public void test2() {
-        System.out.println("running test 2");
+        Infirmier wa = new Infirmier("Jabari", "Walid", "0102030405", null);
+        System.out.println(Utils.testConditions(wa, "nom=Jabari"));
     }
 }

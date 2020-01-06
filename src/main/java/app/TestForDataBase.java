@@ -1,5 +1,9 @@
 package app;
 
+import app.database_manager.Utils;
+
+import app.database_manager.entities.Infirmier;
+
 /**
  * menu
  */
@@ -22,5 +26,7 @@ public class TestForDataBase {
                  * .get("patients{nom&prenom}&docteurs{patientsSoignes{nom&prenom}}", h);
                  */
                 System.out.println("done");
+                Infirmier wa = new Infirmier("Jabari", "Walid", "10", null, null, null, 3.0);
+                System.out.println(Utils.testConditions(wa, "salaire<1000"));
         }
 }

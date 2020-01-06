@@ -30,18 +30,18 @@ public class Utils {
      * @param pers person object from which hash will be made
      * @return hash value for person object
      */
-    public static int makeHash(Personne pers) {
-        String str = pers.getNom() + pers.getPrenom() + pers.getTel();
+    public static int makeHash(final Personne pers) {
+        final String str = pers.getNom() + pers.getPrenom() + pers.getTel();
         return str.hashCode();
     }
 
-    public static int makeHash(Chambre chambre) {
-        String str = Integer.toString(chambre.getBatiment()) + Integer.toString(chambre.getId());
+    public static int makeHash(final Chambre chambre) {
+        final String str = Integer.toString(chambre.getBatiment()) + Integer.toString(chambre.getId());
         return str.hashCode();
     }
 
-    public static int makeHash(Service service) {
-        String str = Integer.toString(service.getBatiment()) + Integer.toString(service.getId());
+    public static int makeHash(final Service service) {
+        final String str = Integer.toString(service.getBatiment()) + Integer.toString(service.getId());
         return str.hashCode();
     }
 
@@ -63,15 +63,15 @@ public class Utils {
         return str;
     }
 
-    public static Object extract(String what, Object fromWhere, Object... args) {
+    public static Object extract(final String what, final Object fromWhere, final Object... args) {
         if (fromWhere instanceof Map<?, ?> || fromWhere instanceof Collection<?>)
             return invokeFunction("get", fromWhere, args);
         else
             return invokeFunction("get" + StringUtils.capitalize(what), fromWhere, args);
     }
 
-    public static Object invokeFunction(String functionName, Object obj, Object... args) {
-        Class<?> paramsTypes[] = new Class[args.length];
+    public static Object invokeFunction(final String functionName, final Object obj, final Object... args) {
+        final Class<?> paramsTypes[] = new Class[args.length];
         for (int i = 0; i < paramsTypes.length; i++) {
             paramsTypes[i] = args[i].getClass();
         }
@@ -90,7 +90,7 @@ public class Utils {
      * @param fromWhere
      * @return
      */
-    public static ArrayList<Pair<String, Object>> get(String what, Object fromWhere) {
+    public static ArrayList<Pair<String, Object>> get(String what, final Object fromWhere) {
         try {
             if (Character.isLetter(what.charAt(what.length() - 1))) {
                 what += '&';
@@ -115,14 +115,15 @@ public class Utils {
      * @throws NoSuchMethodException
      * @throws SecurityException
      */
-    public static ArrayList<Pair<String, Object>> getRecur(String what, Object fromWhere) throws IllegalAccessException,
-            IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+    public static ArrayList<Pair<String, Object>> getRecur(final String what, final Object fromWhere)
+            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
+            SecurityException {
 
         // start constructing query from string
-        StringBuilder entity = new StringBuilder(10);
-        ArrayList<Pair<String, Object>> result = new ArrayList<>();
+        final StringBuilder entity = new StringBuilder(10);
+        final ArrayList<Pair<String, Object>> result = new ArrayList<>();
         for (int i = 0; i < what.length(); i++) {
-            char ch = what.charAt(i);
+            final char ch = what.charAt(i);
 
             // check if encountered a seperator
             if (Character.isLetter(ch)) {
@@ -130,7 +131,7 @@ public class Utils {
             } else if (entity.length() > 0) {
                 switch (ch) {
                 case '{':
-                    int idxOfMatchingClosingBrace = indexOfMatchingClosingBrace(what, i); // getMatchingBrace
+                    final int idxOfMatchingClosingBrace = indexOfMatchingClosingBrace(what, i); // getMatchingBrace
 
                     /**
                      * 1. recursively get the attribute that has been constructed 2. create new
@@ -160,10 +161,10 @@ public class Utils {
                     // only the value interests us if its a pair
                     object = ((Pair<?, ?>) object).getValue();
                 }
-                ArrayList<Pair<String, Object>> tPairs = new ArrayList<>();
-                for (Object obj : getCollection(getFieldValue(what, object))) {
+                final ArrayList<Pair<String, Object>> tPairs = new ArrayList<>();
+                for (final Object obj : getCollection(getFieldValue(what, object))) {
                     if (obj instanceof Pair<?, ?>) {
-                        Pair<?, ?> p = (Pair<?, ?>) obj;
+                        final Pair<?, ?> p = (Pair<?, ?>) obj;
                         tPairs.add(Pair.of(p.getKey().toString(), p.getValue()));
                     } else {
                         result.add(Pair.of(obj.getClass().getSimpleName(), obj));
@@ -177,11 +178,11 @@ public class Utils {
         return result;
     }
 
-    public static int indexOfMatchingClosingBrace(String str, int idxOfOpeningBrace) {
+    public static int indexOfMatchingClosingBrace(final String str, final int idxOfOpeningBrace) {
         int idxOfMatchingClosingBrace = -1;
         int nbOpeningBraces = 0;
         for (int i = idxOfOpeningBrace; i < str.length(); i++) {
-            char ch = str.charAt(i);
+            final char ch = str.charAt(i);
             if (ch == '{') {
                 nbOpeningBraces++;
             } else if (ch == '}') {
@@ -195,7 +196,7 @@ public class Utils {
         return idxOfMatchingClosingBrace;
     }
 
-    public static List<Field> getAllFields(List<Field> fields, Class<?> type) {
+    public static List<Field> getAllFields(final List<Field> fields, final Class<?> type) {
         fields.addAll(Arrays.asList(type.getDeclaredFields()));
 
         if (type.getSuperclass() != null) {
@@ -205,11 +206,11 @@ public class Utils {
         return fields;
     }
 
-    private static Object getFieldValue(String fieldName, Object parent) throws IllegalAccessException,
+    private static Object getFieldValue(final String fieldName, final Object parent) throws IllegalAccessException,
             IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
         if (fieldName.equals("*")) {
-            ArrayList<Pair<String, Object>> fArrayList = new ArrayList<>();
-            for (Field f : getAllFields(new ArrayList<>(), parent.getClass())) {
+            final ArrayList<Pair<String, Object>> fArrayList = new ArrayList<>();
+            for (final Field f : getAllFields(new ArrayList<>(), parent.getClass())) {
                 fArrayList.add(Pair.of(f.getName(), getFieldValue(f.getName(), parent)));
             }
             return fArrayList;
@@ -219,14 +220,14 @@ public class Utils {
         }
     }
 
-    private static ArrayList<Object> getCollection(Object obj) {
-        ArrayList<Object> result = new ArrayList<>();
+    private static ArrayList<Object> getCollection(final Object obj) {
+        final ArrayList<Object> result = new ArrayList<>();
         if (obj instanceof Collection<?>) {
-            for (Object object : (Collection<?>) obj) {
+            for (final Object object : (Collection<?>) obj) {
                 result.add(object);
             }
         } else if (obj instanceof Map<?, ?>) {
-            for (Object object : ((Map<?, ?>) obj).values()) {
+            for (final Object object : ((Map<?, ?>) obj).values()) {
                 result.add(object);
             }
         } else {
@@ -235,18 +236,107 @@ public class Utils {
         return result;
     }
 
-    public static Object matchConditions(Object obj, String conditions) {
-        return conditions;
+    /*
+     * public static boolean matchConditions(char condition, Object ob, Object val)
+     * { boolean matchCond = false; switch (condition) { case '=': if (ob == val) {
+     * matchCond = true; } else matchCond = false; case '<': if (ob < val) {
+     * matchCond = true; } else matchCond = false; case '>': if (ob > val) {
+     * matchCond = true; } else matchCond = false; } return matchCond; }
+     */
+
+    public static boolean testConditions(final Object obj, final String conditions) {
+
+        StringBuilder elem = new StringBuilder();
+        StringBuilder val = new StringBuilder();
+        boolean portal = false;
+
+        boolean matchCond = false;
+
+        char cond = 'c';
+        for (int i = 0; i < conditions.length(); i++) {
+            if (!portal) {
+
+                if (Character.isLetter(conditions.charAt(i))) {
+                    elem.append(conditions.charAt(i));
+                } else {
+                    cond = conditions.charAt(i);
+                    portal = true;
+                    continue;
+                }
+            }
+            if (portal) {
+                val.append(conditions.charAt(i));
+            }
+        }
+
+        Object ob = null;
+        try {
+            ob = getFieldValue(elem.toString(), obj);
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        if (ob instanceof Double) {
+            Double newval = Double.valueOf(val.toString());
+            Double newobj = (Double) ob;
+            switch (cond) {
+            case '=':
+                if (newobj == newval) {
+                    matchCond = true;
+                } else
+                    matchCond = false;
+            break;
+            case '<':
+                if (newobj < newval) {
+                    matchCond = true;
+                } else
+                    matchCond = false;
+            break;
+            case '>':
+                if (newobj > newval) {
+                    matchCond = true;
+                } else
+                    matchCond = false;
+            break;
+            }
+
+        } else if (ob instanceof String) {
+            String newval = val.toString();
+            String newobj = (String) ob;
+            switch (cond) {
+            case '=':
+                if (newobj.equals(newval)) {
+                    matchCond = true;
+                } else
+                    matchCond = false;
+            }
+
+        }
+
+        return matchCond;
     }
 
     // fonction qui retourne une list de pair (attribut:type de l'attribut) d'une
     // classe passée en paramètre
     // ex. extractFieldNames(Chambre.class) retourne une liste
     // [(id:int), (service:Service), (surveillant:Infirmier), (nbLits:byte) ... etc]
-    public static List<Pair<Field, Class<?>>> extractFieldNames(Class<?> fromWhere) {
-        List<Pair<Field, Class<?>>> result = new ArrayList<>();
-        List<Field> fields = getAllFields(new ArrayList<Field>(), fromWhere);
-        for (Field field : fields) {
+    public static List<Pair<Field, Class<?>>> extractFieldNames(final Class<?> fromWhere) {
+        final List<Pair<Field, Class<?>>> result = new ArrayList<>();
+        final List<Field> fields = getAllFields(new ArrayList<Field>(), fromWhere);
+        for (final Field field : fields) {
             System.out.println("attribut trouvé : " + field.getName() + ". Type : " + field.getType().getSimpleName());
         }
         // ... a continuer
@@ -256,8 +346,8 @@ public class Utils {
     // fonction qui prend en parametre un string en camel case et le retourne
     // normalisé
     // ex : "jeSuisPasBlond" devient "je suis pas blond"
-    public String normalizeCamelCase(String str) {
-        String result = "";
+    public String normalizeCamelCase(final String str) {
+        final String result = "";
 
         // a coder ..
         return result;
@@ -285,8 +375,8 @@ public class Utils {
     // HashMap, auquel cas il faut choper le type qui constitue la
     // List/ArrayList/Map(si t'as une List<Patient>, il faut choper 'Patient')
 
-    public static List<Pair<Object, Class<?>>> extractNestedFields(Class<?> fromWhere) {
-        List<Pair<Object, Class<?>>> result = new ArrayList<>();
+    public static List<Pair<Object, Class<?>>> extractNestedFields(final Class<?> fromWhere) {
+        final List<Pair<Object, Class<?>>> result = new ArrayList<>();
         // a coder ..
         return result;
     }
@@ -300,18 +390,18 @@ public class Utils {
      * @throws ClassNotFoundException
      * @throws IOException
      */
-    public static Class<?>[] getClasses(String packageName) throws ClassNotFoundException, IOException {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+    public static Class<?>[] getClasses(final String packageName) throws ClassNotFoundException, IOException {
+        final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         assert classLoader != null;
-        String path = packageName.replace('.', '/');
-        Enumeration<URL> resources = classLoader.getResources(path);
-        List<File> dirs = new ArrayList<File>();
+        final String path = packageName.replace('.', '/');
+        final Enumeration<URL> resources = classLoader.getResources(path);
+        final List<File> dirs = new ArrayList<File>();
         while (resources.hasMoreElements()) {
-            URL resource = resources.nextElement();
+            final URL resource = resources.nextElement();
             dirs.add(new File(resource.getFile()));
         }
-        ArrayList<Class<?>> classes = new ArrayList<>();
-        for (File directory : dirs) {
+        final ArrayList<Class<?>> classes = new ArrayList<>();
+        for (final File directory : dirs) {
             classes.addAll(findClasses(directory, packageName));
         }
         return classes.toArray(new Class[classes.size()]);
@@ -326,13 +416,14 @@ public class Utils {
      * @return The classes
      * @throws ClassNotFoundException
      */
-    private static List<Class<?>> findClasses(File directory, String packageName) throws ClassNotFoundException {
-        List<Class<?>> classes = new ArrayList<>();
+    private static List<Class<?>> findClasses(final File directory, final String packageName)
+            throws ClassNotFoundException {
+        final List<Class<?>> classes = new ArrayList<>();
         if (!directory.exists()) {
             return classes;
         }
-        File[] files = directory.listFiles();
-        for (File file : files) {
+        final File[] files = directory.listFiles();
+        for (final File file : files) {
             if (file.isDirectory()) {
                 assert !file.getName().contains(".");
                 classes.addAll(findClasses(file, packageName + "." + file.getName()));
