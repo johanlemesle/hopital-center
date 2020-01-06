@@ -1,5 +1,8 @@
 package app.graphical_user_interface;
 
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 
@@ -22,6 +25,7 @@ public class Window extends JFrame {
         // pour separer les panels
         JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, selection, saisie);
         JSplitPane sp2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, true, sp, resultats);
+        
         sp.setResizeWeight(0.5);
         sp2.setResizeWeight(0.5);
 

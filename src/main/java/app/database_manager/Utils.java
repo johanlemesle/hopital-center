@@ -239,17 +239,16 @@ public class Utils {
         return conditions;
     }
 
-    // fonction qui retourne une list de pair (attribut:type de l'attribut) d'une
-    // classe passée en paramètre
-    // ex. extractFieldNames(Chambre.class) retourne une liste
-    // [(id:int), (service:Service), (surveillant:Infirmier), (nbLits:byte) ... etc]
     public static List<Pair<Field, Class<?>>> extractFieldNames(Class<?> fromWhere) {
         List<Pair<Field, Class<?>>> result = new ArrayList<>();
         List<Field> fields = getAllFields(new ArrayList<Field>(), fromWhere);
+
+        // remplir la list result de nom/type attribut
+
         for (Field field : fields) {
-            System.out.println("attribut trouvé : " + field.getName() + ". Type : " + field.getType().getSimpleName());
+            result.add(Pair.of(field, field.getClass()));
         }
-        // ... a continuer
+
         return result;
     }
 
