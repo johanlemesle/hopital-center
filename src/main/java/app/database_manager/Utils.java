@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -298,19 +299,19 @@ public class Utils {
                     matchCond = true;
                 } else
                     matchCond = false;
-            break;
+                break;
             case '<':
                 if (newobj < newval) {
                     matchCond = true;
                 } else
                     matchCond = false;
-            break;
+                break;
             case '>':
                 if (newobj > newval) {
                     matchCond = true;
                 } else
                     matchCond = false;
-            break;
+                break;
             }
 
         } else if (ob instanceof String) {
@@ -322,9 +323,15 @@ public class Utils {
                     matchCond = true;
                 } else
                     matchCond = false;
-            break;
+                break;
             case '%':
-                
+                Pattern patt = Pattern.compile(newval);
+                Matcher match = patt.matcher(newobj);
+                if (match.find()) {
+                    matchCond = true;
+                } else
+                    matchCond = false;
+                break;
             }
 
         }
