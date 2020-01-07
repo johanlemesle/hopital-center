@@ -1,5 +1,6 @@
 package app;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import org.apache.commons.lang3.StringUtils;
@@ -15,8 +16,12 @@ import app.database_manager.entities.Service;
 /**
  * Hopital
  */
-public class Hopital {
+public class Hopital implements Serializable {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 9055425408285489736L;
     // personnes
     private HashMap<Integer, Infirmier> infirmiers = new HashMap<>();
     private HashMap<Integer, Docteur> docteurs = new HashMap<>();

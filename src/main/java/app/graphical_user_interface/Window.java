@@ -25,7 +25,7 @@ public class Window extends JFrame {
         // pour separer les panels
         JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, selection, saisie);
         JSplitPane sp2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, true, sp, resultats);
-        
+
         sp.setResizeWeight(0.5);
         sp2.setResizeWeight(0.5);
 
@@ -36,6 +36,8 @@ public class Window extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.setVisible(true);
+
+     
     }
 
     public void toggle(String mode) {
