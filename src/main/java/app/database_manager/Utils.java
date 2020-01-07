@@ -291,16 +291,12 @@ public class Utils {
     // HashMap, auquel cas il faut choper le type qui constitue la
     // List/ArrayList/Map(si t'as une List<Patient>, il faut choper 'Patient')
 
-    public static List<Pair<Object, Class<?>>> extractNestedFields(Class<?> fromWhere) {
+    public static List<Pair<Field, Object>> extractNestedFields(Class<?> fromWhere) {
        
-        List<Pair<Object, Class<?>>> result = new ArrayList<>();
-        
+        List<Pair<Field,Object>> result = new ArrayList<>();
         List<Pair<Field,Class<?>>> tmp = extractFieldNames(fromWhere);
-
-
-
-
-
+        
+        
         return result;
     }
 
