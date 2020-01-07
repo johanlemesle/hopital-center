@@ -29,10 +29,11 @@ public class TestForDataBase {
                                 new Adresse("3", "rue", "Lazare Carnot", 78220, "Viroflay"));
                 h.insert("patient", johan);
                 h.insert("patient", redoine);
+                h.insert("patient", walid);
                 h.insert("docteur", poulain);
                 h.insert("soin", poulain, redoine);
                 ArrayList<Pair<String, Object>> obj = Utils
-                                .get("patients{nom&prenom}&docteurs{patientsSoignes{nom&prenom}}", h);
+                                .get("patients{nom&prenom}:adresse%carnot&docteurs{patientsSoignes{nom&prenom}}", h);
 
                 System.out.println("done");
                 Infirmier wa = new Infirmier("Jabari", "Walid", "10", null, null, null, 3.0);

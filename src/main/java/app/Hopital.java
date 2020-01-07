@@ -28,7 +28,7 @@ public class Hopital {
     private HashMap<Integer, Hospitalisation> hospitalisations = new HashMap<>();
 
     public void insert(String what, Object... args) {
-        Utils.invokeFunction("add " + StringUtils.capitalize(what), this, args);
+        Utils.invokeFunction("add" + StringUtils.capitalize(what), this, args);
     }
 
     public HashMap<Integer, Infirmier> getInfirmiers() {
@@ -62,6 +62,15 @@ public class Hopital {
     public void addDocteur(Docteur d) {
         this.docteurs.put(d.getId(), d);
     }
+
+    public void addPatient(Patient p) {
+        this.patients.put(p.getId(), p);
+    }
+
+    public void addSoin(Docteur d, Patient p) {
+        d.addSoin(p);
+        p.addSoinRecu(d);
+    }  
 
     public void updatePatient(Patient p) {
         this.patients.put(p.getId(), p);

@@ -26,4 +26,12 @@ public class Patient extends Personne {
     public ArrayList<Docteur> getSoinsRecus() {
         return soinsRecus;
     }
+
+    public void setMutuelle(String mutuelle) {
+        this.mutuelle = mutuelle;
+    }
+
+    public void setSoinsRecus(ArrayList<Docteur> soinsRecus) {
+        this.soinsRecus = soinsRecus;
+    }
 }
