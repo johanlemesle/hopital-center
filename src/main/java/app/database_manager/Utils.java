@@ -238,36 +238,27 @@ public class Utils {
     // ex. extractFieldNames(Chambre.class) retourne une liste
     // [(id:int), (service:Service), (surveillant:Infirmier), (nbLits:byte) ... etc]
 
-    public static List<Pair<Field, Class<?>>> extractFieldNames(Class<?> fromWhere) 
-    {
+    public static List<Pair<Field, Class<?>>> extractFieldNames(Class<?> fromWhere) {
         List<Pair<Field, Class<?>>> result = new ArrayList<>();
         List<Field> fields = getAllFields(new ArrayList<Field>(), fromWhere);
-        
+
         // remplir la list result de nom/type attribut
 
-        for (Field field : fields)
-        {
+        for (Field field : fields) {
             result.add(Pair.of(field, field.getClass()));
         }
 
         return result;
     }
-    
+
     // fonction qui prend en parametre un string en camel case et le retourne
     // normalisé
     // ex : "jeSuisPasBlond" devient "je suis pas blond"
 
-    public static String normalizeCamelCase(String str) 
-    {
-        return str.replaceAll(
-           String.format("%s|%s|%s",
-              "(?<=[A-Z])(?=[A-Z][a-z])",
-              "(?<=[^A-Z])(?=[A-Z])",
-              "(?<=[A-Za-z])(?=[^A-Za-z])"
-           ),
-           " "
-        );
-     }
+    public static String normalizeCamelCase(String str) {
+        return str.replaceAll(String.format("%s|%s|%s", "(?<=[A-Z])(?=[A-Z][a-z])", "(?<=[^A-Z])(?=[A-Z])",
+                "(?<=[A-Za-z])(?=[^A-Za-z])"), " ");
+    }
     // ========================================================================\\
     // HARD:
 
@@ -291,28 +282,35 @@ public class Utils {
     // HashMap, auquel cas il faut choper le type qui constitue la
     // List/ArrayList/Map(si t'as une List<Patient>, il faut choper 'Patient')
 
-    public static List<Pair<Field, Object>> extractNestedFields(Class<?> fromWhere) {
-       
-        List<Pair<Field,Object>> result = new ArrayList<>();
-        List<Pair<Field,Class<?>>> tmp = extractFieldNames(fromWhere);
-        
-        
+    public static List<Pair<Field, Object>> extractNestedFields(Class<?> fromWhere, int currDepth, final int maxDepth) {
+
+        List<Pair<Field, Object>> result = new ArrayList<>();
+        if (currDepth < maxDepth) {
+            for (Pair<Field, Class<?>> pair : extractFieldNames(fromWhere)) {
+                if (isStandardType(pair.getRight())) {
+                    result.add(Pair.of(pair.getLeft(), pair.getRight()));
+                } else {
+                    List<Pair<Field, Object>> nestedObj = extractNestedFields(pair.getRight(), currDepth + 1, maxDepth);
+                    result.add(Pair.of(pair.getLeft(), nestedObj));
+                }
+            }
+        }
         return result;
     }
 
-    //Méthode permettant de savoir si l'attribut est simple ou non , elle retourne vraie si le type passé en paramètre 
-    //est issu de la library java standard 
-    
-    public static boolean verifyAttrib(Class<?> fromWhere)
-    {  
+    // Méthode permettant de savoir si l'attribut est simple ou non , elle retourne
+    // vraie si le type passé en paramètre
+    // est issu de la library java standard
 
-        if(fromWhere.getCanonicalName().startsWith("java.") || fromWhere.getCanonicalName().startsWith("javax.") || fromWhere.getCanonicalName().startsWith("org."))
-        {   
+    public static boolean isStandardType(Class<?> fromWhere) {
+
+        if (fromWhere.getCanonicalName().startsWith("java.") || fromWhere.getCanonicalName().startsWith("javax.")
+                || fromWhere.getCanonicalName().startsWith("org.")) {
             return true;
         }
-        
+
         else
-        return false;
+            return false;
     }
 
 }
