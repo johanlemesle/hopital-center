@@ -1,7 +1,10 @@
 package app.database_manager;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
@@ -342,4 +345,15 @@ public class Utils {
         }
         return classes;
     }
+
+    public static void save(Serializable obj, String fileName) throws Exception {
+        FileOutputStream fos;
+        ObjectOutputStream oos;
+        fos = new FileOutputStream(fileName);
+        oos = new ObjectOutputStream(fos);
+        oos.writeObject(obj);
+        oos.flush();
+        oos.close();
+    }
+
 }
