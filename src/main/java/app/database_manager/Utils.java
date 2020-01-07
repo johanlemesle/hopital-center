@@ -322,6 +322,9 @@ public class Utils {
                     matchCond = true;
                 } else
                     matchCond = false;
+            break;
+            case '%':
+                
             }
 
         }
