@@ -21,7 +21,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import app.database_manager.entities.Chambre;
-import app.database_manager.entities.Personne;
 import app.database_manager.entities.Service;
 
 /**
@@ -41,12 +40,12 @@ public class Utils {
     }
 
     public static int makeHash(Chambre chambre) {
-        String str = Integer.toString(chambre.getBatiment()) + Integer.toString(chambre.getId());
+        String str = Integer.toString(chambre.getBatiment()) + Integer.toString(chambre.getId().value());
         return str.hashCode();
     }
 
     public static int makeHash(Service service) {
-        String str = Integer.toString(service.getBatiment()) + Integer.toString(service.getId());
+        String str = Integer.toString(service.getBatiment()) + Integer.toString(service.getId().value());
         return str.hashCode();
     }
 
@@ -89,10 +88,8 @@ public class Utils {
         return null;
     }
 
-
-
-    //fromWhere: Infirmier inf
-    //service{nom&batiment&directeur{*}}&salaire&rotation
+    // fromWhere: Infirmier inf
+    // service{nom&batiment&directeur{*}}&salaire&rotation
     /**
      * 
      * @param what
@@ -352,7 +349,8 @@ public class Utils {
         return classes;
     }
 
-    public static void save(Serializable obj, String fileName) throws Exception {
+    public static void save(Serializable obj, String fileName) throws IOException {
+        System.out.println(String.format("Saving %s to %s", obj, fileName));
         FileOutputStream fos;
         ObjectOutputStream oos;
         fos = new FileOutputStream(fileName);
@@ -362,7 +360,8 @@ public class Utils {
         oos.close();
     }
 
-    public static Object load(String fileName) throws Exception {
+    public static Object load(String fileName) throws IOException, ClassNotFoundException {
+        System.out.println(String.format("loading from %s", fileName));
         FileInputStream fis;
         ObjectInputStream ois;
         fis = new FileInputStream(fileName);

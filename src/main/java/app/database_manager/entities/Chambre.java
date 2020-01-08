@@ -1,10 +1,12 @@
 package app.database_manager.entities;
 
+import app.database_manager.EntitiyID;
+
 /**
  * Chambre
  */
 public class Chambre {
-    private int id;
+    private EntitiyID id;
     private Service service;
     private Infirmier surveillant;
     private byte nbLits;
@@ -14,7 +16,7 @@ public class Chambre {
         return batiment;
     }
 
-    public int getId() {
+    public EntitiyID getId() {
         return id;
     }
 

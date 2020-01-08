@@ -9,13 +9,17 @@ import app.database_manager.Specialite;;
  * Docteur
  */
 public class Docteur extends Employe {
-    public Docteur(String nom, String prenom, String tel, Adresse adresse, Specialite specialite) {
+    public Docteur(String nom, String prenom, String tel, Adresse adresse, String specialite) {
         super(nom, prenom, tel, adresse);
         this.specialite = specialite;
     }
 
-    private Specialite specialite;
-    ArrayList<Patient> soins = new ArrayList<>();
+    private String specialite;
+    private ArrayList<Patient> soins = new ArrayList<>();
+
+    public void addSoin(Patient p) {
+        this.soins.add(p);
+    }
 
     @Override
     public String toString() {

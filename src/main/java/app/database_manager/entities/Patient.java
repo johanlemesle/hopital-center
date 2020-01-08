@@ -3,6 +3,7 @@ package app.database_manager.entities;
 import java.util.ArrayList;
 
 import app.database_manager.Adresse;
+import app.database_manager.Personne;
 
 /**
  * Malade

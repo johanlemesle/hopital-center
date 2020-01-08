@@ -49,9 +49,6 @@ public class InputDigestor extends JPanel {
     }
 
     public void addMode() {
-        contentPane.removeAll();
-        contentPane.revalidate();
-        contentPane.repaint();
         String possibleValues[] = new String[entities.length];
         HashMap<String, Class<?>> possibleVMap = new HashMap<>();
         int i = 0;
@@ -71,6 +68,15 @@ public class InputDigestor extends JPanel {
             jPanel.add(new JTextField());
             contentPane.add(jPanel);
         }
-        contentPane.updateUI();
+    }
+
+    public void reset() {
+        contentPane.removeAll();
+        contentPane.revalidate();
+    }
+
+    public void refresh() {
+        contentPane.revalidate();
+        contentPane.repaint();
     }
 }

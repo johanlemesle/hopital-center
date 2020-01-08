@@ -1,12 +1,14 @@
 package app.database_manager.entities;
 
+import app.database_manager.EntitiyID;
+
 public class Service {
-    private int id;
+    private EntitiyID id;
     private String nom;
     private int batiment;
     private Docteur directeur;
 
-    public int getId() {
+    public EntitiyID getId() {
         return this.id;
     }
 

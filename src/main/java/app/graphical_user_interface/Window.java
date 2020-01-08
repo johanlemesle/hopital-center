@@ -1,8 +1,5 @@
 package app.graphical_user_interface;
 
-import java.awt.GridLayout;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 
@@ -33,14 +30,14 @@ public class Window extends JFrame {
 
         // trivial
         this.setSize(500, 500);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         this.setVisible(true);
 
-     
     }
 
     public void toggle(String mode) {
+        saisie.reset();
         switch (mode) {
         case ActionSelector.ADD_MODE:
             saisie.addMode();
@@ -54,6 +51,7 @@ public class Window extends JFrame {
         default:
             break;
         }
+        saisie.refresh();
     }
 
 }

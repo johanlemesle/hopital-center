@@ -1,6 +1,7 @@
-package app.database_manager.entities;
+package app.database_manager;
 
 import app.database_manager.Adresse;
+import app.database_manager.EntitiyID;
 import app.database_manager.Utils;
 
 /**
@@ -8,7 +9,7 @@ import app.database_manager.Utils;
  */
 public class Personne {
 
-    protected int id;
+    protected EntitiyID id;
     protected String nom, prenom, tel;
     protected Adresse adresse;
 
@@ -17,10 +18,10 @@ public class Personne {
         this.prenom = prenom;
         this.tel = tel.replace(" ", "");
         this.adresse = adresse;
-        this.id = Utils.makeHash(this);
+        this.id = new EntitiyID(Utils.makeHash(this));
     }
 
-    public int getId() {
+    public EntitiyID getId() {
         return id;
     }
 

@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.apache.commons.lang3.StringUtils;
 
+import app.database_manager.EntitiyID;
 import app.database_manager.Utils;
 import app.database_manager.entities.Chambre;
 import app.database_manager.entities.Docteur;
@@ -23,41 +24,45 @@ public class Hopital implements Serializable {
      */
     private static final long serialVersionUID = 9055425408285489736L;
     // personnes
-    private HashMap<Integer, Infirmier> infirmiers = new HashMap<>();
-    private HashMap<Integer, Docteur> docteurs = new HashMap<>();
-    private HashMap<Integer, Patient> patients = new HashMap<>();
+    private HashMap<EntitiyID, Infirmier> infirmiers = new HashMap<>();
+    private HashMap<EntitiyID, Docteur> docteurs = new HashMap<>();
+    private HashMap<EntitiyID, Patient> patients = new HashMap<>();
 
     // other
-    private HashMap<Integer, Service> services = new HashMap<>();
-    private HashMap<Integer, Chambre> chambres = new HashMap<>();
-    private HashMap<Integer, Hospitalisation> hospitalisations = new HashMap<>();
+    private HashMap<EntitiyID, Service> services = new HashMap<>();
+    private HashMap<EntitiyID, Chambre> chambres = new HashMap<>();
+    private HashMap<EntitiyID, Hospitalisation> hospitalisations = new HashMap<>();
 
     public void insert(String what, Object... args) {
-        Utils.invokeFunction("add " + StringUtils.capitalize(what), this, args);
+        Utils.invokeFunction("add" + StringUtils.capitalize(what), this, args);
     }
 
-    public HashMap<Integer, Infirmier> getInfirmiers() {
+    public HashMap<EntitiyID, Infirmier> getInfirmiers() {
         return infirmiers;
     }
 
-    public HashMap<Integer, Docteur> getDocteurs() {
+    public HashMap<EntitiyID, Docteur> getDocteurs() {
         return docteurs;
     }
 
-    public HashMap<Integer, Patient> getPatients() {
+    public HashMap<EntitiyID, Patient> getPatients() {
         return patients;
     }
 
-    public HashMap<Integer, Service> getServices() {
+    public HashMap<EntitiyID, Service> getServices() {
         return services;
     }
 
-    public HashMap<Integer, Chambre> getChambres() {
+    public HashMap<EntitiyID, Chambre> getChambres() {
         return chambres;
     }
 
-    public HashMap<Integer, Hospitalisation> getHospitalisations() {
+    public HashMap<EntitiyID, Hospitalisation> getHospitalisations() {
         return hospitalisations;
+    }
+
+    public void addPatient(Patient p) {
+        this.patients.put(p.getId(), p);
     }
 
     public void addInfirmier(Infirmier i) {
@@ -82,5 +87,9 @@ public class Hopital implements Serializable {
 
     public void addHospitalisation(Hospitalisation h) {
         this.hospitalisations.put(h.getPatient().getId(), h);
+    }
+
+    public void addSoin(Docteur d, Patient p) {
+        p.addSoinRecu(d);
     }
 }
