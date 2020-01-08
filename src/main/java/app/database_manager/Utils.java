@@ -133,7 +133,9 @@ public class Utils {
                     result.add(Pair.of(entity.toString(), getRecur(entity.toString(), fromWhere)));
                     break;
                 case ':':
-                    condition = what.substring(i + 1, what.indexOf(':', i + 1));
+                    int matchingColonIdx = what.indexOf(':', i + 1);
+                    condition = what.substring(i + 1, matchingColonIdx);
+                    what = what.replace(":" + condition + ":", "");
                     break;
                 default:
                     break;
@@ -150,8 +152,7 @@ public class Utils {
                 for (Object obj : getCollection(getFieldValue(what, object))) {
                     if (obj instanceof Pair<?, ?>) {
                         Pair<?, ?> p = (Pair<?, ?>) obj;
-                        if (testConditions(p.getValue(), condition))
-                            tPairs.add(Pair.of(p.getKey().toString(), p.getValue()));
+                        tPairs.add(Pair.of(p.getKey().toString(), p.getValue()));
                     } else {
                         result.add(Pair.of(what, obj));
                     }
