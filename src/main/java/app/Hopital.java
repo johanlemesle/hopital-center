@@ -63,16 +63,21 @@ public class Hopital implements Serializable {
         return hospitalisations;
     }
 
-    public void addPatient(Patient p) {
-        this.patients.put(p.getId(), p);
-    }
-
     public void addInfirmier(Infirmier i) {
         this.infirmiers.put(i.getId(), i);
     }
 
     public void addDocteur(Docteur d) {
         this.docteurs.put(d.getId(), d);
+    }
+
+    public void addPatient(Patient p) {
+        this.patients.put(p.getId(), p);
+    }
+
+    public void addSoin(Docteur d, Patient p) {
+        d.addSoin(p);
+        p.addSoinRecu(d);
     }
 
     public void updatePatient(Patient p) {
@@ -89,11 +94,6 @@ public class Hopital implements Serializable {
 
     public void addHospitalisation(Hospitalisation h) {
         this.hospitalisations.put(h.getPatient().getId(), h);
-    }
-
-    public void addSoin(Docteur d, Patient p) {
-        p.addSoinRecu(d);
-        d.addSoin(p);
     }
 
     public void addEmploye(Employe e) {

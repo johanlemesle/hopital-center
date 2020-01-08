@@ -8,11 +8,19 @@ public class Infirmier extends Employe {
         super(nom, prenom, tel, adresse);
     }
 
+    public Infirmier(String nom, String prenom, String tel, Adresse adresse, Service service, Rotation rotation,
+            double salaire) {
+        super(nom, prenom, tel, adresse);
+        this.service = service;
+        this.rotation = rotation;
+        this.salaire = salaire;
+    }
+    
     private Service service;
     private Rotation rotation;
-    private int salaire;
+    private double salaire;
 
-    public int getSalaire() {
+    public double getSalaire() {
         return salaire;
     }
 
@@ -23,4 +31,6 @@ public class Infirmier extends Employe {
     public Rotation getRotation() {
         return rotation;
     }
+
+    
 }

@@ -1,7 +1,8 @@
 package app.database_manager;
 
 public class Adresse {
-    private String numVoie, codePostal;
+    private String numVoie;
+    private int codePostal;
 
     private String commune, nomVoie;
     private String typeVoie;
@@ -11,14 +12,12 @@ public class Adresse {
         return numVoie + ", " + typeVoie + " " + nomVoie + ", " + codePostal + " " + commune;
     }
 
-    public Adresse(String numVoie, String codePostal, String commune, String nomVoie, String typeVoie) {
+    public Adresse(String numVoie, String nomVoie, String commune, int codePostal, String typeVoie) {
         this.numVoie = numVoie;
         this.codePostal = codePostal;
         this.commune = commune;
         this.nomVoie = nomVoie;
         this.typeVoie = typeVoie;
     }
-
-    
 
 }

@@ -9,20 +9,35 @@ import app.database_manager.Specialite;;
  * Docteur
  */
 public class Docteur extends Employe {
-    public Docteur(String nom, String prenom, String tel, Adresse adresse, String specialite) {
+    public Docteur(String nom, String prenom, String tel, Adresse adresse, Specialite specialite) {
         super(nom, prenom, tel, adresse);
-        this.specialite = specialite;
     }
 
-    private String specialite;
-    private ArrayList<Patient> soins = new ArrayList<>();
+    private Specialite specialite;
+    ArrayList<Patient> patientsSoignes = new ArrayList<>();
 
-    public void addSoin(Patient p) {
-        this.soins.add(p);
+    public void addSoin(final Patient p) {
+        patientsSoignes.add(p);
     }
 
     @Override
     public String toString() {
         return "Docteur(Specialité : " + this.specialite + ")";
+    }
+
+    public Specialite getSpecialite() {
+        return specialite;
+    }
+
+    public void setSpecialite(Specialite specialite) {
+        this.specialite = specialite;
+    }
+
+    public ArrayList<Patient> getPatientsSoignes() {
+        return patientsSoignes;
+    }
+
+    public void setSoins(ArrayList<Patient> soins) {
+        this.patientsSoignes = soins;
     }
 }
