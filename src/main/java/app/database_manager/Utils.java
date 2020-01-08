@@ -2,8 +2,6 @@ package app.database_manager;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Member;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -245,7 +243,7 @@ public class Utils {
         // remplir la list result de nom/type attribut
 
         for (Field field : fields) {
-            result.add(Pair.of(field, field.getClass()));
+            result.add(Pair.of(field, field.getType()));
         }
 
         return result;
@@ -288,7 +286,7 @@ public class Utils {
         if (currDepth < maxDepth) {
             for (Pair<Field, Class<?>> pair : extractFieldNames(fromWhere)) {
                 if (isStandardType(pair.getRight())) {
-                    result.add(Pair.of(pair.getLeft(), pair.getRight()));
+                    result.add(Pair.of(pair.getLeft(), pair.getRight().getClass()));
                 } else {
                     List<Pair<Field, Object>> nestedObj = extractNestedFields(pair.getRight(), currDepth + 1, maxDepth);
                     result.add(Pair.of(pair.getLeft(), nestedObj));
