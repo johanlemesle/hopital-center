@@ -113,6 +113,8 @@ public class Utils {
     private static ArrayList<Pair<String, Object>> getRecur(String what, Object fromWhere)
             throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
             SecurityException {
+
+        String condition = "";
         StringBuilder entity = new StringBuilder(10);
         ArrayList<Pair<String, Object>> result = new ArrayList<>();
         for (int i = 0; i < what.length(); i++) {
@@ -130,6 +132,9 @@ public class Utils {
                 case '&':
                     result.add(Pair.of(entity.toString(), getRecur(entity.toString(), fromWhere)));
                     break;
+                case ':':
+                    condition = what.substring(i + 1, what.indexOf(':', i + 1));
+                    break;
                 default:
                     break;
                 }
@@ -145,7 +150,8 @@ public class Utils {
                 for (Object obj : getCollection(getFieldValue(what, object))) {
                     if (obj instanceof Pair<?, ?>) {
                         Pair<?, ?> p = (Pair<?, ?>) obj;
-                        tPairs.add(Pair.of(p.getKey().toString(), p.getValue()));
+                        if (testConditions(p.getValue(), condition))
+                            tPairs.add(Pair.of(p.getKey().toString(), p.getValue()));
                     } else {
                         result.add(Pair.of(what, obj));
                     }

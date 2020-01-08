@@ -3,10 +3,17 @@ package app;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import org.apache.commons.lang3.tuple.Pair;
+
+import app.database_manager.Adresse;
+import app.database_manager.Specialite;
 import app.database_manager.Utils;
+import app.database_manager.entities.Docteur;
+import app.database_manager.entities.Patient;
 import app.graphical_user_interface.Window;
 
 /**
@@ -18,14 +25,15 @@ public class App {
         private static final Hopital hopital;
         private static final Window window = new Window();
         static {
-                Object tmp = null;
+                Hopital tmp = null;
                 try {
-                        tmp = Utils.load(PATH_TO_DB_FILE);
+                        tmp = (Hopital) Utils.load(PATH_TO_DB_FILE);
                 } catch (Exception e1) {
                         e1.printStackTrace();
+                        tmp = new Hopital();
                 }
+                hopital = tmp;
 
-                hopital = (Hopital) tmp;
                 window.addWindowListener(new WindowAdapter() {
                         @Override
                         public void windowClosing(WindowEvent e) {
@@ -54,22 +62,21 @@ public class App {
 
         public static void main(String[] args) {
 
-                // Patient johan = new Patient("Lemesle", "Johan", "06 06 06 06 06",
-                // new Adresse("12", "rue", "de la Bretonne", "78220", "Viroflay"));
-                // Patient redoine = new Patient("Lahdiri", "Redoine", "0708070982",
-                // new Adresse("37", "quai", "de grenelle", "75015", "Juvisy sur Marne"));
-                // Docteur poulain = new Docteur("Poulain", "Philippe", "0102030405",
-                // new Adresse("10", "Boulevard", "du Général Leclerc", "78140", "Vélizy
-                // Villacoublay"),
-                // "Généraliste");
-                // Patient walid = new Patient("jabari", "walid", "0767248491",
-                // new Adresse("3", "rue", "Lazare Carnot", "78220", "Viroflay"));
-                // hopital.insert("patient", walid);
-                // hopital.insert("patient", johan);
-                // hopital.insert("patient", redoine);
-                // hopital.insert("docteur", poulain);
-                // hopital.insert("soin", poulain, redoine);
-                // ArrayList<Pair<String, Object>> obj = Utils
-                // .get("patients{nom&prenom}&docteurs{patientsSoignes{nom&prenom}}", hopital);
+                Patient johan = new Patient("Lemesle", "Johan", "06 06 06 06 06",
+                                new Adresse("12", "rue", "de la Bretonne", 78220, "Viroflay"));
+                Patient redoine = new Patient("Lahdiri", "Redoine", "0708070982",
+                                new Adresse("37", "quai", "de grenelle", 75015, "Juvisy sur Marne"));
+                Docteur poulain = new Docteur("Poulain", "Philippe", "0102030405",
+                                new Adresse("10", "Boulevard", "du Général Leclerc", 78140, "Vélizy Villacoublay"),
+                                Specialite.generaliste);
+                Patient walid = new Patient("jabari", "walid", "0767248491",
+                                new Adresse("3", "rue", "Lazare Carnot", 78220, "Viroflay"));
+                hopital.insert("patient", walid);
+                hopital.insert("patient", johan);
+                hopital.insert("patient", redoine);
+                hopital.insert("docteur", poulain);
+                hopital.insert("soin", poulain, redoine);
+                ArrayList<Pair<String, Object>> obj = Utils
+                                .get("patients{nom&prenom:nom%lid:}&docteurs{patientsSoignes{nom&prenom}}", hopital);
         }
 }
