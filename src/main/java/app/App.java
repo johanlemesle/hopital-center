@@ -14,45 +14,9 @@ import app.graphical_user_interface.Window;
  */
 
 public class App {
-        public static final String PATH_TO_DB_FILE = "database.txt";
-        private static final Hopital hopital;
-        private static final Window window = new Window();
-        static {
-                Object tmp = null;
-                try {
-                        tmp = Utils.load(PATH_TO_DB_FILE);
-                } catch (Exception e1) {
-                        e1.printStackTrace();
-                }
-
-                hopital = (Hopital) tmp;
-                window.addWindowListener(new WindowAdapter() {
-                        @Override
-                        public void windowClosing(WindowEvent e) {
-                                confirmAndExit();
-                        }
-                });
-        }
-
-        private static void confirmAndExit() {
-                int conf = JOptionPane.showConfirmDialog(window, "Enregistrer les modifications avant de quitter?",
-                                "Confirmez", JOptionPane.YES_NO_CANCEL_OPTION);
-                switch (conf) {
-                case JOptionPane.YES_OPTION:
-                        try {
-                                Utils.save(hopital, PATH_TO_DB_FILE);
-                        } catch (IOException e) {
-                                e.printStackTrace();
-                        }
-                case JOptionPane.NO_OPTION:
-                        window.dispose();
-                        System.exit(0);
-                default:
-                        break;
-                }
-        }
 
         public static void main(String[] args) {
+                Hopital h = new Hopital();
 
                 // Patient johan = new Patient("Lemesle", "Johan", "06 06 06 06 06",
                 // new Adresse("12", "rue", "de la Bretonne", "78220", "Viroflay"));
