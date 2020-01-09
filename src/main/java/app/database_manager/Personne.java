@@ -13,10 +13,11 @@ public class Personne {
     protected String nom, prenom, tel;
     protected Adresse adresse;
 
-    public Personne(String nom, String prenom, String tel, Adresse adresse) {
+    public Personne(String nom, String prenom, String tel, Adresse adresse) 
+    {
         this.nom = nom.toUpperCase();
         this.prenom = prenom;
-        this.tel = tel.replace(" ", "");
+        this.tel = tel.replace("","");
         this.adresse = adresse;
         this.id = new EntitiyID(Utils.makeHash(this));
     }

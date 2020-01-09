@@ -15,10 +15,14 @@ public class Docteur extends Employe {
     }
 
     private String specialite;
-    private ArrayList<Patient> soins = new ArrayList<>();
+    private ArrayList<Patient> patientsSoignes = new ArrayList<>();
 
     public void addSoin(Patient p) {
-        this.soins.add(p);
+        this.patientsSoignes.add(p);
+    }
+
+    public ArrayList<Patient> getPatientsSoignes(){
+        return patientsSoignes;
     }
 
     @Override
