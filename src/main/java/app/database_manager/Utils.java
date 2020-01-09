@@ -20,7 +20,6 @@ import java.util.regex.*;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
-
 import app.database_manager.entities.Chambre;
 import app.database_manager.entities.Service;
 
@@ -94,7 +93,8 @@ public class Utils {
             if (Character.isLetter(what.charAt(what.length() - 1))) {
                 what += '&';
             }
-            return getRecur(what, fromWhere);
+
+            return getRecur(what, fromWhere, "");
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
                 | SecurityException | IndexOutOfBoundsException e) {
             e.printStackTrace();
@@ -114,8 +114,9 @@ public class Utils {
      * @throws NoSuchMethodException
      * @throws SecurityException
      */
-    public static ArrayList<Pair<String, Object>> getRecur(String what, Object fromWhere) throws IllegalAccessException,
-            IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+    public static ArrayList<Pair<String, Object>> getRecur(String what, Object fromWhere, String condition)
+            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
+            SecurityException {
 
         // start constructing query from string
         StringBuilder entity = new StringBuilder(10);
@@ -128,6 +129,15 @@ public class Utils {
                 entity.append(ch);
             } else if (entity.length() > 0) {
                 switch (ch) {
+
+                case '&':
+                    // simply get the attribute recursively and add it to the result array
+                    result.add(Pair.of(entity.toString(), getRecur(entity.toString(), fromWhere, condition)));
+                    break;
+                case ':':
+                    int idxMatchingColon = what.indexOf(':', i + 1);
+                    condition = what.substring(i + 1, idxMatchingColon);
+                    what = what.replace(":" + condition + ":", "");
                 case '{':
                     int idxOfMatchingClosingBrace = indexOfMatchingClosingBrace(what, i); // getMatchingBrace
 
@@ -137,13 +147,10 @@ public class Utils {
                      * function : it can be treated as its own query 4. add it to the array
                      */
                     result.add(Pair.of(entity.toString(), get(what.substring(i + 1, idxOfMatchingClosingBrace),
-                            getRecur(entity.toString(), fromWhere))));
+                            getRecur(entity.toString(), fromWhere, condition))));
 
                     i = idxOfMatchingClosingBrace; // update i as what is in the braces has been processed
-                    break;
-                case '&':
-                    // simply get the attribute recursively and add it to the result array
-                    result.add(Pair.of(entity.toString(), getRecur(entity.toString(), fromWhere)));
+                    condition = "";
                     break;
                 default:
                     break;
@@ -165,7 +172,8 @@ public class Utils {
                         Pair<?, ?> p = (Pair<?, ?>) obj;
                         tPairs.add(Pair.of(p.getKey().toString(), p.getValue()));
                     } else {
-                        result.add(Pair.of(obj.getClass().getSimpleName(), obj));
+                        if (testConditions(obj, condition))
+                            result.add(Pair.of(obj.getClass().getSimpleName(), obj));
                     }
                 }
                 if (!tPairs.isEmpty()) {
@@ -243,7 +251,8 @@ public class Utils {
      */
 
     public static boolean testConditions(final Object obj, final String conditions) {
-
+        if (conditions.isEmpty())
+            return true;
         StringBuilder elem = new StringBuilder();
         StringBuilder val = new StringBuilder();
         boolean portal = false;
@@ -312,8 +321,8 @@ public class Utils {
             }
 
         } else if (ob instanceof String) {
-            String newval = val.toString();
-            String newobj = (String) ob;
+            String newval = val.toString().toLowerCase();
+            String newobj = ((String) ob).toLowerCase();
             switch (cond) {
             case '=':
                 if (newobj.equals(newval)) {
