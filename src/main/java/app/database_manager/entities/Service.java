@@ -12,7 +12,8 @@ public class Service {
         return this.id;
     }
 
-    public String getNom() {
+    public String getNom() 
+    {
         return this.nom;
     }
 

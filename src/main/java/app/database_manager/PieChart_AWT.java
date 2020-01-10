@@ -11,10 +11,13 @@ import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
 /*
+
 Idées de graphes : 
-Nb d'hospitalisations par service
+
+Nb d'hospitalisations par service : ok
 Nb de maladie contractée par service ? 
-Salaire par employé ? 
+
+Salaire par infirmier ? 
 Nombre de chambre dans un service ? 
 
 */
@@ -22,7 +25,12 @@ Nombre de chambre dans un service ?
 public class PieChart_AWT extends ApplicationFrame 
 {
    
-   public PieChart_AWT(String title) 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -7145470278665113308L;
+
+    public PieChart_AWT(String title) 
    {
       super(title); 
       setContentPane(createDemoPanel());
@@ -41,7 +49,7 @@ public class PieChart_AWT extends ApplicationFrame
    private static JFreeChart createChart(PieDataset dataset) 
    {
       JFreeChart chart = ChartFactory.createPieChart(      
-         "Hospitalisatoions par service",   // chart title 
+         "Hospitalisations par service",   // chart title 
          dataset,          // data    
          true,             // include legend   
          true, 
@@ -58,10 +66,15 @@ public class PieChart_AWT extends ApplicationFrame
 
    public static void main(String[ ] args) 
    {
-      PieChart_AWT demo = new PieChart_AWT("Hospitalisations par service");  
+      PieChart_AWT demo = new PieChart_AWT("JABARI LEMESLE LAHDIRI");  
       demo.setSize(560,360);    
       RefineryUtilities.centerFrameOnScreen(demo);    
       demo.setVisible(true); 
     }
 
 }
+
+/*
+Généraliser cette fonction en faisant un graphe personnalisé.
+On envoie tout ce qu'on veut en paramètre et ça lance la fonction et ça crée le graphe
+*/

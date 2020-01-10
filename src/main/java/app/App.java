@@ -11,6 +11,7 @@ import app.database_manager.entities.Patient;
 
 /**
  * menu
+ *
  */
 
 public class App {
@@ -27,12 +28,13 @@ public class App {
                                 "Généraliste");
                 Patient walid = new Patient("jabari", "walid", "0767248491",
                                 new Adresse("3", "rue", "Lazare Carnot", "78220", "Viroflay"));
+
                 hopital.insert("patient", walid);
                 hopital.insert("patient", johan);
                 hopital.insert("patient", redoine);
                 hopital.insert("docteur", poulain);
                 hopital.insert("soin", poulain, redoine);
-                
+
                 ArrayList<Pair<String, Object>> resultat = Utils.get("hospitalisations{patient{}&service}", hopital);
                 System.out.println("done");
 
