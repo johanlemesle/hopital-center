@@ -9,6 +9,7 @@ import app.database_manager.EntitiyID;
 import app.database_manager.Utils;
 import app.database_manager.entities.Chambre;
 import app.database_manager.entities.Docteur;
+import app.database_manager.entities.Employe;
 import app.database_manager.entities.Hospitalisation;
 import app.database_manager.entities.Infirmier;
 import app.database_manager.entities.Patient;
@@ -27,7 +28,7 @@ public class Hopital implements Serializable {
     private HashMap<EntitiyID, Infirmier> infirmiers = new HashMap<>();
     private HashMap<EntitiyID, Docteur> docteurs = new HashMap<>();
     private HashMap<EntitiyID, Patient> patients = new HashMap<>();
-
+    private HashMap<EntitiyID, Employe> employes = new HashMap<>();
     // other
     private HashMap<EntitiyID, Service> services = new HashMap<>();
     private HashMap<EntitiyID, Chambre> chambres = new HashMap<>();
@@ -89,7 +90,19 @@ public class Hopital implements Serializable {
         this.hospitalisations.put(h.getPatient().getId(), h);
     }
 
+    public void addEmploye(Employe e) {
+        employes.put(e.getId(), e);
+    }
+
     public void addSoin(Docteur d, Patient p) {
         p.addSoinRecu(d);
+    }
+
+    public HashMap<EntitiyID, Employe> getEmployes() {
+        return employes;
+    }
+
+    public void setEmployes(HashMap<EntitiyID, Employe> employes) {
+        this.employes = employes;
     }
 }

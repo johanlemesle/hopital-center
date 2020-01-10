@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -14,6 +15,7 @@ import javax.swing.JTextField;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import app.database_manager.EntitiyID;
 import app.database_manager.Utils;
 import app.graphical_user_interface.prompts.ListDialog;
 
@@ -65,6 +67,13 @@ public class InputDigestor extends JPanel {
             final JPanel jPanel = new JPanel(new GridLayout(1, 2));
             final JLabel label = new JLabel(pair.getLeft().getName());
             jPanel.add(label);
+            if (pair.getRight().isArray()) {
+
+            } else if (pair.getRight().isAssignableFrom(EntitiyID.class)) {
+
+            } else if (pair.getRight().isAssignableFrom(Map.class)) {
+                
+            }
             jPanel.add(new JTextField());
             contentPane.add(jPanel);
         }
