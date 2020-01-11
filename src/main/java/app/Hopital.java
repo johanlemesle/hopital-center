@@ -90,9 +90,6 @@ public class Hopital implements Serializable {
         this.hospitalisations.put(h.getPatient().getId(), h);
     }
 
-    public void addEmploye(Employe e) {
-        employes.put(e.getId(), e);
-    }
 
     public void addSoin(Docteur d, Patient p) {
         p.addSoinRecu(d);
@@ -103,9 +100,6 @@ public class Hopital implements Serializable {
         employes.put(e.getId(), e);
     }
 
-    public HashMap<EntitiyID, Employe> getEmployes() {
-        return employes;
-    }
 
     public void setEmployes(HashMap<EntitiyID, Employe> employes) {
         this.employes = employes;
