@@ -35,9 +35,9 @@ public class App {
         }
 
         private static void confirmAndExit() {
-                int conf = JOptionPane.showConfirmDialog(window, "Enregistrer les modifications avant de quitter?",
+                int choice = JOptionPane.showConfirmDialog(window, "Enregistrer les modifications avant de quitter?",
                                 "Confirmez", JOptionPane.YES_NO_CANCEL_OPTION);
-                switch (conf) {
+                switch (choice) {
                 case JOptionPane.YES_OPTION:
                         try {
                                 Utils.save(hopital, PATH_TO_DB_FILE);
