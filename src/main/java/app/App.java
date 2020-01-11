@@ -42,12 +42,12 @@ public class App {
                 hopital.insert("patient", redoine);
                 hopital.insert("docteur", poulain);
                 hopital.insert("soin", poulain, redoine);
-                hopital.insert("services",urgence);
-                hopital.insert("services",pediatrie);
+                hopital.insert("service",urgence);
+                hopital.insert("service",pediatrie);
 
- 
+                ArrayList<Pair<String, Object>> resultat = Utils.get("*", hopital);
 
-                ArrayList<Pair<String, Object>> resultat = Utils.get("services{nom}", hopital);
+
                 System.out.println("done");
 
                 
