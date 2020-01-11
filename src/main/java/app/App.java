@@ -89,13 +89,14 @@ public class App {
                                 hopital);
 
                 // Récupérer le nom des services
+                
                 ArrayList<Pair<String, Object>> intermed1 = Utils.get("services{nom}", hopital);
                 ArrayList<Pair<String, Object>> intermed2 = (ArrayList<Pair<String, Object>>) intermed1.get(0).getRight();
                 ArrayList<Pair<String, Object>> servicesName = (ArrayList<Pair<String, Object>>) intermed2.get(0).getRight();
 
                 //Récupérer le nombre d'hospitalisation dans un service
                 
-                ArrayList<Pair<String, Object>> list = Utils.get("hospitalisations{services{nom}}",hopital);
+                ArrayList<Pair<String, Object>> list = Utils.get("hospitalisations{service{nom}}",hopital);
 
         
                 // Données : Nom des services   
