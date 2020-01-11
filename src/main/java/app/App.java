@@ -42,7 +42,6 @@ public class App {
                         try {
                                 Utils.save(hopital, PATH_TO_DB_FILE);
                         } catch (IOException e) {
-                                // TODO Auto-generated catch block
                                 e.printStackTrace();
                         }
                 case JOptionPane.NO_OPTION:

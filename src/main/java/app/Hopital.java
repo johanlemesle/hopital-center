@@ -96,6 +96,19 @@ public class Hopital implements Serializable {
 
     public void addSoin(Docteur d, Patient p) {
         p.addSoinRecu(d);
+        d.addSoin(p);
+    }
+
+    public void addEmploye(Employe e) {
+        employes.put(e.getId(), e);
+    }
+
+    public HashMap<EntitiyID, Employe> getEmployes() {
+        return employes;
+    }
+
+    public void setEmployes(HashMap<EntitiyID, Employe> employes) {
+        this.employes = employes;
     }
 
     public HashMap<EntitiyID, Employe> getEmployes() {

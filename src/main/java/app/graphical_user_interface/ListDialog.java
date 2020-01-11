@@ -1,4 +1,4 @@
-package app.graphical_user_interface.prompts;
+package app.graphical_user_interface;
 
 import javax.swing.*;
 import java.awt.*;

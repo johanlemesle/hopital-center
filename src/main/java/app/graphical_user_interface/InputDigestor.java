@@ -17,7 +17,6 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import app.database_manager.EntitiyID;
 import app.database_manager.Utils;
-import app.graphical_user_interface.prompts.ListDialog;
 
 /**
  * InputDigester
