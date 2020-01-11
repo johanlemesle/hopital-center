@@ -67,14 +67,16 @@ public class Utils {
         return str;
     }
 
-    public static Object extract(String what, Object fromWhere, Object... args) {
+    public static Object extract(String what, Object fromWhere, Object... args) 
+    {
         if (fromWhere instanceof Map<?, ?> || fromWhere instanceof Collection<?>)
             return invokeFunction("get", fromWhere, args);
         else
             return invokeFunction("get" + StringUtils.capitalize(what), fromWhere, args);
     }
 
-    public static Object invokeFunction(String functionName, Object obj, Object... args) {
+    public static Object invokeFunction(String functionName, Object obj, Object... args) 
+    {
         Class<?> paramsTypes[] = new Class[args.length];
         for (int i = 0; i < paramsTypes.length; i++) {
             paramsTypes[i] = args[i].getClass();

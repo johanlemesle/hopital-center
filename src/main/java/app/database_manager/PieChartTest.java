@@ -1,5 +1,7 @@
 package app.database_manager;
 
+import java.util.ArrayList;
+
 import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
@@ -7,6 +9,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
+import org.jfree.data.xml.DatasetTags;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
@@ -22,7 +25,7 @@ Nombre de chambre dans un service ?
 
 */
  
-public class PieChart_AWT extends ApplicationFrame 
+public class PieChartTest extends ApplicationFrame 
 {
    
     /**
@@ -30,13 +33,13 @@ public class PieChart_AWT extends ApplicationFrame
      */
     private static final long serialVersionUID = -7145470278665113308L;
 
-    public PieChart_AWT(String title) //Constructeur 
-   {
-      super(title); 
-      setContentPane(createDemoPanel());
+    public PieChartTest(String title, PieDataset dataset1) // Constructeur
+    {
+        super(title);
+        setContentPane(createDemoPanel(dataset1));
    }
    
-   private static PieDataset createDataset() 
+   public static PieDataset createDataset() 
    {
       DefaultPieDataset dataset = new DefaultPieDataset();
       dataset.setValue("Pediatrie",new Double(20));  
@@ -46,7 +49,7 @@ public class PieChart_AWT extends ApplicationFrame
       return dataset;         
    }
    
-   private static JFreeChart createChart(PieDataset dataset) 
+   public static JFreeChart createChart(PieDataset dataset) 
    {
       JFreeChart chart = ChartFactory.createPieChart(      
         "Hospitalisation par service", // chart title
@@ -58,23 +61,33 @@ public class PieChart_AWT extends ApplicationFrame
       return chart;
    }
    
-   public static JPanel createDemoPanel() 
+   public JPanel createDemoPanel(PieDataset dataset) 
    {
-      JFreeChart chart = createChart(createDataset());  
+      JFreeChart chart = createChart(dataset);  
       return new ChartPanel(chart); 
    }
 
    public static void main(String[ ] args) 
    {
-      PieChart_AWT demo = new PieChart_AWT("JABARI LEMESLE LAHDIRI");
-      demo.setSize(560,360);    
-      RefineryUtilities.centerFrameOnScreen(demo);    
-      demo.setVisible(true); 
+
+    PieDataset dataset1 = new DefaultPieDataset();
+    dataset1 = createDataset();
+    PieChartTest demo = new PieChartTest("JABARI LEMESLE LAHDIRI", dataset1);
+    demo.setSize(560,360);    
+    RefineryUtilities.centerFrameOnScreen(demo);    
+    demo.setVisible(true); 
+
     }
 
-}
-
+    //Construction du tableau de data
 /*
-Généraliser cette fonction en faisant un graphe personnalisé.
-On envoie tout ce qu'on veut en paramètre et ça lance la fonction et ça crée le graphe
+    public static ArrayList<DefaultPieDataset> createDataTab(Array)
+    {
+        ArrayList<DefaultPieDataset> dataTab = new ArrayList<>();
+
+        return dataTab;
+    }
+
 */
+
+}

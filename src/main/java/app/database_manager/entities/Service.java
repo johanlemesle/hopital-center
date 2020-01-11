@@ -3,10 +3,19 @@ package app.database_manager.entities;
 import app.database_manager.EntitiyID;
 
 public class Service {
+
     private EntitiyID id;
     private String nom;
     private int batiment;
     private Docteur directeur;
+
+    public Service(EntitiyID a, String n, int b, Docteur d) 
+    {
+        id = a;
+        nom = n;
+        batiment = b;
+        directeur = d;
+    }
 
     public EntitiyID getId() {
         return this.id;
