@@ -30,26 +30,15 @@ Nombre de chambre dans un service ?
 public class PieChartTest extends ApplicationFrame 
 {
    
-    /**
-     *
-     */
     private static final long serialVersionUID = -7145470278665113308L;
 
     public PieChartTest(String title, PieDataset dataset1) // Constructeur
     {
         super(title);
-        setContentPane(createDemoPanel(dataset1));
-   }
+     setContentPane(createDemoPanel(dataset1));
+     }
    
-   public DefaultPieDataset createDataset() 
-   {
-      DefaultPieDataset dataset = new DefaultPieDataset();    
-    //   dataset.setValue("Pediatrie",new Double(20));  
-    //   dataset.setValue("Urgences",new Double(20));   
-    //   dataset.setValue("Maternite",new Double(100));    
-    //   dataset.setValue("Radiologie",new Double(10));  
-      return dataset;         
-   }
+
    
    public static JFreeChart createChart(PieDataset dataset) 
    {
@@ -73,7 +62,6 @@ public class PieChartTest extends ApplicationFrame
    {
 
     PieDataset dataset1 = new DefaultPieDataset();
-   // dataset1 = createDataset();
     PieChartTest demo = new PieChartTest("JABARI LEMESLE LAHDIRI", dataset1);
     demo.setSize(560,360);    
     RefineryUtilities.centerFrameOnScreen(demo);    
@@ -82,14 +70,24 @@ public class PieChartTest extends ApplicationFrame
     }
 
     //Construction du tableau de data
-/*
-    public static ArrayList<DefaultPieDataset> createDataTab(Array)
-    {
-        ArrayList<DefaultPieDataset> dataTab = new ArrayList<>();
 
-        return dataTab;
-    }
+    // public static ArrayList<DefaultPieDataset> createDataTab(Array)
+    // {
+    //     ArrayList<DefaultPieDataset> dataTab = new ArrayList<>();
 
-*/
+    //     return dataTab;
+    // }
+
+    //    public DefaultPieDataset createDataset() 
+//    {
+//       DefaultPieDataset dataset = new DefaultPieDataset();    
+//        dataset.setValue("Pediatrie",new Double(20));  
+//        dataset.setValue("Urgences",new Double(20));   
+//        dataset.setValue("Maternite",new Double(100));    
+//        dataset.setValue("Radiologie",new Double(10));  
+//       return dataset;         
+//    }
+
+
 
 }
