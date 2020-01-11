@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 
 import org.apache.commons.lang3.reflect.ConstructorUtils;
 
-import app.database_manager.EntityID;
 import app.database_manager.Utils;
 import app.graphical_user_interface.helpers.InputHandler;
 
