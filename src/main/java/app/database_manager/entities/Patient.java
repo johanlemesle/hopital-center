@@ -14,17 +14,8 @@ public class Patient extends Personne {
     }
 
     private String mutuelle;
-    private ArrayList<Docteur> soinsRecus = new ArrayList<>();
-
-    public void addSoinRecu(Docteur d) {
-        soinsRecus.add(d);
-    }
 
     public String getMutuelle() {
         return mutuelle;
-    }
-
-    public ArrayList<Docteur> getSoinsRecus() {
-        return soinsRecus;
     }
 }

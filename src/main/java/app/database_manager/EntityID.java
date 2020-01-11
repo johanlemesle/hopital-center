@@ -3,10 +3,10 @@ package app.database_manager;
 /**
  * EntitiyID
  */
-public class EntitiyID {
+public class EntityID {
     private int id;
 
-    public EntitiyID(int id) {
+    public EntityID(int id) {
         this.id = id;
     }
 
@@ -16,6 +16,11 @@ public class EntitiyID {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString(){
+        return Integer.toString(id);
     }
 
 }

@@ -24,30 +24,9 @@ import app.database_manager.entities.Chambre;
 import app.database_manager.entities.Service;
 
 /**
- * util
+ * utils
  */
 public class Utils {
-
-    /**
-     * Hashes a person object according to nom, prenom, tel fields
-     * 
-     * @param pers person object from which hash will be made
-     * @return hash value for person object
-     */
-    public static int makeHash(Personne pers) {
-        String str = pers.getNom() + pers.getPrenom() + pers.getTel();
-        return str.hashCode();
-    }
-
-    public static int makeHash(Chambre chambre) {
-        String str = Integer.toString(chambre.getBatiment()) + Integer.toString(chambre.getId().value());
-        return str.hashCode();
-    }
-
-    public static int makeHash(Service service) {
-        String str = Integer.toString(service.getBatiment()) + Integer.toString(service.getId().value());
-        return str.hashCode();
-    }
 
     /**
      * removes special characetrs and puts string to lower case
@@ -245,14 +224,13 @@ public class Utils {
         return conditions;
     }
 
-    public static List<Pair<Field, Class<?>>> extractFieldNames(Class<?> fromWhere) {
-        List<Pair<Field, Class<?>>> result = new ArrayList<>();
-        List<Field> fields = getAllFields(new ArrayList<Field>(), fromWhere);
+    public static List<Field> extractFieldNames(Class<?> fromWhere) {
+        List<Field> result = new ArrayList<>();
 
         // remplir la list result de nom/type attribut
 
-        for (Field field : fields) {
-            result.add(Pair.of(field, field.getClass()));
+        for (Field field : getAllFields(new ArrayList<Field>(), fromWhere)) {
+            result.add(field);
         }
 
         return result;
