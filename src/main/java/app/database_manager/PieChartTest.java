@@ -13,6 +13,8 @@ import org.jfree.data.xml.DatasetTags;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
+import app.Hopital;
+
 /*
 
 Idées de graphes : 
@@ -39,10 +41,9 @@ public class PieChartTest extends ApplicationFrame
         setContentPane(createDemoPanel(dataset1));
    }
    
-   public static PieDataset createDataset() 
+   public DefaultPieDataset createDataset() 
    {
-      DefaultPieDataset dataset = new DefaultPieDataset();
-
+      DefaultPieDataset dataset = new DefaultPieDataset();    
     //   dataset.setValue("Pediatrie",new Double(20));  
     //   dataset.setValue("Urgences",new Double(20));   
     //   dataset.setValue("Maternite",new Double(100));    
@@ -72,7 +73,7 @@ public class PieChartTest extends ApplicationFrame
    {
 
     PieDataset dataset1 = new DefaultPieDataset();
-    dataset1 = createDataset();
+   // dataset1 = createDataset();
     PieChartTest demo = new PieChartTest("JABARI LEMESLE LAHDIRI", dataset1);
     demo.setSize(560,360);    
     RefineryUtilities.centerFrameOnScreen(demo);    
