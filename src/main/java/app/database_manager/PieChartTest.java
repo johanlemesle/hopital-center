@@ -42,10 +42,11 @@ public class PieChartTest extends ApplicationFrame
    public static PieDataset createDataset() 
    {
       DefaultPieDataset dataset = new DefaultPieDataset();
-      dataset.setValue("Pediatrie",new Double(20));  
-      dataset.setValue("Urgences",new Double(20));   
-      dataset.setValue("Maternite",new Double(100));    
-      dataset.setValue("Radiologie",new Double(10));  
+      
+    //   dataset.setValue("Pediatrie",new Double(20));  
+    //   dataset.setValue("Urgences",new Double(20));   
+    //   dataset.setValue("Maternite",new Double(100));    
+    //   dataset.setValue("Radiologie",new Double(10));  
       return dataset;         
    }
    

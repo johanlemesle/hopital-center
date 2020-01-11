@@ -34,6 +34,8 @@ public class App {
                                 new Adresse("3", "rue", "Lazare Carnot", "78220", "Viroflay"));
 
                 Service urgence = new Service(new EntitiyID(2),"Urgences",1,poulain);
+                Service pediatrie = new Service(new EntitiyID(1),"Pediatrie",1,poulain);
+
 
                 hopital.insert("patient", walid);
                 hopital.insert("patient", johan);
@@ -41,6 +43,8 @@ public class App {
                 hopital.insert("docteur", poulain);
                 hopital.insert("soin", poulain, redoine);
                 hopital.insert("services",urgence);
+                hopital.insert("services",pediatrie);
+
  
 
                 ArrayList<Pair<String, Object>> resultat = Utils.get("services{nom}", hopital);
