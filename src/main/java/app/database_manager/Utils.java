@@ -20,9 +20,6 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
-import app.database_manager.entities.Chambre;
-import app.database_manager.entities.Service;
-
 /**
  * utils
  */
@@ -206,7 +203,7 @@ public class Utils {
         return conditions;
     }
 
-    public static List<Field> extractFieldNames(Class<?> fromWhere) {
+    public static List<Field> extractFields(Class<?> fromWhere) {
         List<Field> result = new ArrayList<>();
 
         // remplir la list result de nom/type attribut

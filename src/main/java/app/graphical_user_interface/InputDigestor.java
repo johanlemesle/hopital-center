@@ -5,15 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import app.database_manager.Utils;
+import app.graphical_user_interface.helpers.ListDialog;
+import app.graphical_user_interface.input_modes.Adder;
 
 /**
  * InputDigester
@@ -37,52 +34,19 @@ public class InputDigestor extends JPanel implements ActionListener {
     }
 
     public void addMode() {
-        final String possibleValues[] = new String[Adder.entities.length];
         final HashMap<String, Class<?>> possibleVMap = new HashMap<>();
+        final String possibleValues[] = new String[Adder.entities.length];
         int i = 0;
         for (final Class<?> cl : Adder.entities) {
             possibleValues[i] = cl.getSimpleName();
             possibleVMap.put(possibleValues[i], cl);
             i++;
         }
-<<<<<<< HEAD
         adder = new Adder(contentPane,
                 possibleVMap.get(
                         ListDialog.showDialog(this, this, "Selectionnez le type d'entité que vous souhaitez ajouter",
                                 "Selection entité", possibleValues, null, null)));
 
-||||||| merged common ancestors
-        String value = ListDialog.showDialog(this, this, "Selectionnez le type d'entité que vous souhaitez ajouter",
-                "Selection entité", possibleValues, null, null);
-        List<Pair<Field, Class<?>>> fieldsNames = Utils.extractFieldNames(possibleVMap.get(value));
-        contentPane.setLayout(new GridLayout(5, fieldsNames.size() / 5));
-        for (final Pair<Field, Class<?>> pair : fieldsNames) {
-            final JPanel jPanel = new JPanel(new GridLayout(1, 2));
-            final JLabel label = new JLabel(pair.getLeft().getName());
-            jPanel.add(label);
-            jPanel.add(new JTextField());
-            contentPane.add(jPanel);
-        }
-=======
-        String value = ListDialog.showDialog(this, this, "Selectionnez le type d'entité que vous souhaitez ajouter",
-                "Selection entité", possibleValues, null, null);
-        List<Pair<Field, Class<?>>> fieldsNames = Utils.extractFieldNames(possibleVMap.get(value));
-        contentPane.setLayout(new GridLayout(5, fieldsNames.size() / 5));
-        for (final Pair<Field, Class<?>> pair : fieldsNames) {
-            final JPanel jPanel = new JPanel(new GridLayout(1, 2));
-            final JLabel label = new JLabel(pair.getLeft().getName());
-            jPanel.add(label);
-            if (pair.getRight().isArray()) {
-
-            } else if (pair.getRight().isAssignableFrom(EntitiyID.class)) {
-
-            } else if (pair.getRight().isAssignableFrom(Map.class)) {
-                
-            }
-            jPanel.add(new JTextField());
-            contentPane.add(jPanel);
-        }
->>>>>>> d75fcea16b06c7b84fe7dd42b1fda154f2fa59de
     }
 
     public void reset() {
