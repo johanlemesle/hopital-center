@@ -40,10 +40,10 @@ public class App {
                 hopital.insert("patient", redoine);
                 hopital.insert("docteur", poulain);
                 hopital.insert("soin", poulain, redoine);
-                hopital.insert("service",urgence);
+                hopital.insert("services",urgence);
  
 
-                ArrayList<Pair<String, Object>> resultat = Utils.get("service{nom}", hopital);
+                ArrayList<Pair<String, Object>> resultat = Utils.get("services{nom}", hopital);
                 System.out.println("done");
 
                 
