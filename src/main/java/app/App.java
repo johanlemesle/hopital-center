@@ -26,7 +26,8 @@ import app.database_manager.entities.Service;
 
 public class App {
 
-        public static void main(String[] args) {
+        public static void main(String[] args) 
+        {
                 Hopital hopital = new Hopital();
 
                 Patient johan = new Patient("Lemesle", "Johan", "06 06 06 06 06",
@@ -93,9 +94,13 @@ public class App {
                 ArrayList<Pair<String, Object>> servicesName = (ArrayList<Pair<String, Object>>) intermed2.get(0).getRight();
 
                 //Récupérer le nombre d'hospitalisation dans un service
+                
+                ArrayList<Pair<String, Object>> list = Utils.get("hospitalisations{services{nom}}",hopital);
 
+        
                 // Données : Nom des services   
                 DefaultPieDataset dataset = new DefaultPieDataset();
+                
                 for (int i = 0; i < servicesName.size(); i++)
                 {
                         Random r = new Random();
@@ -104,12 +109,6 @@ public class App {
                         dataset.setValue(tst, randomValue);
                 }
 
-                /*
-                 * dataset.setValue("Pediatrie",new Double(20)); dataset.setValue("Urgences",new
-                 * Double(20)); dataset.setValue("Maternite",new Double(100));
-                 * dataset.setValue("Radiologie",new Double(10));
-                 */
-
                 // création de mon chart
                 PieChartTest chart1 = new PieChartTest("JABARI LEMESLE LAHDIRI", dataset);
                 chart1.setSize(560, 360);
@@ -117,9 +116,22 @@ public class App {
                 chart1.setVisible(true);
 
                 System.out.println("done");
+		
+                
 
         }
+
+        public int extractNumberHospitalisation(String nomservice,ArrayList<Pair<String, Object>> list)
+        {
+            int nb = 0;
+
+            for(int i = 0 ; i<list.size() ; i++)
+            {
+                if (nomservice == list.get(0).getRight())
+                nb++;
+            }
+    
+            return nb;
+        }
+        
 }
-// hopital.insert("hospitalisation", new Hospitalisation(walid, new Service(),
-// new , lit))
-// Utils.get("hospitalisations{patient{}&service}", hopital);
