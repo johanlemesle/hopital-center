@@ -27,24 +27,11 @@ public class Hopital implements Serializable {
      */
     private static final long serialVersionUID = 9055425408285489736L;
     // personnes
-<<<<<<< HEAD
     private HashMap<Integer, Infirmier> infirmiers = new HashMap<>();
     private HashMap<Integer, Docteur> docteurs = new HashMap<>();
     private HashMap<Integer, Patient> patients = new HashMap<>();
     private HashMap<Integer, Employe> employes = new HashMap<>();
 
-||||||| merged common ancestors
-    private HashMap<EntitiyID, Infirmier> infirmiers = new HashMap<>();
-    private HashMap<EntitiyID, Docteur> docteurs = new HashMap<>();
-    private HashMap<EntitiyID, Patient> patients = new HashMap<>();
-    private HashMap<EntitiyID, Employe> employes = new HashMap<>();
-
-=======
-    private HashMap<EntitiyID, Infirmier> infirmiers = new HashMap<>();
-    private HashMap<EntitiyID, Docteur> docteurs = new HashMap<>();
-    private HashMap<EntitiyID, Patient> patients = new HashMap<>();
-    private HashMap<EntitiyID, Employe> employes = new HashMap<>();
->>>>>>> d75fcea16b06c7b84fe7dd42b1fda154f2fa59de
     // other
     private List<Soin> soins = new ArrayList<>();
     private HashMap<Integer, Service> services = new HashMap<>();
@@ -101,10 +88,6 @@ public class Hopital implements Serializable {
 
     public void addChambre(Chambre c) {
         this.chambres.put(c.hashCode(), c);
-    }
-
-    public void addHospitalisation(Hospitalisation h) {
-        this.hospitalisations.put(h.getPatient().hashCode(), h);
     }
 
     public void addSoin(Soin s) {

@@ -47,11 +47,9 @@ public class Adder implements ActionListener {
         List<Field> fieldsNames = Utils.extractFieldNames(typeToAdd);
         workingPane.setLayout(new GridLayout(5, fieldsNames.size() / 5));
         for (final Field field : fieldsNames) {
-            if (!field.getType().isAssignableFrom(EntityID.class)) {
-                InputHandler ihHandler = new InputHandler(field);
-                inputHandlers.add(ihHandler);
-                workingPane.add(ihHandler);
-            }
+            InputHandler ihHandler = new InputHandler(field);
+            inputHandlers.add(ihHandler);
+            workingPane.add(ihHandler);
         }
     }
 

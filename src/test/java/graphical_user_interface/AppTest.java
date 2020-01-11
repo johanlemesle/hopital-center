@@ -1,23 +1,15 @@
 package graphical_user_interface;
 
-import java.awt.Component;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
-import javax.swing.JTextField;
-
-import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
 
 import app.Hopital;
 import app.database_manager.Adresse;
-import app.database_manager.EntityID;
 import app.database_manager.Specialite;
 import app.database_manager.Utils;
-import app.database_manager.entities.Chambre;
 import app.database_manager.entities.Docteur;
-import app.database_manager.entities.Infirmier;
 import app.database_manager.entities.Patient;
 import app.database_manager.entities.Service;
 
@@ -54,16 +46,11 @@ public class AppTest {
                 Patient walid = new Patient("jabari", "walid", "0767248491",
                                 new Adresse("3", "rue", "Lazare Carnot", "78220", "Viroflay"));
 
-                Service urgence = new Service(new EntityID(2), "Urgences", 1, poulain);
-                Service pediatrie = new Service(new EntityID(1), "Pediatrie", 1, poulain);
-
                 hopital.insert("patient", walid);
                 hopital.insert("patient", johan);
                 hopital.insert("patient", redoine);
                 hopital.insert("docteur", poulain);
                 hopital.insert("soin", poulain, redoine);
-                hopital.insert("service", urgence);
-                hopital.insert("service", pediatrie);
 
                 ArrayList<Pair<String, Object>> resultat = Utils.get("*", hopital);
 
