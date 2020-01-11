@@ -37,17 +37,7 @@ public class AppTest {
          */
         @Test
         public void test1() {
-                try {
-                        Service s = new Service(null, null, 5, null);
-                        Infirmier i = new Infirmier(null, null, null, null);
-                        Object obj = ConstructorUtils.invokeConstructor(Chambre.class,
-                                        new Object[] { s, i, 1, 1 });
-                        System.out.println("done");
-                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException
-                                | InstantiationException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                }
+
         }
 
         @Test

@@ -1,5 +1,7 @@
 package app.database_manager.entities;
 
+import java.util.List;
+
 import app.database_manager.Adresse;
 import app.database_manager.Specialite;;
 
@@ -12,6 +14,7 @@ public class Docteur extends Employe {
         this.specialite = specialite;
     }
 
+    private List<Service> servicesGeres;
     private Specialite specialite;
 
     // #NUMERO, SPECIALITE

@@ -1,7 +1,5 @@
 package app.database_manager.entities;
 
-import app.database_manager.EntityID;
-
 /**
  * Chambre
  */

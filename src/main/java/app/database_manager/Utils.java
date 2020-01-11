@@ -28,24 +28,6 @@ import app.database_manager.entities.Service;
  */
 public class Utils {
 
-    /**
-     * removes special characetrs and puts string to lower case
-     * 
-     * @param str
-     * @return new string
-     */
-    public static String purge(String str) {
-        str = str.toLowerCase();
-        str = str.replace("é", "e");
-        str = str.replace("è", "e");
-        str = str.replace("ê", "e");
-        str = str.replace("à", "a");
-        str = str.replace("â", "a");
-        str = str.replace("î", "i");
-
-        return str;
-    }
-
     public static Object extract(String what, Object fromWhere, Object... args) {
         if (fromWhere instanceof Map<?, ?> || fromWhere instanceof Collection<?>)
             return invokeFunction("get", fromWhere, args);

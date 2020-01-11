@@ -1,13 +1,12 @@
 package app;
 
-import java.util.List;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
-import app.database_manager.EntityID;
 import app.database_manager.Utils;
 import app.database_manager.entities.Chambre;
 import app.database_manager.entities.Docteur;
@@ -28,71 +27,71 @@ public class Hopital implements Serializable {
      */
     private static final long serialVersionUID = 9055425408285489736L;
     // personnes
-    private HashMap<EntityID, Infirmier> infirmiers = new HashMap<>();
-    private HashMap<EntityID, Docteur> docteurs = new HashMap<>();
-    private HashMap<EntityID, Patient> patients = new HashMap<>();
-    private HashMap<EntityID, Employe> employes = new HashMap<>();
+    private HashMap<Integer, Infirmier> infirmiers = new HashMap<>();
+    private HashMap<Integer, Docteur> docteurs = new HashMap<>();
+    private HashMap<Integer, Patient> patients = new HashMap<>();
+    private HashMap<Integer, Employe> employes = new HashMap<>();
 
     // other
     private List<Soin> soins = new ArrayList<>();
-    private HashMap<EntityID, Service> services = new HashMap<>();
-    private HashMap<EntityID, Chambre> chambres = new HashMap<>();
-    private HashMap<EntityID, Hospitalisation> hospitalisations = new HashMap<>();
+    private HashMap<Integer, Service> services = new HashMap<>();
+    private HashMap<Integer, Chambre> chambres = new HashMap<>();
+    private HashMap<Integer, Hospitalisation> hospitalisations = new HashMap<>();
 
     public void insert(String what, Object... args) {
         Utils.invokeFunction("add" + StringUtils.capitalize(what), this, args);
     }
 
-    public HashMap<EntityID, Infirmier> getInfirmiers() {
+    public HashMap<Integer, Infirmier> getInfirmiers() {
         return infirmiers;
     }
 
-    public HashMap<EntityID, Docteur> getDocteurs() {
+    public HashMap<Integer, Docteur> getDocteurs() {
         return docteurs;
     }
 
-    public HashMap<EntityID, Patient> getPatients() {
+    public HashMap<Integer, Patient> getPatients() {
         return patients;
     }
 
-    public HashMap<EntityID, Service> getServices() {
+    public HashMap<Integer, Service> getServices() {
         return services;
     }
 
-    public HashMap<EntityID, Chambre> getChambres() {
+    public HashMap<Integer, Chambre> getChambres() {
         return chambres;
     }
 
-    public HashMap<EntityID, Hospitalisation> getHospitalisations() {
+    public HashMap<Integer, Hospitalisation> getHospitalisations() {
         return hospitalisations;
     }
 
     public void addPatient(Patient p) {
-        this.patients.put(p.getId(), p);
+        this.patients.put(p.hashCode(), p);
     }
 
     public void addInfirmier(Infirmier i) {
-        this.infirmiers.put(i.getId(), i);
+        this.infirmiers.put(i.hashCode(), i);
     }
 
     public void addDocteur(Docteur d) {
-        this.docteurs.put(d.getId(), d);
+        this.docteurs.put(d.hashCode(), d);
     }
 
     public void updatePatient(Patient p) {
-        this.patients.put(p.getId(), p);
+        this.patients.put(p.hashCode(), p);
     }
 
     public void addService(Service s) {
-        this.services.put(s.getId(), s);
+        this.services.put(s.hashCode(), s);
     }
 
     public void addChambre(Chambre c) {
-        this.chambres.put(c.getId(), c);
+        this.chambres.put(c.hashCode(), c);
     }
 
     public void addHospitalisation(Hospitalisation h) {
-        this.hospitalisations.put(h.getPatient().getId(), h);
+        this.hospitalisations.put(h.getPatient().hashCode(), h);
     }
 
     public void addSoin(Soin s) {
@@ -100,14 +99,14 @@ public class Hopital implements Serializable {
     }
 
     public void addEmploye(Employe e) {
-        employes.put(e.getId(), e);
+        employes.put(e.hashCode(), e);
     }
 
-    public HashMap<EntityID, Employe> getEmployes() {
+    public HashMap<Integer, Employe> getEmployes() {
         return employes;
     }
 
-    public void setEmployes(HashMap<EntityID, Employe> employes) {
+    public void setEmployes(HashMap<Integer, Employe> employes) {
         this.employes = employes;
     }
 }
