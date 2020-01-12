@@ -3,17 +3,10 @@ package app;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import app.database_manager.Adresse;
-import app.database_manager.Specialite;
 import app.database_manager.Utils;
-import app.database_manager.entities.Docteur;
-import app.database_manager.entities.Patient;
 import app.graphical_user_interface.Window;
 
 /**
@@ -23,7 +16,7 @@ import app.graphical_user_interface.Window;
 public class App {
         public static final String PATH_TO_DB_FILE = "database.txt";
         public static final Hopital hopital;
-        private static final Window window = new Window();
+        public static final Window window = new Window();
         static {
                 Hopital tmp = null;
                 try {
@@ -62,6 +55,5 @@ public class App {
 
         public static void main(String[] args) {
 
-                
         }
 }

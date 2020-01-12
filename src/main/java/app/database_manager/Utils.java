@@ -10,25 +10,21 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Enumeration;
-import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.reflect.TypeUtils;
-import org.apache.commons.lang3.reflect.FieldUtils;
-import org.apache.commons.lang3.reflect.TypeLiteral;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.tuple.Pair;
-import app.database_manager.entities.Chambre;
-import app.database_manager.entities.Service;
+
 
 /**
  * utils
@@ -39,7 +35,13 @@ public class Utils {
         if (fromWhere instanceof Map<?, ?> || fromWhere instanceof Collection<?>)
             return invokeFunction("get", fromWhere, args);
         else
-            return invokeFunction("get" + StringUtils.capitalize(what), fromWhere, args);
+            try {
+                return FieldUtils.readField(fromWhere, what, true);
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                return invokeFunction("get" + StringUtils.capitalize(what), fromWhere);
+            }
     }
 
     public static Object invokeFunction(final String functionName, final Object obj, final Object... args) {
@@ -170,12 +172,12 @@ public class Utils {
         return idxOfMatchingClosingBrace;
     }
 
-    public static List<Field> getAllFields(final List<Field> fields, final Class<?> type) {
-        fields.addAll(Arrays.asList(type.getDeclaredFields()));
+    public static List<Field> getAllFields(List<Field> fields, Class<?> type) {
 
         if (type.getSuperclass() != null) {
             getAllFields(fields, type.getSuperclass());
         }
+        fields.addAll(Arrays.asList(type.getDeclaredFields()));
 
         return fields;
     }
@@ -313,11 +315,8 @@ public class Utils {
         return matchCond;
     }
 
-    public static List<Field> extractFieldNames(Class<?> fromWhere) {
+    public static List<Field> extractFields(Class<?> fromWhere) {
         List<Field> result = new ArrayList<>();
-
-        // remplir la list result de nom/type attribut
-
         for (Field field : getAllFields(new ArrayList<Field>(), fromWhere)) {
             result.add(field);
         }
@@ -325,53 +324,9 @@ public class Utils {
         return result;
     }
 
-    public static Class<?> getTypeFromMap(Field f) {
-        Class<?> c;
-        if (f.getType().isAssignableFrom(HashMap.class)) {
-            ParameterizedType pt = (ParameterizedType) f.getGenericType();
-            c = (Class<?>) pt.getActualTypeArguments()[1];
-        } else {
-            c = f.getType();
-        }
-        return c;
-    }
-
-    // fonction qui prend en parametre un string en camel case et le retourne
-    // normalisé
-    // ex : "jeSuisPasBlond" devient "je suis pas blond"
-    public String normalizeCamelCase(final String str) {
-        final String result = "";
-
-        // a coder ..
-        return result;
-    }
-    // ========================================================================\\
-    // HARD:
-
-    // fonction qui prend en parametre un objet et qui retourne ses attributs et les
-    // attributs emboités des objets à l'intérieur
-    // on s'arrête quand on arrive à des types qui ne sont pas définits dans le
-    // modèle objet
-    // la fonction retourne une pair (attribut:type)
-
-    // exemple : extractNestedFields(Chambre.class) retourne :
-    // Chambre:[(id:int),(service:[(id:int),(nom:String),(batiment:int),(directeur:[(nom:String),(prenom:String)])])]
-
-    // tip #1 : le prototype marche car Object peut lui meme etre une
-    // List<Pair<Object,Class<?>>. mais change le à ta maniere
-    // tip #2 : partir sur une implementation recursive
-    // tip #3 : attention, pour l'implementation recursive, il y a des dependances
-    // cycliques : un Patient a Docteur comme attribut, et un docteur a un patient
-    // comme attribut. je te conseil d'ajouter une variable 'maxDepth' qui lui dira
-    // de s'arreter quand il atteint la profondeur maximale de l'arbre
-    // tip #4 : attention, parfois les attributs sont des List, ArrayList, ou
-    // HashMap, auquel cas il faut choper le type qui constitue la
-    // List/ArrayList/Map(si t'as une List<Patient>, il faut choper 'Patient')
-
-    public static List<Pair<Object, Class<?>>> extractNestedFields(final Class<?> fromWhere) {
-        final List<Pair<Object, Class<?>>> result = new ArrayList<>();
-        // a coder ..
-        return result;
+    public static String normalizeCamelCase(String str) {
+        return StringUtils.capitalize(str.replaceAll(String.format("%s|%s|%s", "(?<=[A-Z])(?=[A-Z][a-z])",
+                "(?<=[^A-Z])(?=[A-Z])", "(?<=[A-Za-z])(?=[^A-Za-z])"), " "));
     }
 
     /**
@@ -450,6 +405,17 @@ public class Utils {
         return obj;
     }
 
+    public static Class<?> getTypeFromMap(Field f) {
+        Class<?> c;
+        if (f.getType().isAssignableFrom(HashMap.class)) {
+            ParameterizedType pt = (ParameterizedType) f.getGenericType();
+            c = (Class<?>) pt.getActualTypeArguments()[1];
+        } else {
+            c = f.getType();
+        }
+        return c;
+    }
+
     public static boolean isStandardType(Class<?> fromWhere) {
 
         if (fromWhere.getCanonicalName().startsWith("java.") || fromWhere.getCanonicalName().startsWith("javax.")
@@ -460,5 +426,4 @@ public class Utils {
         else
             return false;
     }
-
 }

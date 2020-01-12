@@ -1,23 +1,22 @@
 package app.database_manager;
 
 public class Adresse {
-    private String numVoie;
-    private int codePostal;
+    private final String numVoie, codePostal;
 
-    private String commune, nomVoie;
-    private String typeVoie;
+    private final String commune, nomVoie;
+    private final String typeVoie;
 
     @Override
     public String toString() {
         return numVoie + ", " + typeVoie + " " + nomVoie + ", " + codePostal + " " + commune;
     }
 
-    public Adresse(String numVoie, String nomVoie, String commune, int codePostal, String typeVoie) {
+    public Adresse(final String numVoie, final String codePostal, final String commune, final String nomVoie,
+            final String typeVoie) {
         this.numVoie = numVoie;
         this.codePostal = codePostal;
         this.commune = commune;
         this.nomVoie = nomVoie;
         this.typeVoie = typeVoie;
     }
-
 }

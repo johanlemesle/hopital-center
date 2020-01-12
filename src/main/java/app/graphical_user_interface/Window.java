@@ -10,12 +10,12 @@ public class Window extends JFrame {
     /**
      *
      */
+    public ActionMode ACTION_MODE;
+
     private static final long serialVersionUID = -2641871501940426386L;
     private ActionSelector selection;
     private InputDigestor saisie;
     private ResultDisplayer resultats;
-
-    public ActionMode ACTION_MODE;
 
     public Window() {
         super("Gestionnaire de centre hospitallier");
@@ -41,15 +41,13 @@ public class Window extends JFrame {
     }
 
     public void toggleMode(String mode) {
-        saisie.reset();
         for (ActionMode actionMode : ActionMode.values()) {
-            if(actionMode.toString().equals(mode)){
-                ACTION_MODE=actionMode;
+            if (actionMode.toString().equals(mode)) {
+                ACTION_MODE = actionMode;
                 break;
             }
         }
         updateInputPane();
-        saisie.refresh();
     }
 
     public void updateInputPane() {
