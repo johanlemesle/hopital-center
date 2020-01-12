@@ -13,14 +13,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.apache.commons.lang3.reflect.TypeUtils;
+
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
+import app.database_manager.EntityID;
 import app.database_manager.Utils;
 import app.graphical_user_interface.helpers.HintTextField;
 
@@ -33,7 +38,7 @@ public class Adder {
      *
      */
     private Object theEntity = null;
-    JTextField idTextField = new JTextField();
+    private JTextField idTextField = new JTextField();
 
     private List<Pair<Class<?>, Component>> inputFields = new ArrayList<>();
     private Class<?> typeToAdd;
@@ -56,8 +61,8 @@ public class Adder {
 
         this.typeToAdd = typeToAdd;
         workingPane.setBorder(BorderFactory.createTitledBorder("Saisie de : " + typeToAdd.getSimpleName()));
-        List<Field> fieldsNames = Utils.extractFields(typeToAdd);
-        workingPane.setLayout(new GridLayout(fieldsNames.size(), 1));
+        List<Field> fields = Utils.extractFields(typeToAdd);
+        workingPane.setLayout(new BoxLayout(workingPane, BoxLayout.Y_AXIS));
 
         {
             idTextField.setEditable(false);
@@ -69,7 +74,9 @@ public class Adder {
             workingPane.add(jPanel);
         }
 
-        for (final Field field : fieldsNames) {
+        for (final Field field : fields) {
+            if (field.getType().isAssignableFrom(EntityID.class))
+                continue;
             Component inputField = null;
             if (field.getType().isEnum()) {
                 JComboBox<Object> jcb = new JComboBox<>();
@@ -77,8 +84,10 @@ public class Adder {
                     jcb.addItem(item);
                 }
                 inputField = jcb;
+            } else if (field.getType().isArray()) {
+                Object obj = TypeUtils.getArrayComponentType(field.getType());
             } else {
-                inputField = new HintTextField("Saisir " + field.getName());
+                inputField = new HintTextField("Saisir " + Utils.normalizeCamelCase(field.getName()));
                 inputField.addKeyListener(new KeyListener() {
 
                     @Override
@@ -88,21 +97,17 @@ public class Adder {
                             idTextField.setText(String.valueOf(theEntity.hashCode()));
                         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException
                                 | InstantiationException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
-
                     }
 
                     @Override
                     public void keyReleased(KeyEvent arg0) {
-                        // TODO Auto-generated method stub
 
                     }
 
                     @Override
                     public void keyPressed(KeyEvent arg0) {
-                        // TODO Auto-generated method stub
 
                     }
                 });
@@ -111,7 +116,7 @@ public class Adder {
                 inputFields.add(Pair.of(field.getType(), inputField));
 
                 JPanel jPanel = new JPanel(new GridLayout(1, 2));
-                jPanel.add(new JLabel(field.getName()));
+                jPanel.add(new JLabel(Utils.normalizeCamelCase(field.getName())));
                 jPanel.add(inputField);
 
                 workingPane.add(jPanel);
@@ -123,14 +128,21 @@ public class Adder {
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Object args[] = new Object[inputFields.size()];
         for (int i = 0; i < args.length; i++) {
-            Pair<Class<?>, Component> pair = inputFields.get(i);
-            if (pair.getLeft().isEnum()) {
-                args[i] = String.valueOf(((JComboBox<?>) pair.getRight()).getSelectedItem());
-            } else if (pair.getLeft().isAssignableFrom(String.class)) {
-                args[i] = ((JTextField) pair.getRight()).getText();
-            } else if (pair.getLeft().isAssignableFrom(Integer.class)) {
-                args[i] = Integer.parseInt(((JTextField) pair.getRight()).getText());
+            try {
+                Pair<Class<?>, Component> pair = inputFields.get(i);
+                if (pair.getLeft().isEnum()) {
+                    args[i] = ((JComboBox<?>) pair.getRight()).getSelectedItem();
+                } else if (pair.getLeft().isAssignableFrom(String.class)) {
+                    args[i] = ((JTextField) pair.getRight()).getText();
+                } else if (pair.getLeft().isAssignableFrom(Integer.class)) {
+                    args[i] = NumberUtils.createInteger(((JTextField) pair.getRight()).getText());
+                } else if (pair.getLeft().isAssignableFrom(Byte.class)) {
+                    args[i] = Byte.parseByte(((JTextField) pair.getRight()).getText());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+
         }
         return ConstructorUtils.invokeConstructor(typeToAdd, args);
     }

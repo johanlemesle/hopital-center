@@ -9,6 +9,7 @@ import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import app.App;
 import app.graphical_user_interface.helpers.ListDialog;
 import app.graphical_user_interface.input_modes.Adder;
 
@@ -42,34 +43,30 @@ public class InputDigestor extends JPanel implements ActionListener {
             possibleVMap.put(possibleValues[i], cl);
             i++;
         }
-        adder = new Adder(contentPane,
-                possibleVMap.get(
-                        ListDialog.showDialog(this, this, "Selectionnez le type d'entité que vous souhaitez ajouter",
-                                "Selection entité", possibleValues, null, null)));
+        String input = ListDialog.showDialog(this, this, "Selectionnez le type d'entité que vous souhaitez ajouter",
+                "Selection entité", possibleValues, null, null);
+        if (input != null) {
+            contentPane.removeAll();
+            contentPane.revalidate();
+            adder = new Adder(contentPane, possibleVMap.get(input));
+            contentPane.repaint();
+        }
 
-    }
-
-    public void reset() {
-        adder = null;
-        contentPane.removeAll();
-        contentPane.revalidate();
-    }
-
-    public void refresh() {
-        contentPane.revalidate();
-        contentPane.repaint();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (adder != null) {
+        switch (App.window.ACTION_MODE) {
+        case ADD_MODE:
             try {
                 adder.buildEntity();
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException
                     | InstantiationException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
+            break;
+        default:
+            break;
         }
     }
 }

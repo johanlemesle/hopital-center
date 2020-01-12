@@ -9,7 +9,7 @@ public class Chambre {
     private Integer noChambre;
     private Service service;
     private Infirmier surveillant;
-    private byte nbLits;
+    private Byte nbLits;
 
     // NO_CHAMBRE, #CODE_SERVICE, SURVEILLANT, NB_LITS
     private HashMap<Integer, Hospitalisation> hospitalisations;
@@ -65,7 +65,7 @@ public class Chambre {
         this.hospitalisations.put(h.hashCode(), h);
     }
 
-    public Chambre(int noChambre, Service service, Infirmier surveillant, byte nbLits,
+    public Chambre(Integer noChambre, Service service, Infirmier surveillant, Byte nbLits,
             HashMap<Integer, Hospitalisation> hospitalisations) {
         this.noChambre = noChambre;
         this.service = service;
@@ -73,7 +73,9 @@ public class Chambre {
         this.nbLits = nbLits;
         this.hospitalisations = hospitalisations;
 
-        this.service.addChambre(this);
-        this.surveillant.addChambre(this);
+        if (this.service != null)
+            this.service.addChambre(this);
+        if (this.surveillant != null)
+            this.surveillant.addChambre(this);
     }
 }

@@ -6,10 +6,6 @@ import app.database_manager.Adresse;
 import app.database_manager.Rotation;
 
 public class Infirmier extends Employe {
-    public Infirmier(String nom, String prenom, String tel, Adresse adresse) {
-        super(nom, prenom, tel, adresse);
-    }
-
     private Service service;
     private Rotation rotation;
     private Integer salaire;
@@ -66,6 +62,15 @@ public class Infirmier extends Employe {
 
         this.service.addInfirmier(this);
 
+    }
+
+    public Infirmier(String nom, String prenom, String tel, Adresse adresse, Service service, Rotation rotation,
+            Integer salaire, HashMap<Integer, Chambre> chambresSurveillees) {
+        super(nom, prenom, tel, adresse);
+        this.service = service;
+        this.rotation = rotation;
+        this.salaire = salaire;
+        this.chambresSurveillees = chambresSurveillees;
     }
 
 }
