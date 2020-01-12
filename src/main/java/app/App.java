@@ -139,29 +139,33 @@ public class App {
 
                 // Cette ligne affiche le nom du service de l'hospitalisation numéro 1 get(0)
                 System.out.println(interm4.get(0).getRight());
+                System.out.println(interm4.get(1).getRight());
 
                 // Données : Nom des services
                 DefaultPieDataset dataset = new DefaultPieDataset();
+
                 for (int i = 0; i < servicesName.size(); i++) {
                         Random r = new Random();
                         double randomValue = 2 + (10 - 2) * r.nextDouble();
                         String tst = servicesName.get(i).getRight().toString();
-                        dataset.setValue(tst, randomValue);
+
+                       // dataset.setValue(tst, randomValue);
+                       dataset.setValue(tst, extractNumberHospitalisation(tst, interm4));
                 }
+
                 // création de mon chart
                 PieChartTest chart1 = new PieChartTest("JABARI LEMESLE LAHDIRI", dataset);
                 chart1.setSize(560, 360);
                 RefineryUtilities.centerFrameOnScreen(chart1);
                 chart1.setVisible(true);
                 System.out.println("done");
-
         }
 
-        public int extractNumberHospitalisation(String nomservice, ArrayList<Pair<String, Object>> list) {
+        public static int extractNumberHospitalisation(String nomservice, ArrayList<Pair<String, Object>> list) {
                 int nb = 0;
 
                 for (int i = 0; i < list.size(); i++) {
-                        if (nomservice == list.get(0).getRight())
+                        if (nomservice == list.get(i).getRight())
                                 nb++;
                 }
 
