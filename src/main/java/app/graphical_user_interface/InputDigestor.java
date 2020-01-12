@@ -3,14 +3,22 @@ package app.graphical_user_interface;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
+import app.Hopital;
+import app.database_manager.Utils;
 import app.graphical_user_interface.helpers.ListDialog;
+import app.graphical_user_interface.helpers.Toto;
 import app.graphical_user_interface.input_modes.Adder;
+import app.graphical_user_interface.input_modes.QueryMode;
 
 /**
  * InputDigester
@@ -25,6 +33,7 @@ public class InputDigestor extends JPanel implements ActionListener {
     private final JButton executeButton = new JButton("Executer");
 
     private Adder adder;
+    private QueryMode query;
 
     public InputDigestor() {
         super(new BorderLayout());
@@ -49,8 +58,24 @@ public class InputDigestor extends JPanel implements ActionListener {
 
     }
 
+    public void queryMode() {
+        // query = new QueryMode(contentPane);
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        for (Field field : Utils.extractFieldNames(Hopital.class)) {
+            Class<?> cls;
+            if (field.getType().isAssignableFrom(HashMap.class)) {
+                ParameterizedType pt = (ParameterizedType) field.getGenericType();
+                cls = (Class<?>) pt.getActualTypeArguments()[1];
+            } else {
+                cls = field.getType();
+            }
+            contentPane.add(new Toto(new JCheckBox(), cls, field.getName()));
+        }
+    }
+
     public void reset() {
         adder = null;
+        query = null;
         contentPane.removeAll();
         contentPane.revalidate();
     }

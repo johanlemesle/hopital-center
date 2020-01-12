@@ -62,6 +62,7 @@ public class Window extends JFrame {
         case UPDATE_MODE:
             break;
         case QUERY_MODE:
+            saisie.queryMode();
             break;
         default:
             break;

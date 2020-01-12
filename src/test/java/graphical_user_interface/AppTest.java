@@ -1,6 +1,7 @@
 package graphical_user_interface;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
@@ -29,7 +30,8 @@ public class AppTest {
          */
         @Test
         public void test1() {
-
+                HashMap<String, Hopital> hm = new HashMap<>();
+                Utils.extractFieldNames(Hopital.class);
         }
 
         @Test
