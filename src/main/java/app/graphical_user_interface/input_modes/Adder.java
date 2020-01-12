@@ -2,16 +2,20 @@ package app.graphical_user_interface.input_modes;
 
 import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,17 +28,21 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import app.database_manager.EntityID;
 import app.database_manager.Utils;
+import app.graphical_user_interface.helpers.EntityInputWindow;
+import app.graphical_user_interface.helpers.HashMapInput;
 import app.graphical_user_interface.helpers.HintTextField;
 import app.graphical_user_interface.helpers.JTextFieldLimit;
 
 /**
  * Add
  */
-public class Adder {
+public class Adder implements ActionListener {
 
     /**
      *
      */
+
+    private EntityInputWindow entityInputWindow = null;
     private Object theEntity = null;
     private JTextField idTextField = new JTextField();
 
@@ -82,10 +90,13 @@ public class Adder {
                     jcb.addItem(item);
                 }
                 inputField = jcb;
-            } else if (field.getType().isArray()) {
-                Object obj = TypeUtils.getArrayComponentType(field.getType());
             } else if (field.getType().isAssignableFrom(Character.class)) {
-                JTextFieldLimit jtx = new JTextFieldLimit(1);
+                inputField = new JTextFieldLimit(1);
+            } else if (!Utils.isStandardType(field.getType())) {
+                JButton button = new JButton("saisie de " + field.getType().getSimpleName());
+                button.addActionListener(this);
+                inputField = button;
+                entityInputWindow = new EntityInputWindow(field.getType(), workingPane);
             } else {
                 inputField = new HintTextField("Saisir " + Utils.normalizeCamelCase(field.getName()));
             }
@@ -150,6 +161,12 @@ public class Adder {
 
         }
         return ConstructorUtils.invokeConstructor(typeToAdd, args);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        entityInputWindow.setVisible(true);
+        theEntity = entityInputWindow.getEntity();
     }
 
 }

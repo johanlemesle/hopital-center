@@ -9,11 +9,13 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -299,4 +301,25 @@ public class Utils {
         return obj;
     }
 
+    public static Class<?> getTypeFromMap(Field f) {
+        Class<?> c;
+        if (f.getType().isAssignableFrom(HashMap.class)) {
+            ParameterizedType pt = (ParameterizedType) f.getGenericType();
+            c = (Class<?>) pt.getActualTypeArguments()[1];
+        } else {
+            c = f.getType();
+        }
+        return c;
+    }
+
+    public static boolean isStandardType(Class<?> fromWhere) {
+
+        if (fromWhere.getCanonicalName().startsWith("java.") || fromWhere.getCanonicalName().startsWith("javax.")
+                || fromWhere.getCanonicalName().startsWith("org.")) {
+            return true;
+        }
+
+        else
+            return false;
+    }
 }
