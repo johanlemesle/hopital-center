@@ -15,7 +15,7 @@ import app.graphical_user_interface.Window;
 
 public class App {
         public static final String PATH_TO_DB_FILE = "database.txt";
-        private static final Hopital hopital;
+        public static final Hopital hopital;
         private static final Window window = new Window();
         static {
                 Object tmp = null;

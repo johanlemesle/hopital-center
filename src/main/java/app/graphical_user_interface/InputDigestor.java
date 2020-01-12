@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
+import app.App;
 import app.Hopital;
 import app.database_manager.Utils;
 import app.graphical_user_interface.helpers.ListDialog;
@@ -59,18 +60,8 @@ public class InputDigestor extends JPanel implements ActionListener {
     }
 
     public void queryMode() {
-        // query = new QueryMode(contentPane);
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        for (Field field : Utils.extractFieldNames(Hopital.class)) {
-            Class<?> cls;
-            if (field.getType().isAssignableFrom(HashMap.class)) {
-                ParameterizedType pt = (ParameterizedType) field.getGenericType();
-                cls = (Class<?>) pt.getActualTypeArguments()[1];
-            } else {
-                cls = field.getType();
-            }
-            contentPane.add(new Toto(new JCheckBox(), cls, field.getName()));
-        }
+        query = new QueryMode(contentPane);
+
     }
 
     public void reset() {
@@ -95,6 +86,10 @@ public class InputDigestor extends JPanel implements ActionListener {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
+        } else if (query != null) {
+            String str = query.parse();
+           // Utils.get(str, App.hopital);
+            System.out.println("la requete nsm : " + str);
         }
     }
 }

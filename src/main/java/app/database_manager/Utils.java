@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Enumeration;
+import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -224,6 +225,17 @@ public class Utils {
         return result;
     }
 
+    public static Class<?> getTypeFromMap(Field f) {
+        Class<?> c;
+        if (f.getType().isAssignableFrom(HashMap.class)) {
+            ParameterizedType pt = (ParameterizedType) f.getGenericType();
+            c = (Class<?>) pt.getActualTypeArguments()[1];
+        } else {
+            c = f.getType();
+        }
+        return c;
+    }
+
     // fonction qui prend en parametre un string en camel case et le retourne
     // normalisé
     // ex : "jeSuisPasBlond" devient "je suis pas blond"
@@ -335,6 +347,17 @@ public class Utils {
         Object obj = ois.readObject();
         ois.close();
         return obj;
+    }
+
+    public static boolean isStandardType(Class<?> fromWhere) {
+
+        if (fromWhere.getCanonicalName().startsWith("java.") || fromWhere.getCanonicalName().startsWith("javax.")
+                || fromWhere.getCanonicalName().startsWith("org.")) {
+            return true;
+        }
+
+        else
+            return false;
     }
 
 }
