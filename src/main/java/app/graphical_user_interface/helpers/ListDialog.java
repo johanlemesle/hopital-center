@@ -1,4 +1,4 @@
-package app.graphical_user_interface;
+package app.graphical_user_interface.helpers;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +21,8 @@ import java.awt.event.*;
  */
 public class ListDialog extends JDialog implements ActionListener {
     /**
-     *
+     * source :
+     * https://docs.oracle.com/javase/tutorial/displayCode.html?code=https://docs.oracle.com/javase/tutorial/uiswing/examples/components/ListDialogRunnerProject/src/components/ListDialog.java
      */
     private static final long serialVersionUID = 2366214576774107990L;
     private static ListDialog dialog;
@@ -149,6 +150,7 @@ public class ListDialog extends JDialog implements ActionListener {
     }
 
     // Handle clicks on the Set and Cancel buttons.
+    @Override
     public void actionPerformed(ActionEvent e) {
         if ("Set".equals(e.getActionCommand())) {
             ListDialog.value = (String) (list.getSelectedValue());

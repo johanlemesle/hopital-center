@@ -1,6 +1,6 @@
 package app.database_manager.entities;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import app.database_manager.Adresse;
 import app.database_manager.Specialite;;
@@ -13,31 +13,8 @@ public class Docteur extends Employe {
         super(nom, prenom, tel, adresse);
     }
 
+    private List<Service> servicesGeres;
     private Specialite specialite;
-    ArrayList<Patient> patientsSoignes = new ArrayList<>();
 
-    public void addSoin(final Patient p) {
-        patientsSoignes.add(p);
-    }
-
-    @Override
-    public String toString() {
-        return "Docteur(Specialité : " + this.specialite + ")";
-    }
-
-    public Specialite getSpecialite() {
-        return specialite;
-    }
-
-    public void setSpecialite(Specialite specialite) {
-        this.specialite = specialite;
-    }
-
-    public ArrayList<Patient> getPatientsSoignes() {
-        return patientsSoignes;
-    }
-
-    public void setSoins(ArrayList<Patient> soins) {
-        this.patientsSoignes = soins;
-    }
+    // #NUMERO, SPECIALITE
 }

@@ -9,65 +9,33 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Enumeration;
+import java.lang.reflect.ParameterizedType;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.*;
 
+import org.apache.commons.lang3.reflect.TypeUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
+import org.apache.commons.lang3.reflect.TypeLiteral;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import app.database_manager.entities.Chambre;
 import app.database_manager.entities.Service;
 
 /**
- * util
+ * utils
  */
 public class Utils {
 
-    /**
-     * Hashes a person object according to nom, prenom, tel fields
-     * 
-     * @param pers person object from which hash will be made
-     * @return hash value for person object
-     */
-    public static int makeHash(final Personne pers) {
-        final String str = pers.getNom() + pers.getPrenom() + pers.getTel();
-        return str.hashCode();
-    }
-
-    public static int makeHash(Chambre chambre) {
-        String str = Integer.toString(chambre.getBatiment()) + Integer.toString(chambre.getId().value());
-        return str.hashCode();
-    }
-
-    public static int makeHash(Service service) {
-        String str = Integer.toString(service.getBatiment()) + Integer.toString(service.getId().value());
-        return str.hashCode();
-    }
-
-    /**
-     * removes special characetrs and puts string to lower case
-     * 
-     * @param str
-     * @return new string
-     */
-    public static String purge(String str) {
-        str = str.toLowerCase();
-        str = str.replace("é", "e");
-        str = str.replace("è", "e");
-        str = str.replace("ê", "e");
-        str = str.replace("à", "a");
-        str = str.replace("â", "a");
-        str = str.replace("î", "i");
-
-        return str;
-    }
-
-    public static Object extract(final String what, final Object fromWhere, final Object... args) {
+    public static Object extract(String what, Object fromWhere, Object... args) {
         if (fromWhere instanceof Map<?, ?> || fromWhere instanceof Collection<?>)
             return invokeFunction("get", fromWhere, args);
         else
@@ -345,17 +313,27 @@ public class Utils {
         return matchCond;
     }
 
-    public static List<Pair<Field, Class<?>>> extractFieldNames(Class<?> fromWhere) {
-        List<Pair<Field, Class<?>>> result = new ArrayList<>();
-        List<Field> fields = getAllFields(new ArrayList<Field>(), fromWhere);
+    public static List<Field> extractFieldNames(Class<?> fromWhere) {
+        List<Field> result = new ArrayList<>();
 
         // remplir la list result de nom/type attribut
 
-        for (Field field : fields) {
-            result.add(Pair.of(field, field.getClass()));
+        for (Field field : getAllFields(new ArrayList<Field>(), fromWhere)) {
+            result.add(field);
         }
 
         return result;
+    }
+
+    public static Class<?> getTypeFromMap(Field f) {
+        Class<?> c;
+        if (f.getType().isAssignableFrom(HashMap.class)) {
+            ParameterizedType pt = (ParameterizedType) f.getGenericType();
+            c = (Class<?>) pt.getActualTypeArguments()[1];
+        } else {
+            c = f.getType();
+        }
+        return c;
     }
 
     // fonction qui prend en parametre un string en camel case et le retourne
@@ -470,6 +448,17 @@ public class Utils {
         Object obj = ois.readObject();
         ois.close();
         return obj;
+    }
+
+    public static boolean isStandardType(Class<?> fromWhere) {
+
+        if (fromWhere.getCanonicalName().startsWith("java.") || fromWhere.getCanonicalName().startsWith("javax.")
+                || fromWhere.getCanonicalName().startsWith("org.")) {
+            return true;
+        }
+
+        else
+            return false;
     }
 
 }

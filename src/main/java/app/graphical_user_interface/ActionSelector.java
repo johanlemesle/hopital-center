@@ -17,18 +17,31 @@ public class ActionSelector extends JPanel implements ActionListener {
      *
      */
     private static final long serialVersionUID = -1349720485385763778L;
-    public static final String ADD_MODE = "Ajouter";
-    public static final String QUERY_MODE = "Selectionner";
-    public static final String UPDATE_MODE = "Modifier";
-    public static final String DELETE_MODE = "Supprimer";
+
+    enum ActionMode {
+        ADD_MODE("Ajouter"), QUERY_MODE("Rechercher"), UPDATE_MODE("Modifier"), DELETE_MODE("Supprimer");
+
+        private String action;
+
+        ActionMode(String action) {
+            this.action = action;
+        }
+
+        @Override
+        public String toString() {
+            return action;
+        }
+    };
 
     private Window parentWindow;
 
     public ActionSelector(Window parentWindow) {
         super(new GridLayout(0, 1));
         this.parentWindow = parentWindow;
-        final JRadioButton add = new JRadioButton(ADD_MODE), update = new JRadioButton(UPDATE_MODE),
-                delete = new JRadioButton(DELETE_MODE), query = new JRadioButton(QUERY_MODE);
+        final JRadioButton add = new JRadioButton(ActionMode.ADD_MODE.toString()),
+                update = new JRadioButton(ActionMode.UPDATE_MODE.toString()),
+                delete = new JRadioButton(ActionMode.DELETE_MODE.toString()),
+                query = new JRadioButton(ActionMode.QUERY_MODE.toString());
 
         ButtonGroup optionsGroup = new ButtonGroup();
 
@@ -51,6 +64,6 @@ public class ActionSelector extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        parentWindow.toggle(e.getActionCommand());
+        parentWindow.toggleMode(e.getActionCommand());
     }
 }

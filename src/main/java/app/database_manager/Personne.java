@@ -1,15 +1,10 @@
 package app.database_manager;
 
-import app.database_manager.Adresse;
-import app.database_manager.EntitiyID;
-import app.database_manager.Utils;
-
 /**
  * Personne
  */
 public class Personne {
 
-    protected EntitiyID id;
     protected String nom, prenom, tel;
     protected Adresse adresse;
 
@@ -18,11 +13,6 @@ public class Personne {
         this.prenom = prenom;
         this.tel = tel.replace(" ", "");
         this.adresse = adresse;
-        this.id = new EntitiyID(Utils.makeHash(this));
-    }
-
-    public EntitiyID getId() {
-        return id;
     }
 
     public String getNom() {
@@ -58,8 +48,8 @@ public class Personne {
     }
 
     @Override
-    public String toString() {
-        return "Personne(id : " + id + ", nom : " + nom + ", prenom : " + prenom + ", tel : " + tel + ", adresse : "
-                + adresse + ")";
+    public int hashCode() {
+        return (nom + prenom + tel).hashCode();
     }
+
 }

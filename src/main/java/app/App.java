@@ -22,7 +22,7 @@ import app.graphical_user_interface.Window;
 
 public class App {
         public static final String PATH_TO_DB_FILE = "database.txt";
-        private static final Hopital hopital;
+        public static final Hopital hopital;
         private static final Window window = new Window();
         static {
                 Hopital tmp = null;
@@ -43,9 +43,9 @@ public class App {
         }
 
         private static void confirmAndExit() {
-                int conf = JOptionPane.showConfirmDialog(window, "Enregistrer les modifications avant de quitter?",
+                int choice = JOptionPane.showConfirmDialog(window, "Enregistrer les modifications avant de quitter?",
                                 "Confirmez", JOptionPane.YES_NO_CANCEL_OPTION);
-                switch (conf) {
+                switch (choice) {
                 case JOptionPane.YES_OPTION:
                         try {
                                 Utils.save(hopital, PATH_TO_DB_FILE);

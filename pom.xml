@@ -21,6 +21,7 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.9</version>
         </dependency>
+
     </dependencies>
     <build>
         <pluginManagement>
@@ -41,11 +42,6 @@
                             <version>1.1.0</version>
                         </dependency>
 
-                        <dependency>
-                            <groupId>org.apache.commons</groupId>
-                            <artifactId>commons-lang3</artifactId>
-                            <version>3.9</version>
-                        </dependency>
                     </dependencies>
                     <configuration>
                         <configLocation>com/github/ngeor/checkstyle.xml</configLocation>
