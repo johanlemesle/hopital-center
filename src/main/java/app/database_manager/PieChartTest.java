@@ -32,18 +32,18 @@ public class PieChartTest extends ApplicationFrame
    
     private static final long serialVersionUID = -7145470278665113308L;
 
-    public PieChartTest(String title, PieDataset dataset1) // Constructeur
+    public PieChartTest(String title, PieDataset dataset1, String chartTitle) // Constructeur
     {
         super(title);
-     setContentPane(createDemoPanel(dataset1));
+     setContentPane(createDemoPanel(dataset1,chartTitle));
      }
    
 
    
-   public static JFreeChart createChart(PieDataset dataset) 
+   public static JFreeChart createChart(PieDataset dataset, String chartTitle) 
    {
       JFreeChart chart = ChartFactory.createPieChart(      
-        "Hospitalisation par service", // chart title
+        chartTitle, // chart title
          dataset,          // data    
          true,             // include legend   
          true, 
@@ -52,22 +52,22 @@ public class PieChartTest extends ApplicationFrame
       return chart;
    }
    
-   public JPanel createDemoPanel(PieDataset dataset) 
+   public JPanel createDemoPanel(PieDataset dataset, String chartTitle) 
    {
-      JFreeChart chart = createChart(dataset);  
+      JFreeChart chart = createChart(dataset,chartTitle);  
       return new ChartPanel(chart); 
    }
 
-   public static void main(String[ ] args) 
-   {
+   // public static void main(String[ ] args) 
+   // {
 
-    PieDataset dataset1 = new DefaultPieDataset();
-    PieChartTest demo = new PieChartTest("JABARI LEMESLE LAHDIRI", dataset1);
-    demo.setSize(560,360);    
-    RefineryUtilities.centerFrameOnScreen(demo);    
-    demo.setVisible(true); 
+   //  PieDataset dataset1 = new DefaultPieDataset();
+   //  PieChartTest demo = new PieChartTest("JABARI LEMESLE LAHDIRI", dataset1);
+   //  demo.setSize(560,360);    
+   //  RefineryUtilities.centerFrameOnScreen(demo);    
+   //  demo.setVisible(true); 
 
-    }
+   //  }
 
     //Construction du tableau de data
 

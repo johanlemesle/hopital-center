@@ -60,12 +60,14 @@ public class App {
                                 new Adresse("12", "rue", "de la Bretonne", "78220", "Viroflay"));
                 Malade redoine = new Malade("Lahdiri", "Redoine", "0708070982",
                                 new Adresse("37", "quai", "de grenelle", "75015", "Juvisy sur Marne"));
-
                 Malade john = new Malade("Dark", "John", "0353426153",
                                 new Adresse("26", "quai", "de grounelle", "75003", "Paris sur Orge"));
-
                 Malade hermione = new Malade("Granger", "Hermione", "0023212322",
                                 new Adresse("21", "allée", "de poudlard", "91200", "Marseille sur Orge"));
+                Malade walid = new Malade("jabari", "walid", "0767248491",
+                                new Adresse("3", "rue", "Lazare Carnot", "78220", "Viroflay"));
+                Malade jacques = new Malade("chirac", "jacques", "0767123491",
+                                new Adresse("2", "rue", "Laurent Blanc", "78220", "Viroflay"));
 
                 Docteur poulain = new Docteur("Poulain", "Philippe", "0102030405",
                                 new Adresse("10", "Boulevard", "du Général Leclerc", "78140", "Vélizy Villacoublay"),
@@ -73,25 +75,31 @@ public class App {
                 Docteur bibiche = new Docteur("Bibiche", "Ichli", "0165345321",
                                 new Adresse("9", "rue", "du Dassault Dassault", "78140", "Vélizy Villacoublay"),
                                 Specialite.generaliste);
-                Malade walid = new Malade("jabari", "walid", "0767248491",
-                                new Adresse("3", "rue", "Lazare Carnot", "78220", "Viroflay"));
-
-                Malade jacques = new Malade("chirac", "jacques", "0767123491",
-                                new Adresse("2", "rue", "Laurent Blanc", "78220", "Viroflay"));
-
+        
                 Service urgence = new Service("URG", "Urgences", 'B', poulain);
                 Service pediatrie = new Service("PED", "Pediatrie", 'B', poulain);
                 Service asile = new Service("ASL", "Asile", 'B', poulain);
                 Service radiologie = new Service("RAD", "Radiologie", 'A', bibiche);
 
                 Infirmier marec = new Infirmier("Marec", "Affeli", "0670223410",
-                                new Adresse("12", "avenue", "Lazare Carnot", "78220", "Viroflay"), asile, Rotation.Jour,
+                                new Adresse("12", "avenue", "Lazare Carnot", "78220", "Viroflay"), asile, Rotation.Jour,1540);
+
+                Infirmier jamel = new Infirmier("Debbouze", "Jamel", "0654237612",
+                                new Adresse("11", "avenue", "Lazare ", "78220", "Luciole"), asile, Rotation.Jour,
                                 1520);
+                Infirmier ramzi = new Infirmier("Kika", "Ramzi", "0654237612",
+                                new Adresse("11", "avenue", "Lazare ", "78220", "Luciole"), radiologie, Rotation.Jour,
+                                1520);
+
+                Infirmier diane = new Infirmier("Vilandrau", "Diane", "0654237612",
+                                new Adresse("11", "avenue", "Bleuet ", "78220", "Luciole"), pediatrie, Rotation.Jour,
+                                1520);
+
                 Chambre room205 = new Chambre(205, asile, marec, (byte) 5);
 
                 // On ne peut pas faire deux hospitalisation différente sur un même Malade car
                 // même clé
-                
+
                 Hospitalisation greffe = new Hospitalisation(walid, urgence, room205, 2, null, null);
                 Hospitalisation platre = new Hospitalisation(johan, urgence, room205, 1, null, null);
                 Hospitalisation piqure = new Hospitalisation(redoine, urgence, room205, 1, null, null);
@@ -99,27 +107,23 @@ public class App {
                 Hospitalisation dechirure = new Hospitalisation(hermione, urgence, room205, 1, null, null);
                 Hospitalisation coupure = new Hospitalisation(jacques, radiologie, room205, 1, null, null);
 
-
                 hopital.insert("Malade", walid);
                 hopital.insert("Malade", johan);
                 hopital.insert("Malade", redoine);
                 hopital.insert("Malade", john);
                 hopital.insert("Malade", hermione);
                 hopital.insert("Malade", jacques);
-
-
                 hopital.insert("infirmier", marec);
-
+                hopital.insert("infirmier",jamel);
+                hopital.insert("infirmier",ramzi);
+                hopital.insert("infirmier",diane);
                 hopital.insert("docteur", poulain);
                 hopital.insert("docteur", bibiche);
-
                 hopital.insert("soin", new Soin(poulain, redoine, null));
-
                 hopital.insert("service", urgence);
                 hopital.insert("service", pediatrie);
                 hopital.insert("service", asile);
                 hopital.insert("service", radiologie);
-
                 hopital.insert("hospitalisation", greffe);
                 hopital.insert("hospitalisation", couture);
                 hopital.insert("hospitalisation", dechirure);
@@ -128,31 +132,37 @@ public class App {
                 hopital.insert("hospitalisation", coupure);
 
 
+                //Ici, on get toutes les informations de l'hopital pour les stocker dans résultat
                 ArrayList<Pair<String, Object>> resultat = Utils.get(
                                 "malades{*}&services{*}&docteurs{*}&infirmiers{*}&hospitalisations{*}&chambres{*}&employes{*}",
                                 hopital);
 
                 // Récupérer le nom des services
-
                 ArrayList<Pair<String, Object>> intermed1 = Utils.get("services{nom}", hopital);
                 ArrayList<Pair<String, Object>> intermed2 = (ArrayList<Pair<String, Object>>) intermed1.get(0)
                                 .getRight();
                 ArrayList<Pair<String, Object>> servicesName = (ArrayList<Pair<String, Object>>) intermed2.get(0)
                                 .getRight();
 
-                // Récupérer le nombre d'hospitalisation dans un service
-
+                // Récupérer le nom des services pour les hospitalisations
                 ArrayList<Pair<String, Object>> interm1 = Utils.get("hospitalisations{service{nom}}", hopital);
                 ArrayList<Pair<String, Object>> interm2 = (ArrayList<Pair<String, Object>>) interm1.get(0).getRight();
                 ArrayList<Pair<String, Object>> interm3 = (ArrayList<Pair<String, Object>>) interm2.get(0).getRight();
                 ArrayList<Pair<String, Object>> interm4 = (ArrayList<Pair<String, Object>>) interm3.get(0).getRight();
 
+                // Récupérer le nom des srrvices pour les infirmiers
+                ArrayList<Pair<String, Object>> int1 = Utils.get("infirmiers{service{nom}}", hopital);
+                ArrayList<Pair<String, Object>> int2 = (ArrayList<Pair<String, Object>>) int1.get(0).getRight();
+                ArrayList<Pair<String, Object>> int3 = (ArrayList<Pair<String, Object>>) int2.get(0).getRight();
+                ArrayList<Pair<String, Object>> int4 = (ArrayList<Pair<String, Object>>) int3.get(0).getRight();
+
                 //Test :  Cette ligne affiche le nom du service de l'hospitalisation numéro 1 get(0)
                 System.out.println(interm4.get(0).getRight());
+                System.out.println(int4.get(0).getRight());
 
-
-                // Données : Nom des services
+                // Données 
                 DefaultPieDataset dataset = new DefaultPieDataset();
+                DefaultPieDataset dataset1 = new DefaultPieDataset();
 
                 for (int i = 0; i < servicesName.size(); i++) {
                         Random r = new Random();
@@ -161,17 +171,36 @@ public class App {
 
                        // dataset.setValue(tst, randomValue);
                        dataset.setValue(tst, extractNumberHospitalisation(tst, interm4));
+                       dataset1.setValue(tst,extractNumberInfirmiers(tst, int4 ));
                 }
 
+
                 // création de mon chart
-                PieChartTest chart1 = new PieChartTest("JABARI LEMESLE LAHDIRI", dataset);
+                PieChartTest chart1 = new PieChartTest("JABARI LEMESLE LAHDIRI", dataset,"Nb hospitalisations par service");
                 chart1.setSize(560, 360);
                 RefineryUtilities.centerFrameOnScreen(chart1);
                 chart1.setVisible(true);
+
+                PieChartTest chart2 = new PieChartTest("JABARI LEMESLE LAHDIRI",dataset1,"Nb infirmiers par service");
+                chart2.setSize(560, 360);
+                RefineryUtilities.centerFrameOnScreen(chart2);
+                chart2.setVisible(true);
+
                 System.out.println("done");
         }
 
         public static int extractNumberHospitalisation(String nomservice, ArrayList<Pair<String, Object>> list) {
+                int nb = 0;
+
+                for (int i = 0; i < list.size(); i++) {
+                        if (nomservice == list.get(i).getRight())
+                                nb++;
+                }
+
+                return nb;
+        }
+
+        public static int extractNumberInfirmiers(String nomservice, ArrayList<Pair<String, Object>> list) {
                 int nb = 0;
 
                 for (int i = 0; i < list.size(); i++) {
