@@ -2,8 +2,6 @@ package app.graphical_user_interface.input_modes;
 
 import java.awt.Component;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
@@ -19,15 +17,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.apache.commons.lang3.reflect.TypeUtils;
-
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
+import org.apache.commons.lang3.reflect.TypeUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import app.database_manager.EntityID;
 import app.database_manager.Utils;
 import app.graphical_user_interface.helpers.HintTextField;
+import app.graphical_user_interface.helpers.JTextFieldLimit;
 
 /**
  * Add
@@ -86,8 +84,13 @@ public class Adder {
                 inputField = jcb;
             } else if (field.getType().isArray()) {
                 Object obj = TypeUtils.getArrayComponentType(field.getType());
+            } else if (field.getType().isAssignableFrom(Character.class)) {
+                JTextFieldLimit jtx = new JTextFieldLimit(1);
             } else {
                 inputField = new HintTextField("Saisir " + Utils.normalizeCamelCase(field.getName()));
+            }
+
+            if (inputField.getClass().isAssignableFrom(JTextField.class)) {
                 inputField.addKeyListener(new KeyListener() {
 
                     @Override
@@ -111,6 +114,7 @@ public class Adder {
 
                     }
                 });
+
             }
             if (inputField != null) {
                 inputFields.add(Pair.of(field.getType(), inputField));
@@ -122,6 +126,7 @@ public class Adder {
                 workingPane.add(jPanel);
             }
         }
+
     }
 
     public Object buildEntity()

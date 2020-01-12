@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 /**
@@ -29,7 +30,13 @@ public class Utils {
         if (fromWhere instanceof Map<?, ?> || fromWhere instanceof Collection<?>)
             return invokeFunction("get", fromWhere, args);
         else
-            return invokeFunction("get" + StringUtils.capitalize(what), fromWhere, args);
+            try {
+                return FieldUtils.readField(fromWhere, what, true);
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                return invokeFunction("get" + StringUtils.capitalize(what), fromWhere);
+            }
     }
 
     public static Object invokeFunction(String functionName, Object obj, Object... args) {
