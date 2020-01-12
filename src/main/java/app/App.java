@@ -170,8 +170,8 @@ public class App {
                         String tst = servicesName.get(i).getRight().toString();
 
                        // dataset.setValue(tst, randomValue);
-                       dataset.setValue(tst, extractNumberHospitalisation(tst, interm4));
-                       dataset1.setValue(tst,extractNumberInfirmiers(tst, int4 ));
+                       dataset.setValue(tst, extractNumberHospitalisation(tst,interm4));
+                       dataset1.setValue(tst,extractNumberInfirmiers(tst,int4));
                 }
 
 
@@ -190,9 +190,11 @@ public class App {
         }
 
         public static int extractNumberHospitalisation(String nomservice, ArrayList<Pair<String, Object>> list) {
+                
                 int nb = 0;
 
-                for (int i = 0; i < list.size(); i++) {
+                for (int i = 0; i < list.size(); i++) 
+                {
                         if (nomservice == list.get(i).getRight())
                                 nb++;
                 }
@@ -203,7 +205,8 @@ public class App {
         public static int extractNumberInfirmiers(String nomservice, ArrayList<Pair<String, Object>> list) {
                 int nb = 0;
 
-                for (int i = 0; i < list.size(); i++) {
+                for (int i = 0; i < list.size(); i++) 
+                {
                         if (nomservice == list.get(i).getRight())
                                 nb++;
                 }
