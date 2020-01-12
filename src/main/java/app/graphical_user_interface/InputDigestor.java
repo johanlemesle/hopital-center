@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import app.App;
 import app.graphical_user_interface.helpers.ListDialog;
 import app.graphical_user_interface.input_modes.Adder;
+import app.graphical_user_interface.input_modes.Searcher;
 
 /**
  * InputDigester
@@ -26,12 +27,16 @@ public class InputDigestor extends JPanel implements ActionListener {
     private final JButton executeButton = new JButton("Executer");
 
     private Adder adder;
+    private Searcher query;
 
-    public InputDigestor() {
+    private Window parentWindow;
+
+    public InputDigestor(Window parentWindow) {
         super(new BorderLayout());
         this.add(contentPane);
         this.add(executeButton, BorderLayout.SOUTH);
         executeButton.addActionListener(this);
+        this.parentWindow = parentWindow;
     }
 
     public void addMode() {
@@ -54,6 +59,13 @@ public class InputDigestor extends JPanel implements ActionListener {
 
     }
 
+    public void searchMode() {
+        contentPane.removeAll();
+        contentPane.revalidate();
+        query = new Searcher(contentPane);
+        contentPane.repaint();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (App.window.ACTION_MODE) {
@@ -64,6 +76,11 @@ public class InputDigestor extends JPanel implements ActionListener {
                     | InstantiationException e1) {
                 e1.printStackTrace();
             }
+            break;
+        case QUERY_MODE:
+            String str = query.parse();
+            System.out.println("la requete : " + str);
+            parentWindow.displayResult(str);
             break;
         default:
             break;

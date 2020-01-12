@@ -4,9 +4,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JCheckBox;
@@ -21,7 +19,7 @@ import app.database_manager.Utils;
 /**
  * Toto
  */
-public class Toto extends JPanel implements ActionListener {
+public class Query extends JPanel implements ActionListener {
 
     /**
      *
@@ -33,9 +31,9 @@ public class Toto extends JPanel implements ActionListener {
     private String name;
     private JTextField txtField = null;
 
-    private List<Toto> children = new ArrayList<>();
+    private List<Query> children = new ArrayList<>();
 
-    public Toto(JCheckBox parent, Class<?> type, String name) {
+    public Query(JCheckBox parent, Class<?> type, String name) {
         this.parent = parent;
         this.type = type;
         this.name = name;
@@ -61,21 +59,28 @@ public class Toto extends JPanel implements ActionListener {
         System.out.println("je suis la");
         if (cbx.isSelected()) {
             if (!Utils.isStandardType(type))
-                for (Field f : Utils.extractFieldNames(type)) {
+                for (Field f : FieldUtils.getAllFields(type)) {
                     Class<?> cls;
                     String name = f.getName();
                     cls = Utils.getTypeFromMap(f);
-                    Toto t = new Toto(new JCheckBox(), cls, name);
+                    Query t = new Query(new JCheckBox(), cls, name);
                     t.parent.setSelected(true);
                     children.add(t);
                     this.add(t);
                 }
         } else {
-            for (Toto toto : children) {
+            for (Query toto : children) {
                 this.remove(toto);
             }
             children.clear();
         }
+
+        for (Query query : children) {
+            query.revalidate();
+            query.repaint();
+        }
+        this.revalidate();
+        this.repaint();
     }
 
     public boolean isSelected() {
@@ -89,7 +94,7 @@ public class Toto extends JPanel implements ActionListener {
         String condQuerry = "";
         List<String> lesConds = new ArrayList<>();
         List<String> lesStrings = new ArrayList<>();
-        for (Toto child : children) {
+        for (Query child : children) {
             if (child.isSelected()) {
                 lesStrings.add(child.buildQuerry());
                 if (child.txtField != null) {
@@ -114,8 +119,6 @@ public class Toto extends JPanel implements ActionListener {
             return name + "{" + String.join("&", lesStrings) + "}";
         } else
             return name + condQuerry + "{" + String.join("&", lesStrings) + "}";
-
-        // return txtField.getText();
     }
 
 }

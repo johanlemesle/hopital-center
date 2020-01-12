@@ -3,6 +3,8 @@ package app.graphical_user_interface;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 
+import app.App;
+import app.database_manager.Utils;
 import app.graphical_user_interface.ActionSelector.ActionMode;
 
 public class Window extends JFrame {
@@ -20,7 +22,7 @@ public class Window extends JFrame {
     public Window() {
         super("Gestionnaire de centre hospitallier");
         selection = new ActionSelector(this);
-        saisie = new InputDigestor();
+        saisie = new InputDigestor(this);
         resultats = new ResultDisplayer();
 
         // pour separer les panels
@@ -60,8 +62,19 @@ public class Window extends JFrame {
         case UPDATE_MODE:
             break;
         case QUERY_MODE:
-            saisie.queryMode();
+            saisie.searchMode();
             break;
+        default:
+            break;
+        }
+    }
+
+    public void displayResult(String command) {
+        switch (ACTION_MODE) {
+        case QUERY_MODE:
+            resultats.displayQueryOutput(Utils.get(command, App.hopital));
+            break;
+
         default:
             break;
         }
