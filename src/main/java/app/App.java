@@ -76,6 +76,9 @@ public class App {
                 Malade walid = new Malade("jabari", "walid", "0767248491",
                                 new Adresse("3", "rue", "Lazare Carnot", "78220", "Viroflay"));
 
+                Malade jacques = new Malade("chirac", "jacques", "0767123491",
+                                new Adresse("2", "rue", "Laurent Blanc", "78220", "Viroflay"));
+
                 Service urgence = new Service("URG", "Urgences", 'B', poulain);
                 Service pediatrie = new Service("PED", "Pediatrie", 'B', poulain);
                 Service asile = new Service("ASL", "Asile", 'B', poulain);
@@ -88,17 +91,22 @@ public class App {
 
                 // On ne peut pas faire deux hospitalisation différente sur un même Malade car
                 // même clé
+                
                 Hospitalisation greffe = new Hospitalisation(walid, urgence, room205, 2, null, null);
                 Hospitalisation platre = new Hospitalisation(johan, urgence, room205, 1, null, null);
                 Hospitalisation piqure = new Hospitalisation(redoine, urgence, room205, 1, null, null);
                 Hospitalisation couture = new Hospitalisation(john, urgence, room205, 1, null, null);
                 Hospitalisation dechirure = new Hospitalisation(hermione, urgence, room205, 1, null, null);
+                Hospitalisation coupure = new Hospitalisation(jacques, radiologie, room205, 1, null, null);
+
 
                 hopital.insert("Malade", walid);
                 hopital.insert("Malade", johan);
                 hopital.insert("Malade", redoine);
                 hopital.insert("Malade", john);
                 hopital.insert("Malade", hermione);
+                hopital.insert("Malade", jacques);
+
 
                 hopital.insert("infirmier", marec);
 
@@ -117,6 +125,8 @@ public class App {
                 hopital.insert("hospitalisation", dechirure);
                 hopital.insert("hospitalisation", piqure);
                 hopital.insert("hospitalisation", platre);
+                hopital.insert("hospitalisation", coupure);
+
 
                 ArrayList<Pair<String, Object>> resultat = Utils.get(
                                 "malades{*}&services{*}&docteurs{*}&infirmiers{*}&hospitalisations{*}&chambres{*}&employes{*}",
@@ -137,9 +147,9 @@ public class App {
                 ArrayList<Pair<String, Object>> interm3 = (ArrayList<Pair<String, Object>>) interm2.get(0).getRight();
                 ArrayList<Pair<String, Object>> interm4 = (ArrayList<Pair<String, Object>>) interm3.get(0).getRight();
 
-                // Cette ligne affiche le nom du service de l'hospitalisation numéro 1 get(0)
+                //Test :  Cette ligne affiche le nom du service de l'hospitalisation numéro 1 get(0)
                 System.out.println(interm4.get(0).getRight());
-                System.out.println(interm4.get(1).getRight());
+
 
                 // Données : Nom des services
                 DefaultPieDataset dataset = new DefaultPieDataset();
