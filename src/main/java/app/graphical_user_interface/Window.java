@@ -3,11 +3,15 @@ package app.graphical_user_interface;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 
+import app.graphical_user_interface.ActionSelector.ActionMode;
+
 public class Window extends JFrame {
 
     /**
      *
      */
+    public ActionMode ACTION_MODE;
+
     private static final long serialVersionUID = -2641871501940426386L;
     private ActionSelector selection;
     private InputDigestor saisie;
@@ -36,22 +40,30 @@ public class Window extends JFrame {
 
     }
 
-    public void toggle(String mode) {
-        saisie.reset();
-        switch (mode) {
-        case ActionSelector.ADD_MODE:
+    public void toggleMode(String mode) {
+        for (ActionMode actionMode : ActionMode.values()) {
+            if (actionMode.toString().equals(mode)) {
+                ACTION_MODE = actionMode;
+                break;
+            }
+        }
+        updateInputPane();
+    }
+
+    public void updateInputPane() {
+        switch (ACTION_MODE) {
+        case ADD_MODE:
             saisie.addMode();
             break;
-        case ActionSelector.DELETE_MODE:
+        case DELETE_MODE:
             break;
-        case ActionSelector.UPDATE_MODE:
+        case UPDATE_MODE:
             break;
-        case ActionSelector.QUERY_MODE:
+        case QUERY_MODE:
             break;
         default:
             break;
         }
-        saisie.refresh();
     }
 
 }

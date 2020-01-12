@@ -1,33 +1,40 @@
 package app.database_manager;
 
-import app.database_manager.Adresse;
-import app.database_manager.EntitiyID;
-import app.database_manager.Utils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Personne
  */
 public class Personne {
 
-    protected EntitiyID id;
+    protected EntityID numero;
     protected String nom, prenom, tel;
     protected Adresse adresse;
 
-    public Personne(String nom, String prenom, String tel, Adresse adresse) 
-    {
+    public Personne(String nom, String prenom, String tel, Adresse adresse) {
         this.nom = nom.toUpperCase();
-        this.prenom = prenom;
-        this.tel = tel.replace("","");
+        this.prenom = StringUtils.capitalize(prenom);
+        this.tel = tel.replace(" ", "");
         this.adresse = adresse;
-        this.id = new EntitiyID(Utils.makeHash(this));
+
+        this.numero = new EntityID(hashCode());
     }
 
-    public EntitiyID getId() {
-        return id;
+    @Override
+    public int hashCode() {
+        return (nom + prenom + tel).hashCode();
+    }
+
+    public EntityID getNumero() {
+        return numero;
+    }
+
+    public void setNumero(EntityID numero) {
+        this.numero = numero;
     }
 
     public String getNom() {
-        return this.nom;
+        return nom;
     }
 
     public void setNom(String nom) {
@@ -35,7 +42,7 @@ public class Personne {
     }
 
     public String getPrenom() {
-        return this.prenom;
+        return prenom;
     }
 
     public void setPrenom(String prenom) {
@@ -43,7 +50,7 @@ public class Personne {
     }
 
     public String getTel() {
-        return this.tel;
+        return tel;
     }
 
     public void setTel(String tel) {
@@ -51,16 +58,11 @@ public class Personne {
     }
 
     public Adresse getAdresse() {
-        return this.adresse;
+        return adresse;
     }
 
     public void setAdresse(Adresse adresse) {
         this.adresse = adresse;
     }
 
-    @Override
-    public String toString() {
-        return "Personne(id : " + id + ", nom : " + nom + ", prenom : " + prenom + ", tel : " + tel + ", adresse : "
-                + adresse + ")";
-    }
 }

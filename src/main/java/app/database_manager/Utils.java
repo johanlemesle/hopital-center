@@ -17,66 +17,30 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
-import app.database_manager.entities.Chambre;
-import app.database_manager.entities.Service;
-
 /**
- * util
+ * utils
  */
 public class Utils {
 
-    /**
-     * Hashes a person object according to nom, prenom, tel fields
-     * 
-     * @param pers person object from which hash will be made
-     * @return hash value for person object
-     */
-    public static int makeHash(Personne pers) {
-        String str = pers.getNom() + pers.getPrenom() + pers.getTel();
-        return str.hashCode();
-    }
+    public static Object extract(String what, Object fromWhere, Object... args) {
 
-    public static int makeHash(Chambre chambre) {
-        String str = Integer.toString(chambre.getBatiment()) + Integer.toString(chambre.getId().value());
-        return str.hashCode();
-    }
-
-    public static int makeHash(Service service) {
-        String str = Integer.toString(service.getBatiment()) + Integer.toString(service.getId().value());
-        return str.hashCode();
-    }
-
-    /**
-     * removes special characetrs and puts string to lower case
-     * 
-     * @param str
-     * @return new string
-     */
-    public static String purge(String str) {
-        str = str.toLowerCase();
-        str = str.replace("é", "e");
-        str = str.replace("è", "e");
-        str = str.replace("ê", "e");
-        str = str.replace("à", "a");
-        str = str.replace("â", "a");
-        str = str.replace("î", "i");
-
-        return str;
-    }
-
-    public static Object extract(String what, Object fromWhere, Object... args) 
-    {
         if (fromWhere instanceof Map<?, ?> || fromWhere instanceof Collection<?>)
             return invokeFunction("get", fromWhere, args);
         else
-            return invokeFunction("get" + StringUtils.capitalize(what), fromWhere, args);
+            try {
+                return FieldUtils.readField(fromWhere, what, true);
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                return invokeFunction("get" + StringUtils.capitalize(what), fromWhere);
+            }
     }
 
-    public static Object invokeFunction(String functionName, Object obj, Object... args) 
-    {
+    public static Object invokeFunction(String functionName, Object obj, Object... args) {
         Class<?> paramsTypes[] = new Class[args.length];
         for (int i = 0; i < paramsTypes.length; i++) {
             paramsTypes[i] = args[i].getClass();
@@ -204,11 +168,11 @@ public class Utils {
     }
 
     public static List<Field> getAllFields(List<Field> fields, Class<?> type) {
-        fields.addAll(Arrays.asList(type.getDeclaredFields()));
 
         if (type.getSuperclass() != null) {
             getAllFields(fields, type.getSuperclass());
         }
+        fields.addAll(Arrays.asList(type.getDeclaredFields()));
 
         return fields;
     }
@@ -247,55 +211,18 @@ public class Utils {
         return conditions;
     }
 
-    public static List<Pair<Field, Class<?>>> extractFieldNames(Class<?> fromWhere) {
-        List<Pair<Field, Class<?>>> result = new ArrayList<>();
-        List<Field> fields = getAllFields(new ArrayList<Field>(), fromWhere);
-
-        // remplir la list result de nom/type attribut
-
-        for (Field field : fields) {
-            result.add(Pair.of(field, field.getClass()));
+    public static List<Field> extractFields(Class<?> fromWhere) {
+        List<Field> result = new ArrayList<>();
+        for (Field field : getAllFields(new ArrayList<Field>(), fromWhere)) {
+            result.add(field);
         }
 
         return result;
     }
 
-    // fonction qui prend en parametre un string en camel case et le retourne
-    // normalisé
-    // ex : "jeSuisPasBlond" devient "je suis pas blond"
-    public String normalizeCamelCase(String str) {
-        String result = "";
-
-        // a coder ..
-        return result;
-    }
-    // ========================================================================\\
-    // HARD:
-
-    // fonction qui prend en parametre un objet et qui retourne ses attributs et les
-    // attributs emboités des objets à l'intérieur
-    // on s'arrête quand on arrive à des types qui ne sont pas définits dans le
-    // modèle objet
-    // la fonction retourne une pair (attribut:type)
-
-    // exemple : extractNestedFields(Chambre.class) retourne :
-    // Chambre:[(id:int),(service:[(id:int),(nom:String),(batiment:int),(directeur:[(nom:String),(prenom:String)])])]
-
-    // tip #1 : le prototype marche car Object peut lui meme etre une
-    // List<Pair<Object,Class<?>>. mais change le à ta maniere
-    // tip #2 : partir sur une implementation recursive
-    // tip #3 : attention, pour l'implementation recursive, il y a des dependances
-    // cycliques : un Patient a Docteur comme attribut, et un docteur a un patient
-    // comme attribut. je te conseil d'ajouter une variable 'maxDepth' qui lui dira
-    // de s'arreter quand il atteint la profondeur maximale de l'arbre
-    // tip #4 : attention, parfois les attributs sont des List, ArrayList, ou
-    // HashMap, auquel cas il faut choper le type qui constitue la
-    // List/ArrayList/Map(si t'as une List<Patient>, il faut choper 'Patient')
-
-    public static List<Pair<Object, Class<?>>> extractNestedFields(Class<?> fromWhere) {
-        List<Pair<Object, Class<?>>> result = new ArrayList<>();
-        // a coder ..
-        return result;
+    public static String normalizeCamelCase(String str) {
+        return StringUtils.capitalize(str.replaceAll(String.format("%s|%s|%s", "(?<=[A-Z])(?=[A-Z][a-z])",
+                "(?<=[^A-Z])(?=[A-Z])", "(?<=[A-Za-z])(?=[^A-Za-z])"), " "));
     }
 
     /**
@@ -372,6 +299,5 @@ public class Utils {
         ois.close();
         return obj;
     }
-
 
 }
