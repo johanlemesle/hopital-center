@@ -13,6 +13,7 @@ import app.App;
 import app.graphical_user_interface.helpers.ListDialog;
 import app.graphical_user_interface.input_modes.Adder;
 import app.graphical_user_interface.input_modes.Searcher;
+import app.graphical_user_interface.input_modes.Modifier;
 
 /**
  * InputDigester
@@ -28,6 +29,7 @@ public class InputDigestor extends JPanel implements ActionListener {
 
     private Adder adder;
     private Searcher query;
+    private Modifier updater;
 
     private Window parentWindow;
 
@@ -66,6 +68,13 @@ public class InputDigestor extends JPanel implements ActionListener {
         contentPane.repaint();
     }
 
+    public void updateMode() {
+        contentPane.removeAll();
+        contentPane.revalidate();
+        updater = new Modifier(contentPane);
+        contentPane.repaint();
+    }
+// catch l'exec
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (App.window.ACTION_MODE) {
@@ -80,7 +89,10 @@ public class InputDigestor extends JPanel implements ActionListener {
         case QUERY_MODE:
             String str = query.parse();
             System.out.println("la requete : " + str);
-            parentWindow.displayResult(str);
+            parentWindow.displayQueryResult(str);
+            break;
+        case UPDATE_MODE:
+            parentWindow.displayTable(updater.getLaMap());
             break;
         default:
             break;

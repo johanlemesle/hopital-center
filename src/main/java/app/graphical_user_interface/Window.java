@@ -1,5 +1,7 @@
 package app.graphical_user_interface;
 
+import java.util.HashMap;
+
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 
@@ -53,7 +55,7 @@ public class Window extends JFrame {
         }
         updateInputPane();
     }
-
+//fenetre principale
     public void updateInputPane() {
         switch (ACTION_MODE) {
         case ADD_MODE:
@@ -62,6 +64,7 @@ public class Window extends JFrame {
         case DELETE_MODE:
             break;
         case UPDATE_MODE:
+            saisie.updateMode();
             break;
         case QUERY_MODE:
             saisie.searchMode();
@@ -71,15 +74,12 @@ public class Window extends JFrame {
         }
     }
 
-    public void displayResult(String command) {
-        switch (ACTION_MODE) {
-        case QUERY_MODE:
-            resultats.displayQueryOutput(Utils.get(command, App.hopital));
-            break;
+    public void displayQueryResult(String command) {
+        resultats.displayQueryOutput(Utils.get(command, App.hopital));
+    }
 
-        default:
-            break;
-        }
+    public void displayTable(HashMap<?, ?> hm) {
+        resultats.displayTable(hm);
     }
 
 }
