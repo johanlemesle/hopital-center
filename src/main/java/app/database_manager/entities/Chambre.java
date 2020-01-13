@@ -12,7 +12,7 @@ public class Chambre {
     private Byte nbLits;
 
     // NO_CHAMBRE, #CODE_SERVICE, SURVEILLANT, NB_LITS
-    private HashMap<Integer, Hospitalisation> hospitalisations;
+    private HashMap<Integer, Hospitalisation> hospitalisations = new HashMap<>();
 
     @Override
     public int hashCode() {
@@ -78,4 +78,17 @@ public class Chambre {
         if (this.surveillant != null)
             this.surveillant.addChambre(this);
     }
+
+    public Chambre(Integer noChambre, Service service, Infirmier surveillant, Byte nbLits) {
+        this.noChambre = noChambre;
+        this.service = service;
+        this.surveillant = surveillant;
+        this.nbLits = nbLits;
+        
+        if (this.service != null)
+            this.service.addChambre(this);
+        if (this.surveillant != null)
+            this.surveillant.addChambre(this);
+    }
+
 }

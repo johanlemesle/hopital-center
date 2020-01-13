@@ -11,9 +11,11 @@ import app.graphical_user_interface.Window;
 
 /**
  * menu
+ *
  */
 
 public class App {
+
         public static final String PATH_TO_DB_FILE = "database.txt";
         public static final Hopital hopital;
         public static final Window window = new Window();
@@ -22,6 +24,7 @@ public class App {
                 try {
                         tmp = (Hopital) Utils.load(PATH_TO_DB_FILE);
                 } catch (Exception e1) {
+                        tmp = new Hopital();
                         e1.printStackTrace();
                         tmp = new Hopital();
                 }

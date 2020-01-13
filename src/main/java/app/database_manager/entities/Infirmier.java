@@ -12,7 +12,7 @@ public class Infirmier extends Employe {
 
     // #NUMERO, #CODE_SERVICE, ROTATION, SALAIRE
 
-    private HashMap<Integer, Chambre> chambresSurveillees;
+    private HashMap<Integer, Chambre> chambresSurveillees = new HashMap<>();
 
     // getters & setters
     public Service getService() {
@@ -53,15 +53,17 @@ public class Infirmier extends Employe {
     }
 
     public Infirmier(String nom, String prenom, String tel, Adresse adresse, Service service, Rotation rotation,
-            Double salaire, HashMap<Integer, Chambre> chambres) {
+            Double salaire, HashMap<Integer, Chambre> chambresSurveillees) {
         super(nom, prenom, tel, adresse);
         this.service = service;
         this.rotation = rotation;
         this.salaire = salaire;
-        this.chambresSurveillees = chambres;
 
-        this.service.addInfirmier(this);
+        if (chambresSurveillees != null)
+            this.chambresSurveillees = chambresSurveillees;
 
+        if (this.service != null)
+            this.service.addInfirmier(this);
     }
 
 }

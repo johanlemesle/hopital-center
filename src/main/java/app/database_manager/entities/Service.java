@@ -9,9 +9,9 @@ public class Service {
     private Docteur directeur;
 
     // CODE, NOM, BATIMENT, DIRECTEUR
-    private HashMap<Integer, Chambre> chambres;
-    private HashMap<Integer, Hospitalisation> hospitalisations;
-    private HashMap<Integer, Infirmier> infirmiers;
+    private HashMap<Integer, Chambre> chambres = new HashMap<>();
+    private HashMap<Integer, Hospitalisation> hospitalisations = new HashMap<>();
+    private HashMap<Integer, Infirmier> infirmiers = new HashMap<>();
 
     @Override
     public int hashCode() {
@@ -89,7 +89,15 @@ public class Service {
         this.hospitalisations = hospitalisations;
         this.infirmiers = infirmiers;
 
-        this.directeur.addServicesGere(this);
+        if (this.directeur != null)
+            this.directeur.addServicesGere(this);
+    }
+
+    public Service(String code, String nom, Character batiment, Docteur directeur) {
+        this.code = code;
+        this.nom = nom;
+        this.batiment = batiment;
+        this.directeur = directeur;
     }
 
 }

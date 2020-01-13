@@ -76,9 +76,12 @@ public class Hospitalisation {
         this.dateEntree = dateEntree;
         this.dateSortie = dateSortie;
 
-        this.service.addHospitalisation(this);
-        this.chambre.addHospitalisation(this);
-        this.malade.addHospitalisation(this);
+        if (this.service != null)
+            this.service.addHospitalisation(this);
+        if (this.chambre != null)
+            this.chambre.addHospitalisation(this);
+        if (this.malade != null)
+            this.malade.addHospitalisation(this);
     }
 
 }

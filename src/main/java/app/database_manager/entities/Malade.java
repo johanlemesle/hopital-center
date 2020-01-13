@@ -19,8 +19,8 @@ public class Malade extends Personne {
 
     // NUMERO, NOM, PRENOM, TEL, ADRESSE, MUTUELLE
 
-    private HashMap<Integer, Hospitalisation> hospitalisations;
-    private HashMap<Integer, Soin> soins;
+    private HashMap<Integer, Hospitalisation> hospitalisations = new HashMap<>();
+    private HashMap<Integer, Soin> soins = new HashMap<>();
 
     public String getMutuelle() {
         return mutuelle;
@@ -38,14 +38,9 @@ public class Malade extends Personne {
         this.hospitalisations = hospitalisations;
     }
 
-    public HashMap<Integer, Soin> getSoinsRecus() {
+    public HashMap<Integer, Soin> getSoins() {
         return soins;
     }
-
-    public void setSoinsRecus(HashMap<Integer, Soin> soinsRecus) {
-        this.soins = soinsRecus;
-    }
-
     // adders
     public void addHospitalisation(Hospitalisation h) {
         this.hospitalisations.put(h.hashCode(), h);
@@ -61,6 +56,11 @@ public class Malade extends Personne {
         this.mutuelle = mutuelle;
         this.hospitalisations = hospitalisations;
         this.soins = soins;
+    }
+
+    public Malade(String nom, String prenom, String tel, Adresse adresse, String mutuelle) {
+        super(nom, prenom, tel, adresse);
+        this.mutuelle = mutuelle;
     }
 
 }

@@ -9,15 +9,12 @@ import app.database_manager.Specialite;;
  * Docteur
  */
 public class Docteur extends Employe {
-    public Docteur(String nom, String prenom, String tel, Adresse adresse, Specialite specialite) {
-        super(nom, prenom, tel, adresse);
-    }
 
     private Specialite specialite;
     // #NUMERO, SPECIALITE
 
-    private HashMap<Integer, Service> servicesGeres;
-    private HashMap<Integer, Soin> soinsDonnes;
+    private HashMap<Integer, Service> servicesGeres = new HashMap<>();
+    private HashMap<Integer, Soin> soinsDonnes = new HashMap<>();
 
     // getters & setters
     public Specialite getSpecialite() {
@@ -59,6 +56,7 @@ public class Docteur extends Employe {
         this.specialite = specialite;
         this.servicesGeres = servicesGeres;
         this.soinsDonnes = soins;
+
     }
 
 }
