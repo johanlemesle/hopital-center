@@ -71,20 +71,11 @@ public class Chambre {
         this.service = service;
         this.surveillant = surveillant;
         this.nbLits = nbLits;
+
+        if(hospitalisations != null){
         this.hospitalisations = hospitalisations;
+        }
 
-        if (this.service != null)
-            this.service.addChambre(this);
-        if (this.surveillant != null)
-            this.surveillant.addChambre(this);
-    }
-
-    public Chambre(Integer noChambre, Service service, Infirmier surveillant, Byte nbLits) {
-        this.noChambre = noChambre;
-        this.service = service;
-        this.surveillant = surveillant;
-        this.nbLits = nbLits;
-        
         if (this.service != null)
             this.service.addChambre(this);
         if (this.surveillant != null)
