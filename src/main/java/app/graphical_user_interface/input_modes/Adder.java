@@ -64,8 +64,7 @@ public class Adder implements ActionListener {
         workingPane.setBorder(BorderFactory.createTitledBorder("Saisie de : " + typeToAdd.getSimpleName()));
         List<Field> fields = Utils.extractFields(typeToAdd);
         workingPane.setLayout(new BoxLayout(workingPane, BoxLayout.Y_AXIS));
-
-        {
+        if (typeToAdd.getCanonicalName().startsWith(Adder.ENTITIES_PACKAGES_PATH)) {
             idTextField.setEditable(false);
             JPanel jPanel = new JPanel(new GridLayout(1, 2));
 

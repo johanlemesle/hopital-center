@@ -1,6 +1,5 @@
 package app.graphical_user_interface.helpers;
 
-import javax.swing.JTextField;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;

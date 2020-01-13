@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
@@ -42,7 +41,7 @@ public class ListInput extends JPanel implements ActionListener {
         {
             JButton button = new JButton("Ajouter");
             button.addActionListener(this);
-            this.add(button, BorderLayout.SOUTH);
+            inputPanel.add(button);
         }
         adder = new Adder(inputPanel, type);
 

@@ -1,16 +1,6 @@
 package graphical_user_interface;
 
-import java.util.ArrayList;
-
-import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
-
-import app.Hopital;
-import app.database_manager.Adresse;
-import app.database_manager.Specialite;
-import app.database_manager.Utils;
-import app.database_manager.entities.Docteur;
-import app.database_manager.entities.Malade;
 
 /**
  * Unit test for simple App.

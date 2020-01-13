@@ -3,6 +3,7 @@ package app.graphical_user_interface.helpers;
 import java.awt.BorderLayout;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JLabel;
@@ -13,6 +14,8 @@ import javax.swing.table.DefaultTableModel;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 
+import app.database_manager.Utils;
+
 /**
  * ListDisplayer
  */
@@ -22,9 +25,23 @@ public class ListDisplayer extends JPanel {
      *
      */
     private static final long serialVersionUID = -7680091293928844911L;
-    private DefaultTableModel model = new DefaultTableModel();
+    private DefaultTableModel model = new DefaultTableModel() {
+        /**
+         *
+         */
+        private static final long serialVersionUID = 4291712734077871213L;
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+
+            // Only the third column
+            return false;
+        }
+    };
     private JTable jTable = new JTable(model);
     private JLabel infoText = new JLabel("Nombre d'elements : 0");
+
+    private HashMap<Integer, Object> listElements = new HashMap<>();
 
     public ListDisplayer(Class<?> cls) {
         super(new BorderLayout());
@@ -36,12 +53,12 @@ public class ListDisplayer extends JPanel {
 
         model.addColumn("id");
         for (Field f : FieldUtils.getAllFields(cls)) {
-            model.addColumn(f.getName());
+            model.addColumn(Utils.normalizeCamelCase(f.getName()));
         }
 
     }
 
-    public ListDisplayer(Object initial[], Class<?> cls) {
+    public ListDisplayer(Class<?> cls, Object initial[]) {
         this(cls);
         for (Object object : initial) {
             addRow(object);
@@ -56,16 +73,14 @@ public class ListDisplayer extends JPanel {
                 Object obj = FieldUtils.readField(f, e, true);
                 row.add(obj);
             } catch (IllegalAccessException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
         }
 
         model.addRow(row.toArray());
-        // model.fireTableDataChanged();
         model.fireTableRowsInserted(jTable.getRowCount() - 1, jTable.getRowCount());
-        // jTable.getRowCount());
 
+        listElements.put(e.hashCode(), e);
         infoText.setText("Nombre d'elements : " + jTable.getRowCount());
 
     }
