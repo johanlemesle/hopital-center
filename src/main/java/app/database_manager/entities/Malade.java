@@ -10,11 +10,6 @@ import app.database_manager.Personne;
  */
 public class Malade extends Personne {
 
-    public Malade(String nom, String prenom, String tel, Adresse adresse) {
-        super(nom, prenom, tel, adresse);
-        // TODO Auto-generated constructor stub
-    }
-
     private String mutuelle;
 
     // NUMERO, NOM, PRENOM, TEL, ADRESSE, MUTUELLE
@@ -41,6 +36,7 @@ public class Malade extends Personne {
     public HashMap<Integer, Soin> getSoins() {
         return soins;
     }
+
     // adders
     public void addHospitalisation(Hospitalisation h) {
         this.hospitalisations.put(h.hashCode(), h);
@@ -57,10 +53,4 @@ public class Malade extends Personne {
         this.hospitalisations = hospitalisations;
         this.soins = soins;
     }
-
-    public Malade(String nom, String prenom, String tel, Adresse adresse, String mutuelle) {
-        super(nom, prenom, tel, adresse);
-        this.mutuelle = mutuelle;
-    }
-
 }

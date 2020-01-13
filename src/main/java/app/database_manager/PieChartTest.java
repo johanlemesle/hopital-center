@@ -61,7 +61,7 @@ public class PieChartTest extends ApplicationFrame {
 
       public void tst(Hopital hopital) {
             Malade johan = new Malade("Lemesle", "Johan", "06 06 06 06 06",
-                        new Adresse("12", "rue", "de la Bretonne", "78220", "Viroflay"));
+                        new Adresse("12", "de la Bretonne", "78220", "Viroflay", TypeVoie.rue), "", null, null);
             Malade redoine = new Malade("Lahdiri", "Redoine", "0708070982",
                         new Adresse("37", "quai", "de grenelle", "75015", "Juvisy sur Marne"));
             Malade john = new Malade("Dark", "John", "0353426153",
