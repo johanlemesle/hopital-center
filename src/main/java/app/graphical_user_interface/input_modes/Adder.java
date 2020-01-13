@@ -25,7 +25,6 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import app.database_manager.EntityID;
 import app.database_manager.Utils;
-import app.graphical_user_interface.helpers.EntityInputWindow;
 import app.graphical_user_interface.helpers.EntityInputHelper;
 import app.graphical_user_interface.helpers.HintTextField;
 import app.graphical_user_interface.helpers.JTextFieldLimit;
