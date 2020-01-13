@@ -52,7 +52,7 @@ public class ListDisplayer extends JPanel {
         this.add(jsp);
 
         model.addColumn("id");
-        for (Field f : FieldUtils.getAllFields(cls)) {
+        for (Field f : Utils.extractFields(cls)) {
             model.addColumn(Utils.normalizeCamelCase(f.getName()));
         }
 
@@ -68,7 +68,7 @@ public class ListDisplayer extends JPanel {
     public void addRow(Object e) {
         List<Object> row = new ArrayList<>();
         row.add(e.hashCode());
-        for (Field f : FieldUtils.getAllFieldsList(e.getClass())) {
+        for (Field f : Utils.extractFields(e.getClass())) {
             try {
                 Object obj = FieldUtils.readField(f, e, true);
                 row.add(obj);

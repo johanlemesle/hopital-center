@@ -76,7 +76,7 @@ public class Adder implements ActionListener {
         }
 
         for (final Field field : fields) {
-            if (field.getType().isAssignableFrom(EntityID.class) || Modifier.isStatic(field.getModifiers()))
+            if (field.getType().isAssignableFrom(EntityID.class))
                 continue;
             Component inputField = null;
             if (field.getType().isEnum()) {

@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.net.URL;
 import java.util.ArrayList;
@@ -26,25 +27,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
-
 /**
  * utils
  */
 public class Utils {
-
-    public static Object extract(String what, Object fromWhere, Object... args) {
-
-        if (fromWhere instanceof Map<?, ?> || fromWhere instanceof Collection<?>)
-            return invokeFunction("get", fromWhere, args);
-        else
-            try {
-                return FieldUtils.readField(fromWhere, what, true);
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                return invokeFunction("get" + StringUtils.capitalize(what), fromWhere);
-            }
-    }
 
     public static Object invokeFunction(final String functionName, final Object obj, final Object... args) {
         final Class<?> paramsTypes[] = new Class[args.length];
@@ -139,7 +125,7 @@ public class Utils {
                     object = ((Pair<?, ?>) object).getValue();
                 }
                 ArrayList<Pair<String, Object>> tPairs = new ArrayList<>();
-                for (Object obj : getCollection(getFieldValue(what, object))) {
+                for (Object obj : getCollection(FieldUtils.readField(object, what, true))) {
                     if (obj instanceof Pair<?, ?>) {
                         Pair<?, ?> p = (Pair<?, ?>) obj;
                         tPairs.add(Pair.of(p.getKey().toString(), p.getValue()));
@@ -182,20 +168,6 @@ public class Utils {
         fields.addAll(Arrays.asList(type.getDeclaredFields()));
 
         return fields;
-    }
-
-    private static Object getFieldValue(final String fieldName, final Object parent) throws IllegalAccessException,
-            IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-        if (fieldName.equals("*")) {
-            final ArrayList<Pair<String, Object>> fArrayList = new ArrayList<>();
-            for (final Field f : getAllFields(new ArrayList<>(), parent.getClass())) {
-                fArrayList.add(Pair.of(f.getName(), getFieldValue(f.getName(), parent)));
-            }
-            return fArrayList;
-
-        } else {
-            return extract(fieldName, parent);
-        }
     }
 
     private static ArrayList<Object> getCollection(final Object obj) {
@@ -249,21 +221,10 @@ public class Utils {
         }
 
         Object ob = null;
+
         try {
-            ob = getFieldValue(elem.toString(), obj);
+            ob = FieldUtils.readField(obj, elem.toString(), true);
         } catch (IllegalAccessException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (SecurityException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -320,7 +281,8 @@ public class Utils {
     public static List<Field> extractFields(Class<?> fromWhere) {
         List<Field> result = new ArrayList<>();
         for (Field field : getAllFields(new ArrayList<Field>(), fromWhere)) {
-            result.add(field);
+            if (!Modifier.isStatic(field.getModifiers()))
+                result.add(field);
         }
 
         return result;
