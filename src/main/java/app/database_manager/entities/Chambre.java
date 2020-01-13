@@ -72,8 +72,8 @@ public class Chambre {
         this.surveillant = surveillant;
         this.nbLits = nbLits;
 
-        if(hospitalisations != null){
-        this.hospitalisations = hospitalisations;
+        if (hospitalisations != null) {
+            this.hospitalisations = hospitalisations;
         }
 
         if (this.service != null)
