@@ -36,9 +36,9 @@ public class InputDigestor extends JPanel implements ActionListener {
 
     public void addMode() {
         final HashMap<String, Class<?>> possibleVMap = new HashMap<>();
-        final String possibleValues[] = new String[Adder.entities.length];
+        final String possibleValues[] = new String[Adder.ENTITIES.length];
         int i = 0;
-        for (final Class<?> cl : Adder.entities) {
+        for (final Class<?> cl : Adder.ENTITIES) {
             possibleValues[i] = cl.getSimpleName();
             possibleVMap.put(possibleValues[i], cl);
             i++;

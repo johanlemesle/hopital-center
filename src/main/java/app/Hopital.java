@@ -42,18 +42,29 @@ public class Hopital implements Serializable {
     // adders
     public void addService(Service s) {
         services.put(s.hashCode(), s);
+
+        hospitalisations.putAll(s.getHospitalisations());
+        chambres.putAll(s.getChambres());
+        infirmiers.putAll(s.getInfirmiers());
     }
 
     public void addInfirmier(Infirmier i) {
         infirmiers.put(i.hashCode(), i);
+        chambres.putAll(i.getChambres());
     }
 
     public void addDocteur(Docteur d) {
         docteurs.put(d.hashCode(), d);
+
+        services.putAll(d.getServicesGeres());
+        soins.putAll(d.getSoinsDonnes());
     }
 
     public void addMalade(Malade m) {
         malades.put(m.hashCode(), m);
+
+        hospitalisations.putAll(m.getHospitalisations());
+        soins.putAll(m.getSoinsRecus());
     }
 
     public void addEmploye(Employe e) {
@@ -62,6 +73,8 @@ public class Hopital implements Serializable {
 
     public void addChambre(Chambre c) {
         chambres.put(c.hashCode(), c);
+
+        hospitalisations.putAll(c.getHospitalisations());
     }
 
     public void addHospitalisation(Hospitalisation h) {

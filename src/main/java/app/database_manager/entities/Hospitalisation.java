@@ -1,6 +1,6 @@
 package app.database_manager.entities;
 
-import java.util.Date;
+import app.database_manager.Date;
 
 /**
  * Hospitalisation

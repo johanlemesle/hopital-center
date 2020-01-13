@@ -10,12 +10,10 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,13 +21,11 @@ import javax.swing.JTextField;
 
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
-import org.apache.commons.lang3.reflect.TypeUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import app.database_manager.EntityID;
 import app.database_manager.Utils;
-import app.graphical_user_interface.helpers.EntityInputWindow;
-import app.graphical_user_interface.helpers.HashMapInput;
+import app.graphical_user_interface.helpers.EntityInputHelper;
 import app.graphical_user_interface.helpers.HintTextField;
 import app.graphical_user_interface.helpers.JTextFieldLimit;
 
@@ -42,24 +38,23 @@ public class Adder implements ActionListener {
      *
      */
 
-    private EntityInputWindow entityInputWindow = null;
     private Object theEntity = null;
     private JTextField idTextField = new JTextField();
 
     private List<Pair<Class<?>, Component>> inputFields = new ArrayList<>();
     private Class<?> typeToAdd;
-    public static final Class<?>[] entities;
+    public static final Class<?>[] ENTITIES;
+    public static final String ENTITIES_PACKAGES_PATH = "app.database_manager.entities";
 
     static {
-        String entitiesPackagePath = "app.database_manager.entities";
         Class<?>[] tmp = null;
         try {
-            tmp = Utils.getClasses(entitiesPackagePath);
+            tmp = Utils.getClasses(ENTITIES_PACKAGES_PATH);
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
             System.exit(1);
         }
-        entities = tmp;
+        ENTITIES = tmp;
 
     }
 
@@ -91,14 +86,16 @@ public class Adder implements ActionListener {
                 }
                 inputField = jcb;
             } else if (field.getType().isAssignableFrom(Character.class)) {
-                inputField = new JTextFieldLimit(1);
-            } else if (!Utils.isStandardType(field.getType())) {
-                JButton button = new JButton("saisie de " + field.getType().getSimpleName());
-                button.addActionListener(this);
-                inputField = button;
-                entityInputWindow = new EntityInputWindow(field.getType(), workingPane);
+                inputField = new JTextFieldLimit(1, "Saisir " + Utils.normalizeCamelCase(field.getName()) + " (type : "
+                        + field.getType().getSimpleName() + ")");
+            } else if (field.getType().isAssignableFrom(String.class)
+                    || Number.class.isAssignableFrom(field.getType())) {
+                inputField = new HintTextField("Saisir " + Utils.normalizeCamelCase(field.getName()) + " (type : "
+                        + field.getType().getSimpleName() + ")");
             } else {
-                inputField = new HintTextField("Saisir " + Utils.normalizeCamelCase(field.getName()));
+                EntityInputHelper eih = new EntityInputHelper(field);
+                eih.addActionListener(this);
+                inputField = eih;
             }
 
             if (inputField.getClass().isAssignableFrom(JTextField.class)) {
@@ -154,6 +151,8 @@ public class Adder implements ActionListener {
                     args[i] = NumberUtils.createInteger(((JTextField) pair.getRight()).getText());
                 } else if (pair.getLeft().isAssignableFrom(Byte.class)) {
                     args[i] = Byte.parseByte(((JTextField) pair.getRight()).getText());
+                } else if (pair.getLeft().isAssignableFrom(Character.class)) {
+                    args[i] = (Character) ((JTextField) pair.getRight()).getText().charAt(0);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -165,8 +164,7 @@ public class Adder implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        entityInputWindow.setVisible(true);
-        theEntity = entityInputWindow.getEntity();
+        ((EntityInputHelper) e.getSource()).getEntity();
     }
 
 }
