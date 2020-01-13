@@ -4,7 +4,7 @@ public class Adresse {
     private final String numVoie, codePostal;
 
     private final String commune, nomVoie;
-    private final String typeVoie;
+    private final TypeVoie typeVoie;
 
     @Override
     public String toString() {
@@ -12,7 +12,7 @@ public class Adresse {
     }
 
     public Adresse(final String numVoie, final String codePostal, final String commune, final String nomVoie,
-            final String typeVoie) {
+            final TypeVoie typeVoie) {
         this.numVoie = numVoie;
         this.codePostal = codePostal;
         this.commune = commune;

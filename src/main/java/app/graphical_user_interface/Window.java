@@ -35,7 +35,9 @@ public class Window extends JFrame {
         this.add(sp2); // pour ajouter dans la frame
 
         // trivial
-        this.setSize(500, 500);
+        this.pack();
+        this.setSize(800, 600);
+        this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         this.setVisible(true);

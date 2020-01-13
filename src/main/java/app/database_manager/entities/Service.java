@@ -79,6 +79,18 @@ public class Service {
         this.infirmiers.put(i.hashCode(), i);
     }
 
+    public void setBatiment(Character batiment) {
+        this.batiment = batiment;
+    }
+
+    public HashMap<Integer, Infirmier> getInfirmiers() {
+        return infirmiers;
+    }
+
+    public void setInfirmiers(HashMap<Integer, Infirmier> infirmiers) {
+        this.infirmiers = infirmiers;
+    }
+
     public Service(String code, String nom, char batiment, Docteur directeur, HashMap<Integer, Chambre> chambres,
             HashMap<Integer, Hospitalisation> hospitalisations, HashMap<Integer, Infirmier> infirmiers) {
         this.code = code;
@@ -91,13 +103,6 @@ public class Service {
 
         if (this.directeur != null)
             this.directeur.addServicesGere(this);
-    }
-
-    public Service(String code, String nom, Character batiment, Docteur directeur) {
-        this.code = code;
-        this.nom = nom;
-        this.batiment = batiment;
-        this.directeur = directeur;
     }
 
 }

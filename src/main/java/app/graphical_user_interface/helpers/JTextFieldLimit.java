@@ -1,20 +1,19 @@
 package app.graphical_user_interface.helpers;
 
-import javax.swing.JTextField;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
 
-public class JTextFieldLimit extends JTextField {
+public class JTextFieldLimit extends HintTextField {
     /**
      *
      */
     private static final long serialVersionUID = -5280709831628634114L;
     private int limit;
 
-    public JTextFieldLimit(int limit) {
-        super();
+    public JTextFieldLimit(int limit, String hint) {
+        super(hint);
         this.limit = limit;
     }
 
