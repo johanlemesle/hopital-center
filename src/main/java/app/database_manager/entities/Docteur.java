@@ -10,6 +10,15 @@ import app.database_manager.Specialite;;
  */
 public class Docteur extends Employe {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 5496168158738482984L;
+
+    /**
+     *
+     */
+
     private Specialite specialite;
     // #NUMERO, SPECIALITE
 
@@ -54,8 +63,11 @@ public class Docteur extends Employe {
             HashMap<Integer, Service> servicesGeres, HashMap<Integer, Soin> soins) {
         super(nom, prenom, tel, adresse);
         this.specialite = specialite;
-        this.servicesGeres = servicesGeres;
-        this.soinsDonnes = soins;
+
+        if (servicesGeres != null)
+            this.servicesGeres = servicesGeres;
+        if (soins != null)
+            this.soinsDonnes = soins;
 
     }
 

@@ -1,4 +1,4 @@
-package app.database_manager;
+package app.graphical_user_interface;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -15,6 +15,11 @@ import org.jfree.data.general.PieDataset;
 import org.jfree.ui.RefineryUtilities;
 
 import app.Hopital;
+import app.database_manager.Adresse;
+import app.database_manager.Rotation;
+import app.database_manager.Specialite;
+import app.database_manager.TypeVoie;
+import app.database_manager.Utils;
 import app.database_manager.entities.Chambre;
 import app.database_manager.entities.Docteur;
 import app.database_manager.entities.Hospitalisation;
@@ -59,46 +64,51 @@ public class PieChartTest extends ApplicationFrame {
             return new ChartPanel(chart);
       }
 
-      public void tst(Hopital hopital) {
+      public static void tst(Hopital hopital) {
             Malade johan = new Malade("Lemesle", "Johan", "06 06 06 06 06",
-                        new Adresse("12", "de la Bretonne", "78220", "Viroflay", TypeVoie.rue), "", null, null);
+                        new Adresse("12", "de la Bretonne", "78220", "Viroflay", TypeVoie.rue), "MU", null, null);
             Malade redoine = new Malade("Lahdiri", "Redoine", "0708070982",
-                        new Adresse("37", "quai", "de grenelle", "75015", "Juvisy sur Marne"));
+                        new Adresse("37", "de grenelle", "75015", "Juvisy sur Marne", TypeVoie.avenue), "MU", null,
+                        null);
+
             Malade john = new Malade("Dark", "John", "0353426153",
-                        new Adresse("26", "quai", "de grounelle", "75003", "Paris sur Orge"));
+                        new Adresse("26", "de grounelle", "75003", "Paris sur Orge", TypeVoie.boulevard), "MU", null,
+                        null);
+
             Malade hermione = new Malade("Granger", "Hermione", "0023212322",
-                        new Adresse("21", "allée", "de poudlard", "91200", "Marseille sur Orge"));
+                        new Adresse("21", "de poudlard", "91200", "Marseille sur Orge", TypeVoie.place), "MU", null,
+                        null);
             Malade walid = new Malade("jabari", "walid", "0767248491",
-                        new Adresse("3", "rue", "Lazare Carnot", "78220", "Viroflay"));
+                        new Adresse("3", "Lazare Carnot", "78220", "Viroflay", TypeVoie.boulevard), "MU", null, null);
             Malade jacques = new Malade("chirac", "jacques", "0767123491",
-                        new Adresse("2", "rue", "Laurent Blanc", "78220", "Viroflay"));
+                        new Adresse("2", "Laurent Blanc", "78220", "Viroflay", TypeVoie.rue), "MU", null, null);
 
             Docteur poulain = new Docteur("Poulain", "Philippe", "0102030405",
-                        new Adresse("10", "Boulevard", "du Général Leclerc", "78140", "Vélizy Villacoublay"),
+                        new Adresse("10", "du Général Leclerc", "78140", "Vélizy Villacoublay", TypeVoie.avenue),
                         Specialite.generaliste, null, null);
             Docteur bibiche = new Docteur("Bibiche", "Ichli", "0165345321",
-                        new Adresse("9", "rue", "du Dassault Dassault", "78140", "Vélizy Villacoublay"),
+                        new Adresse("9", "du Dassault Dassault", "78140", "Vélizy Villacoublay", TypeVoie.avenue),
                         Specialite.generaliste, null, null);
 
-            Service urgence = new Service("URG", "Urgences", 'B', poulain);
-            Service pediatrie = new Service("PED", "Pediatrie", 'B', poulain);
-            Service asile = new Service("ASL", "Asile", 'B', poulain);
-            Service radiologie = new Service("RAD", "Radiologie", 'A', bibiche);
+            Service urgence = new Service("URG", "Urgences", 'B', poulain, null, null, null);
+            Service pediatrie = new Service("PED", "Pediatrie", 'B', poulain, null, null, null);
+            Service asile = new Service("ASL", "Asile", 'B', poulain, null, null, null);
+            Service radiologie = new Service("RAD", "Radiologie", 'A', bibiche, null, null, null);
 
             Infirmier marec = new Infirmier("Marec", "Affeli", "0670223410",
-                        new Adresse("12", "avenue", "Lazare Carnot", "78220", "Viroflay"), asile, Rotation.Jour, 1540.4,
-                        null);
+                        new Adresse("12", "Lazare Carnot", "78220", "Viroflay", TypeVoie.avenue), asile, Rotation.Jour,
+                        1540.4, null);
 
             Infirmier jamel = new Infirmier("Debbouze", "Jamel", "0654237612",
-                        new Adresse("11", "avenue", "Lazare ", "78220", "Luciole"), asile, Rotation.Jour, 1520.09,
-                        null);
+                        new Adresse("11", "Lazare ", "78220", "Luciole", TypeVoie.avenue), asile, Rotation.Jour,
+                        1520.09, null);
             Infirmier ramzi = new Infirmier("Kika", "Ramzi", "0654237612",
-                        new Adresse("11", "avenue", "Lazare ", "78220", "Luciole"), radiologie, Rotation.Jour, 1520.1,
-                        null);
+                        new Adresse("11", "Lazare ", "78220", "Luciole", TypeVoie.boulevard), radiologie, Rotation.Jour,
+                        1520.1, null);
 
             Infirmier diane = new Infirmier("Vilandrau", "Diane", "0654237612",
-                        new Adresse("11", "avenue", "Bleuet ", "78220", "Luciole"), pediatrie, Rotation.Jour, 1520.4,
-                        null);
+                        new Adresse("11", "Bleuet ", "78220", "Luciole", TypeVoie.avenue), pediatrie, Rotation.Jour,
+                        1520.4, null);
 
             Chambre room205 = new Chambre(205, asile, marec, (byte) 5, null);
 

@@ -1,6 +1,13 @@
 package app.database_manager;
 
-public class Adresse {
+import java.io.Serializable;
+
+public class Adresse implements Serializable {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1258730039783652713L;
+
     private final String numVoie, codePostal;
 
     private final String commune, nomVoie;

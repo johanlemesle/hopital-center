@@ -1,10 +1,16 @@
 package app.database_manager;
 
+import java.io.Serializable;
+
 /**
  * Date
  */
-public class Date {
+public class Date implements Serializable {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 3996112805605815166L;
     private Byte jour;
     private Integer annee;
     private Mois mois;

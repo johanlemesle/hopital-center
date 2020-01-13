@@ -26,7 +26,6 @@ public class App {
                 } catch (Exception e1) {
                         tmp = new Hopital();
                         e1.printStackTrace();
-                        tmp = new Hopital();
                 }
                 hopital = tmp;
 
@@ -59,4 +58,5 @@ public class App {
         public static void main(String[] args) {
 
         }
+
 }

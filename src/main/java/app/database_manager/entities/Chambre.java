@@ -1,11 +1,16 @@
 package app.database_manager.entities;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Chambre
  */
-public class Chambre {
+public class Chambre implements Serializable{
+    /**
+     *
+     */
+    private static final long serialVersionUID = 5461061576591282066L;
     private Integer noChambre;
     private Service service;
     private Infirmier surveillant;

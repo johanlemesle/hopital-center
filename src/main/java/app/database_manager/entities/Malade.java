@@ -10,6 +10,11 @@ import app.database_manager.Personne;
  */
 public class Malade extends Personne {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 2147153715399729811L;
+
     private String mutuelle;
 
     // NUMERO, NOM, PRENOM, TEL, ADRESSE, MUTUELLE
@@ -50,7 +55,10 @@ public class Malade extends Personne {
             HashMap<Integer, Hospitalisation> hospitalisations, HashMap<Integer, Soin> soins) {
         super(nom, prenom, tel, adresse);
         this.mutuelle = mutuelle;
-        this.hospitalisations = hospitalisations;
-        this.soins = soins;
+
+        if (hospitalisations != null)
+            this.hospitalisations = hospitalisations;
+        if (soins != null)
+            this.soins = soins;
     }
 }

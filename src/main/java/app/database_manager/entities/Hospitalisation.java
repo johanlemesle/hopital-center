@@ -1,11 +1,17 @@
 package app.database_manager.entities;
 
+import java.io.Serializable;
+
 import app.database_manager.Date;
 
 /**
  * Hospitalisation
  */
-public class Hospitalisation {
+public class Hospitalisation implements Serializable {
+    /**
+     *
+     */
+    private static final long serialVersionUID = -4640402480504115378L;
     private Malade malade;
     private Service service;
     private Chambre chambre;

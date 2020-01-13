@@ -1,12 +1,19 @@
 package app.database_manager.entities;
 
+import java.io.Serializable;
+
 import app.database_manager.Date;
 
 /**
  * Soin
  */
-public class Soin {
+public class Soin implements Serializable {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -8276439793583415702L;
+    
     private Docteur docteur;
     private Malade malade;
     private Date date;

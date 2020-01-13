@@ -64,7 +64,7 @@ public class Hopital implements Serializable {
         malades.put(m.hashCode(), m);
 
         hospitalisations.putAll(m.getHospitalisations());
-        soins.putAll(m.getSoinsRecus());
+        soins.putAll(m.getSoins());
     }
 
     public void addEmploye(Employe e) {

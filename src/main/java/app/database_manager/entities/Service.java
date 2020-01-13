@@ -1,8 +1,14 @@
 package app.database_manager.entities;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Service {
+public class Service implements Serializable {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 2562315473872281073L;
+    
     private String code;
     private String nom;
     private Character batiment;
@@ -97,10 +103,13 @@ public class Service {
         this.nom = nom;
         this.batiment = batiment;
         this.directeur = directeur;
-        this.chambres = chambres;
-        this.hospitalisations = hospitalisations;
-        this.infirmiers = infirmiers;
 
+        if (hospitalisations != null)
+            this.hospitalisations = hospitalisations;
+        if (chambres != null)
+            this.chambres = chambres;
+        if (infirmiers != null)
+            this.infirmiers = infirmiers;
         if (this.directeur != null)
             this.directeur.addServicesGere(this);
     }

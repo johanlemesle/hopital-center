@@ -6,6 +6,10 @@ import app.database_manager.Adresse;
 import app.database_manager.Rotation;
 
 public class Infirmier extends Employe {
+    /**
+     *
+     */
+    private static final long serialVersionUID = -6240405508390737601L;
     private Service service;
     private Rotation rotation;
     private Double salaire;

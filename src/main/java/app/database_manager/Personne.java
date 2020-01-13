@@ -1,12 +1,18 @@
 package app.database_manager;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang3.StringUtils;
 
 /**
  * Personne
  */
-public class Personne {
+public class Personne implements Serializable {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -1654069277090892509L;
     protected EntityID numero;
     protected String nom, prenom, tel;
     protected Adresse adresse;
