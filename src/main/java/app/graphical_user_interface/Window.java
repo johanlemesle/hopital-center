@@ -23,7 +23,7 @@ public class Window extends JFrame {
         super("Gestionnaire de centre hospitallier");
         selection = new ActionSelector(this);
         saisie = new InputDigestor(this);
-        resultats = new ResultDisplayer();
+      //  resultats = new ResultDisplayer();
 
         // pour separer les panels
         JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, selection, saisie);
