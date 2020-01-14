@@ -8,16 +8,13 @@ import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import app.App;
-import app.Hopital;
 import app.graphical_user_interface.helpers.ListDialog;
-import app.graphical_user_interface.helpers.RechercheChoix;
+import app.graphical_user_interface.input_modes.Deleter;
 import app.graphical_user_interface.input_modes.EntityBuilder;
 import app.graphical_user_interface.input_modes.Modifier;
 import app.graphical_user_interface.input_modes.Searcher;
-import app.graphical_user_interface.input_modes.Deleter;
 
 /**
  * InputDigester

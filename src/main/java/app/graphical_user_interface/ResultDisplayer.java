@@ -3,17 +3,15 @@ package app.graphical_user_interface;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import app.database_manager.Utils;
+import app.graphical_user_interface.display_modes.QueryResultDisplayer;
 import app.graphical_user_interface.helpers.ListDisplayer;
 import app.graphical_user_interface.helpers.TableDeleter;
-import app.graphical_user_interface.display_modes.QueryResultDisplayer;
 
 /**
  * ResultDisplayer

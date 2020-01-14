@@ -4,9 +4,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JCheckBox;
@@ -15,8 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.apache.commons.lang3.reflect.FieldUtils;
-
 import app.database_manager.Utils;
 
 /**
@@ -24,29 +20,31 @@ import app.database_manager.Utils;
  */
 public class RechercheChoix extends JPanel implements ActionListener {
 
-    
-	/**
+    /**
      *
      */
     private static final long serialVersionUID = 1L;
     /**
      *
      */
-	private JCheckBox parent;
+    private JCheckBox parent;
     private Class<?> type;
     private String name;
     private JTextField txtField = null;
+    private JFrame forChildren;
 
     private List<RechercheChoix> children = new ArrayList<>();
 
     public RechercheChoix(JCheckBox parent, Class<?> type, String name) {
+
+        forChildren = new JFrame("Les enfants de " + name);
+        forChildren.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.parent = parent;
         this.type = type;
         this.name = name;
 
-        final JLabel jl2 = new JLabel(this.name);
         final JPanel jPanel2 = new JPanel(new GridLayout(1, 2));
-        jPanel2.add(jl2);
+        parent.setText(this.name);
         jPanel2.add(parent);
         if (Utils.isStandardType(type)) {
             txtField = new JTextField();

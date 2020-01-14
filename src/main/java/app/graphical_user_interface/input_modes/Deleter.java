@@ -1,32 +1,25 @@
 package app.graphical_user_interface.input_modes;
 
-import java.awt.GridLayout;
-import java.awt.LayoutManager;
 //import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import app.App;
 import app.Hopital;
 import app.database_manager.Utils;
-import app.graphical_user_interface.Window;
 
 /**
  * Deleter
