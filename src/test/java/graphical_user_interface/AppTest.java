@@ -1,6 +1,12 @@
 package graphical_user_interface;
 
+import java.lang.reflect.Field;
+
 import org.junit.Test;
+
+import app.database_manager.Adresse;
+import app.database_manager.TypeVoie;
+import app.database_manager.entities.Malade;
 
 /**
  * Unit test for simple App.
@@ -18,6 +24,7 @@ public class AppTest {
          */
         @Test
         public void test1() {
+         
 
         }
 

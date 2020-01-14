@@ -24,7 +24,7 @@ public class ResultDisplayer extends JPanel {
 
     public void displayQueryOutput(ArrayList<Pair<String, Object>> arrayList) {
         QueryResultDisplayer qrd = new QueryResultDisplayer(this, arrayList);
-        
+
     }
 
 }

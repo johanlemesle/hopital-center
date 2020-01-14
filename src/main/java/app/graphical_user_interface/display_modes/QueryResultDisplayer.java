@@ -2,6 +2,7 @@ package app.graphical_user_interface.display_modes;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -67,7 +68,11 @@ public class QueryResultDisplayer {
                     if (nextDepth.get(0).getRight() instanceof Collection<?>) {
                         getColumns(nextDepth, target);
                     } else {
-                        target.add(Pair.of(pair.getLeft(), al));
+                        Object tmpArr[] = new Object[nextDepth.size()];
+                        for (int i = 0; i < tmpArr.length; i++) {
+                            tmpArr[i] = nextDepth.get(i).getRight();
+                        }
+                        target.add(Pair.of(pair.getLeft(), Arrays.asList(tmpArr)));
                     }
                 }
             }

@@ -31,14 +31,6 @@ public class Personne implements Serializable {
         return (nom + prenom + tel).hashCode();
     }
 
-    public EntityID getNumero() {
-        return numero;
-    }
-
-    public void setNumero(EntityID numero) {
-        this.numero = numero;
-    }
-
     public String getNom() {
         return nom;
     }
