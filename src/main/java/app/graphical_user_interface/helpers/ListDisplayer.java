@@ -1,6 +1,8 @@
 package app.graphical_user_interface.helpers;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +21,7 @@ import app.database_manager.Utils;
 /**
  * ListDisplayer
  */
-public class ListDisplayer extends JPanel {
+public class ListDisplayer {
 
     /**
      *
@@ -33,8 +35,6 @@ public class ListDisplayer extends JPanel {
 
         @Override
         public boolean isCellEditable(int row, int column) {
-
-            // Only the third column
             return false;
         }
     };
@@ -43,23 +43,38 @@ public class ListDisplayer extends JPanel {
 
     private HashMap<Integer, Object> listElements = new HashMap<>();
 
-    public ListDisplayer(Class<?> cls) {
-        super(new BorderLayout());
+    public ListDisplayer(JPanel workingPane, Class<?> cls) {
+        workingPane.removeAll();
+        workingPane.revalidate();
+        workingPane.setLayout(new BorderLayout());
         JScrollPane jsp = new JScrollPane(jTable);
         jTable.setFillsViewportHeight(true);
+        jTable.addMouseListener(new MouseAdapter() {
 
-        this.add(infoText, BorderLayout.NORTH);
-        this.add(jsp);
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    int row = jTable.getSelectedRow();
+                    Object obj = listElements.get(jTable.getValueAt(row, 0));
+                    EntityInputWindow euw = new EntityInputWindow(obj);
+                    euw.setVisible(true);
+                }
+            }
+        });
+
+        workingPane.add(infoText, BorderLayout.NORTH);
+        workingPane.add(jsp);
 
         model.addColumn("id");
         for (Field f : Utils.extractFields(cls)) {
             model.addColumn(Utils.normalizeCamelCase(f.getName()));
         }
+        workingPane.repaint();
 
     }
 
-    public ListDisplayer(Class<?> cls, Object initial[]) {
-        this(cls);
+    public ListDisplayer(JPanel workingPane, Class<?> cls, Object initial[]) {
+        this(workingPane, cls);
         for (Object object : initial) {
             addRow(object);
         }

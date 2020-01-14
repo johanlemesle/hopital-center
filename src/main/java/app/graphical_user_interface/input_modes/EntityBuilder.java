@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import app.database_manager.EntityID;
@@ -33,7 +34,7 @@ import app.graphical_user_interface.helpers.JTextFieldLimit;
 /**
  * Add
  */
-public class Adder implements ActionListener {
+public class EntityBuilder implements ActionListener {
 
     /**
      *
@@ -59,13 +60,122 @@ public class Adder implements ActionListener {
 
     }
 
-    public Adder(final JPanel workingPane, Class<?> typeToAdd) {
+    /*
+     * public EntityBuilder(final JPanel workingPane, Object e) {
+     * 
+     * this.typeToAdd = e.getClass();
+     * workingPane.setBorder(BorderFactory.createTitledBorder("Saisie de : " +
+     * typeToAdd.getSimpleName())); workingPane.setLayout(new BoxLayout(workingPane,
+     * BoxLayout.Y_AXIS)); if
+     * (typeToAdd.getCanonicalName().startsWith(EntityBuilder.ENTITIES_PACKAGES_PATH
+     * )) { idTextField.setEditable(false); JPanel jPanel = new JPanel(new
+     * GridLayout(1, 2));
+     * 
+     * jPanel.add(new JLabel("id de l'entite")); jPanel.add(idTextField);
+     * 
+     * workingPane.add(jPanel); } int i = 0; for (Field field :
+     * Utils.extractFields(e.getClass())) { Component inputField = null; try {
+     * Object obj = FieldUtils.readField(field, e, true); if
+     * (field.getType().isEnum()) { JComboBox<Object> jcb = new JComboBox<>(); for
+     * (Object item : field.getType().getEnumConstants()) { jcb.addItem(item); }
+     * inputField = jcb; } else{ inputField = new JTextField(obj.toString()); }
+     * inputFields.add(i, Pair.of(field.getType(), inputField)); JPanel jPanel = new
+     * JPanel(new GridLayout(1, 2)); jPanel.add(new
+     * JLabel(Utils.normalizeCamelCase(field.getName()))); jPanel.add(inputField);
+     * 
+     * workingPane.add(jPanel); i++; } catch (IllegalAccessException e1) { // TODO
+     * Auto-generated catch block e1.printStackTrace(); } } }
+     */
+    public EntityBuilder(final JPanel workingPane, Object e) {
+        
+        this.typeToAdd = e.getClass();
+        workingPane.setBorder(BorderFactory.createTitledBorder("Saisie de : " + typeToAdd.getSimpleName()));
+        List<Field> fields = Utils.extractFields(typeToAdd);
+        workingPane.setLayout(new BoxLayout(workingPane, BoxLayout.Y_AXIS));
+        if (typeToAdd.getCanonicalName().startsWith(EntityBuilder.ENTITIES_PACKAGES_PATH)) {
+            idTextField.setEditable(false);
+            JPanel jPanel = new JPanel(new GridLayout(1, 2));
+
+            jPanel.add(new JLabel("id de l'entite"));
+            jPanel.add(idTextField);
+
+            workingPane.add(jPanel);
+        }
+
+        for (Field field : fields) {
+            try {
+                Object obj = FieldUtils.readField(field, e, true);
+                if (field.getType().isAssignableFrom(EntityID.class))
+                    continue;
+                Component inputField = null;
+                if (field.getType().isEnum()) {
+                    JComboBox<Object> jcb = new JComboBox<>();
+                    for (Object item : field.getType().getEnumConstants()) {
+                        jcb.addItem(item);
+                    }
+                    inputField = jcb;
+                } else if (field.getType().isAssignableFrom(Character.class)) {
+                    inputField = new JTextField(obj.toString());
+                } else if (field.getType().isAssignableFrom(String.class)
+                        || Number.class.isAssignableFrom(field.getType())) {
+                    inputField = new JTextField(obj.toString());
+                } else {
+                    EntityInputHelper eih = new EntityInputHelper(field, obj);
+                    eih.addActionListener(this);
+                    eih.setActionCommand("update");
+                    inputField = eih;
+                }
+
+                if (inputField.getClass().isAssignableFrom(JTextField.class)) {
+                    inputField.addKeyListener(new KeyListener() {
+
+                        @Override
+                        public void keyTyped(KeyEvent ke) {
+                            try {
+                                theEntity = buildEntity();
+                                idTextField.setText(String.valueOf(theEntity.hashCode()));
+                            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException
+                                    | InstantiationException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void keyReleased(KeyEvent arg0) {
+
+                        }
+
+                        @Override
+                        public void keyPressed(KeyEvent arg0) {
+
+                        }
+                    });
+
+                }
+                if (inputField != null) {
+                    inputFields.add(Pair.of(field.getType(), inputField));
+
+                    JPanel jPanel = new JPanel(new GridLayout(1, 2));
+                    jPanel.add(new JLabel(Utils.normalizeCamelCase(field.getName())));
+                    jPanel.add(inputField);
+
+                    workingPane.add(jPanel);
+                }
+            } catch (IllegalAccessException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+
+        } 
+    }
+
+    public EntityBuilder(final JPanel workingPane, Class<?> typeToAdd) {
 
         this.typeToAdd = typeToAdd;
         workingPane.setBorder(BorderFactory.createTitledBorder("Saisie de : " + typeToAdd.getSimpleName()));
         List<Field> fields = Utils.extractFields(typeToAdd);
         workingPane.setLayout(new BoxLayout(workingPane, BoxLayout.Y_AXIS));
-        if (typeToAdd.getCanonicalName().startsWith(Adder.ENTITIES_PACKAGES_PATH)) {
+        if (typeToAdd.getCanonicalName().startsWith(EntityBuilder.ENTITIES_PACKAGES_PATH)) {
             idTextField.setEditable(false);
             JPanel jPanel = new JPanel(new GridLayout(1, 2));
 
@@ -164,6 +274,11 @@ public class Adder implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(e.getActionCommand()=="update")
+        {
+            ((EntityInputHelper) e.getSource()).getEntityUpdate();
+        }
+        else
         ((EntityInputHelper) e.getSource()).getEntity();
     }
 

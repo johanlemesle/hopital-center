@@ -55,7 +55,8 @@ public class Window extends JFrame {
         }
         updateInputPane();
     }
-//fenetre principale
+
+    // fenetre principale
     public void updateInputPane() {
         switch (ACTION_MODE) {
         case ADD_MODE:

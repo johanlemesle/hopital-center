@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 import app.App;
 import app.graphical_user_interface.helpers.ListDialog;
-import app.graphical_user_interface.input_modes.Adder;
+import app.graphical_user_interface.input_modes.EntityBuilder;
 import app.graphical_user_interface.input_modes.Searcher;
 import app.graphical_user_interface.input_modes.Modifier;
 
@@ -27,7 +27,7 @@ public class InputDigestor extends JPanel implements ActionListener {
     private final JPanel contentPane = new JPanel();
     private final JButton executeButton = new JButton("Executer");
 
-    private Adder adder;
+    private EntityBuilder adder;
     private Searcher query;
     private Modifier updater;
 
@@ -43,9 +43,9 @@ public class InputDigestor extends JPanel implements ActionListener {
 
     public void addMode() {
         final HashMap<String, Class<?>> possibleVMap = new HashMap<>();
-        final String possibleValues[] = new String[Adder.ENTITIES.length];
+        final String possibleValues[] = new String[EntityBuilder.ENTITIES.length];
         int i = 0;
-        for (final Class<?> cl : Adder.ENTITIES) {
+        for (final Class<?> cl : EntityBuilder.ENTITIES) {
             possibleValues[i] = cl.getSimpleName();
             possibleVMap.put(possibleValues[i], cl);
             i++;
@@ -55,7 +55,7 @@ public class InputDigestor extends JPanel implements ActionListener {
         if (input != null) {
             contentPane.removeAll();
             contentPane.revalidate();
-            adder = new Adder(contentPane, possibleVMap.get(input));
+            adder = new EntityBuilder(contentPane, possibleVMap.get(input));
             contentPane.repaint();
         }
 
@@ -74,7 +74,8 @@ public class InputDigestor extends JPanel implements ActionListener {
         updater = new Modifier(contentPane);
         contentPane.repaint();
     }
-// catch l'exec
+
+    // catch l'exec
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (App.window.ACTION_MODE) {

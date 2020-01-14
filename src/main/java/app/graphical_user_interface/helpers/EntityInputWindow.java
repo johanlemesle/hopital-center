@@ -13,7 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import app.database_manager.Utils;
-import app.graphical_user_interface.input_modes.Adder;
+import app.graphical_user_interface.ResultDisplayer;
+import app.graphical_user_interface.input_modes.EntityBuilder;
 
 /**
  * EntityInput
@@ -25,7 +26,7 @@ public class EntityInputWindow extends JFrame implements ActionListener {
      */
 
     private static final long serialVersionUID = -19874262486299749L;
-    private Adder adder;
+    private EntityBuilder adder;
     private Object value = null;
 
     public EntityInputWindow(Field field) {
@@ -37,7 +38,7 @@ public class EntityInputWindow extends JFrame implements ActionListener {
 
         JPanel contentPane = new JPanel(new BorderLayout());
 
-        if (field.getType().getCanonicalName().startsWith(Adder.ENTITIES_PACKAGES_PATH)) {
+        if (field.getType().getCanonicalName().startsWith(EntityBuilder.ENTITIES_PACKAGES_PATH)) {
             JComboBox<String> jcbx = new JComboBox<>(
                     new String[] { "Selectionner depuis les entites existantes", "Creer une nouvelle entite" });
             jcbx.addActionListener(this);
@@ -51,7 +52,39 @@ public class EntityInputWindow extends JFrame implements ActionListener {
             lInput.setVisible(true);
             this.setContentPane(lInput);
         } else {
-            adder = new Adder(contentPane, field.getType());
+            adder = new EntityBuilder(contentPane, field.getType());
+        }
+
+        this.pack();
+        this.setSize(300, 300);
+        this.setLocationRelativeTo(null);
+    }
+
+    public EntityInputWindow(Object o) {
+        super("Prompt");
+
+        JButton okButton = new JButton("Ok");
+        okButton.setActionCommand("ok");
+        okButton.addActionListener(this);
+
+        JPanel contentPane = new JPanel(new BorderLayout());
+
+        if (o.getClass().getCanonicalName().startsWith(EntityBuilder.ENTITIES_PACKAGES_PATH)) {
+            JComboBox<String> jcbx = new JComboBox<>(
+                    new String[] { "Selectionner depuis les entites existantes", "Creer une nouvelle entite" });
+            jcbx.addActionListener(this);
+            this.add(jcbx, BorderLayout.NORTH);
+        }
+        this.add(contentPane);
+        this.add(okButton, BorderLayout.SOUTH);
+
+        if (o.getClass().isAssignableFrom(HashMap.class)) {
+            HashMap<?, ?> hm = (HashMap<?, ?>) o;
+            ResultDisplayer rd = new ResultDisplayer();
+            rd.displayTable(hm);
+            this.setContentPane(rd);
+        } else {
+            adder = new EntityBuilder(contentPane, o);
         }
 
         this.pack();

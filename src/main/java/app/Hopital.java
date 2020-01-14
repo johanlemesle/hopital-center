@@ -50,6 +50,7 @@ public class Hopital implements Serializable {
 
     public void addInfirmier(Infirmier i) {
         infirmiers.put(i.hashCode(), i);
+
         chambres.putAll(i.getChambres());
     }
 
@@ -75,6 +76,7 @@ public class Hopital implements Serializable {
         chambres.put(c.hashCode(), c);
 
         hospitalisations.putAll(c.getHospitalisations());
+
     }
 
     public void addHospitalisation(Hospitalisation h) {

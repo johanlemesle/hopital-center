@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
@@ -44,9 +45,10 @@ public class Modifier implements ActionListener {
 
     public Modifier(final JPanel jp) {
         // registre = null;
-        jp.setLayout((LayoutManager) new BoxLayout(jp, BoxLayout.X_AXIS));
+        jp.setBorder(BorderFactory.createTitledBorder("Quelle table souhaitez-vous modifier?"));
+        jp.setLayout(new BoxLayout(jp, BoxLayout.Y_AXIS));
         ButtonGroup optionsGroup = new ButtonGroup();
-        for (Field field : FieldUtils.getAllFields(Hopital.class)) {
+        for (Field field : Utils.extractFields(Hopital.class)) {
             // registre.put(field.getName(), field);
             final JRadioButton rb = new JRadioButton(field.getName());
             rb.setActionCommand(field.getName());
