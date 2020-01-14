@@ -8,12 +8,14 @@ import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import app.App;
+import app.Hopital;
 import app.graphical_user_interface.helpers.ListDialog;
 import app.graphical_user_interface.input_modes.EntityBuilder;
-import app.graphical_user_interface.input_modes.Searcher;
 import app.graphical_user_interface.input_modes.Modifier;
+import app.graphical_user_interface.input_modes.Searcher2;
 
 /**
  * InputDigester
@@ -28,9 +30,11 @@ public class InputDigestor extends JPanel implements ActionListener {
     private final JButton executeButton = new JButton("Executer");
 
     private EntityBuilder adder;
-    private Searcher query;
+    private Searcher2 query;
     private Modifier updater;
     
+    // private Adder adder;
+    // private Searcher2 searcher;
 
     private Window parentWindow;
 
@@ -65,7 +69,13 @@ public class InputDigestor extends JPanel implements ActionListener {
     public void searchMode() {
         contentPane.removeAll();
         contentPane.revalidate();
-        query = new Searcher(contentPane);
+        // Searcher query = new Searcher(new JCheckBox(), Hopital.class, "hopital");
+        Searcher2 query = new Searcher2(Hopital.class, "hopital");
+        JScrollPane s = new JScrollPane();
+        s.getViewport().add(query);
+        this.add(s, BorderLayout.CENTER);
+        // contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        // contentPane.add(query);
         contentPane.repaint();
     }
 
@@ -94,7 +104,7 @@ public class InputDigestor extends JPanel implements ActionListener {
             }
             break;
         case QUERY_MODE:
-            String str = query.parse();
+            String str = query.buildQuery();
             System.out.println("la requete : " + str);
             parentWindow.displayQueryResult(str);
             break;

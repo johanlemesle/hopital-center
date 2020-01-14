@@ -6,7 +6,7 @@ import java.util.HashMap;
 /**
  * Chambre
  */
-public class Chambre implements Serializable{
+public class Chambre implements Serializable {
     /**
      *
      */

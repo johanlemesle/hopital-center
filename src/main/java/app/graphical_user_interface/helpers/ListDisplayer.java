@@ -61,6 +61,7 @@ public class ListDisplayer {
                 }
             }
         });
+        jTable.getTableHeader().setReorderingAllowed(false);
 
         workingPane.add(infoText, BorderLayout.NORTH);
         workingPane.add(jsp);

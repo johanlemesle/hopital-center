@@ -21,28 +21,9 @@ public class Date implements Serializable {
         this.mois = mois;
     }
 
-    public Byte getJour() {
-        return jour;
-    }
-
-    public void setJour(Byte jour) {
-        this.jour = jour;
-    }
-
-    public Integer getAnnee() {
-        return annee;
-    }
-
-    public void setAnnee(Integer annee) {
-        this.annee = annee;
-    }
-
-    public Mois getMois() {
-        return mois;
-    }
-
-    public void setMois(Mois mois) {
-        this.mois = mois;
+    @Override
+    public String toString() {
+        return jour + "/" + mois + "/" + annee;
     }
 }
 

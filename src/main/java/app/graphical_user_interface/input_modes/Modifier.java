@@ -27,7 +27,6 @@ import app.App;
 import app.Hopital;
 import app.database_manager.Utils;
 import app.graphical_user_interface.Window;
-import app.graphical_user_interface.helpers.Query;
 
 /**
  * Modifier

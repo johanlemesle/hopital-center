@@ -22,7 +22,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -47,17 +46,10 @@ public class Utils {
     }
 
     public static ArrayList<Pair<String, Object>> get(String what, Object fromWhere) {
-        try {
-            if (Character.isLetter(what.charAt(what.length() - 1))) {
-                what += '&';
-            }
-
-            return getRecur(what, fromWhere, "");
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
-                | SecurityException | IndexOutOfBoundsException e) {
-            e.printStackTrace();
+        if (Character.isLetter(what.charAt(what.length() - 1))) {
+            what += '&';
         }
-        return null;
+        return getRecur(what, fromWhere, "");
     }
 
     /**
@@ -71,10 +63,9 @@ public class Utils {
      * @throws InvocationTargetException
      * @throws NoSuchMethodException
      * @throws SecurityException
+     * @throws NoSuchFieldException
      */
-    public static ArrayList<Pair<String, Object>> getRecur(String what, Object fromWhere, String condition)
-            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException,
-            SecurityException {
+    public static ArrayList<Pair<String, Object>> getRecur(String what, Object fromWhere, String condition) {
 
         // start constructing query from string
         StringBuilder entity = new StringBuilder(10);
@@ -125,7 +116,7 @@ public class Utils {
                     object = ((Pair<?, ?>) object).getValue();
                 }
                 ArrayList<Pair<String, Object>> tPairs = new ArrayList<>();
-                for (Object obj : getCollection(FieldUtils.readField(object, what, true))) {
+                for (Object obj : getCollection(getFieldValue(what, object))) {
                     if (obj instanceof Pair<?, ?>) {
                         Pair<?, ?> p = (Pair<?, ?>) obj;
                         tPairs.add(Pair.of(p.getKey().toString(), p.getValue()));
@@ -140,6 +131,31 @@ public class Utils {
             }
         }
         return result;
+    }
+
+    private static Object getFieldValue(final String fieldName, final Object parent) {
+        if (fieldName.equals("*")) {
+            final ArrayList<Pair<String, Object>> fArrayList = new ArrayList<>();
+            for (final Field f : extractFields(parent.getClass())) {
+                fArrayList.add(Pair.of(f.getName(), getFieldValue(f.getName(), parent)));
+            }
+            return fArrayList;
+        } else {
+
+            Field field = null;
+            for (Field f : FieldUtils.getAllFields(parent.getClass())) {
+                if (f.getName().equals(fieldName)) {
+                    field = f;
+                }
+            }
+            try {
+                return FieldUtils.readField(field, parent, true);
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                return null;
+            }
+        }
     }
 
     public static int indexOfMatchingClosingBrace(final String str, final int idxOfOpeningBrace) {

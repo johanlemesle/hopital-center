@@ -42,6 +42,7 @@ public class EntityInputWindow extends JFrame implements ActionListener {
             JComboBox<String> jcbx = new JComboBox<>(
                     new String[] { "Selectionner depuis les entites existantes", "Creer une nouvelle entite" });
             jcbx.addActionListener(this);
+            jcbx.setActionCommand("set mode");
             this.add(jcbx, BorderLayout.NORTH);
         }
         this.add(contentPane);
@@ -102,6 +103,8 @@ public class EntityInputWindow extends JFrame implements ActionListener {
                 e1.printStackTrace();
             }
             this.setVisible(false);
+        } else if (e.getActionCommand().equals("set mode")) {
+            
         }
     }
 

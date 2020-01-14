@@ -13,6 +13,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import app.database_manager.Utils;
 import app.graphical_user_interface.helpers.ListDisplayer;
 
+import app.graphical_user_interface.display_modes.QueryResultDisplayer;
+
 /**
  * ResultDisplayer
  */
@@ -28,6 +30,7 @@ public class ResultDisplayer extends JPanel {
     }
 
     public void displayQueryOutput(ArrayList<Pair<String, Object>> arrayList) {
+        QueryResultDisplayer qrd = new QueryResultDisplayer(this, arrayList);
 
     }
 
