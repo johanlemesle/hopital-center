@@ -69,7 +69,8 @@ public class Window extends JFrame {
             break;
         case QUERY_MODE:
             // saisie.searchMode();
-            resultats.displayQueryOutput(Utils.get("malades{nom&prenom&adresse&soins{docteur{nom&prenom}}}", App.hopital));
+            resultats.displayQueryOutput(
+                    Utils.get("malades{nom&prenom&adresse&soins{docteur{nom&prenom}}}", App.hopital));
             break;
         case REPORT_MODE:
             saisie.reportMode();

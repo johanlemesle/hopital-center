@@ -187,6 +187,7 @@ public class EntityBuilder implements ActionListener {
         for (final Field field : fields) {
             if (field.getType().isAssignableFrom(EntityID.class))
                 continue;
+            boolean isTxtField = false;
             Component inputField = null;
             if (field.getType().isEnum()) {
                 JComboBox<Object> jcb = new JComboBox<>();
@@ -195,10 +196,12 @@ public class EntityBuilder implements ActionListener {
                 }
                 inputField = jcb;
             } else if (field.getType().isAssignableFrom(Character.class)) {
+                isTxtField = true;
                 inputField = new JTextFieldLimit(1, "Saisir " + Utils.normalizeCamelCase(field.getName()) + " (type : "
                         + field.getType().getSimpleName() + ")");
             } else if (field.getType().isAssignableFrom(String.class)
                     || Number.class.isAssignableFrom(field.getType())) {
+                isTxtField = true;
                 inputField = new HintTextField("Saisir " + Utils.normalizeCamelCase(field.getName()) + " (type : "
                         + field.getType().getSimpleName() + ")");
             } else {
@@ -207,7 +210,7 @@ public class EntityBuilder implements ActionListener {
                 inputField = eih;
             }
 
-            if (inputField.getClass().isAssignableFrom(JTextField.class)) {
+            if (isTxtField) {
                 inputField.addKeyListener(new KeyListener() {
 
                     @Override
@@ -262,6 +265,8 @@ public class EntityBuilder implements ActionListener {
                     args[i] = Byte.parseByte(((JTextField) pair.getRight()).getText());
                 } else if (pair.getLeft().isAssignableFrom(Character.class)) {
                     args[i] = (Character) ((JTextField) pair.getRight()).getText().charAt(0);
+                } else {
+                    args[i] = ((EntityInputHelper) pair.getRight()).getEntity();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -274,9 +279,9 @@ public class EntityBuilder implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand() == "update") {
-            ((EntityInputHelper) e.getSource()).getEntityUpdate();
+            ((EntityInputHelper) e.getSource()).updateEntity();
         } else
-            ((EntityInputHelper) e.getSource()).getEntity();
+            ((EntityInputHelper) e.getSource()).buildEntity();
     }
 
 }

@@ -15,7 +15,6 @@ import app.Hopital;
 import app.graphical_user_interface.helpers.ListDialog;
 import app.graphical_user_interface.input_modes.EntityBuilder;
 import app.graphical_user_interface.input_modes.Modifier;
-import app.graphical_user_interface.input_modes.Searcher2;
 
 /**
  * InputDigester
@@ -30,9 +29,9 @@ public class InputDigestor extends JPanel implements ActionListener {
     private final JButton executeButton = new JButton("Executer");
 
     private EntityBuilder adder;
-    private Searcher2 query;
+    // private Searcher2 query;
     private Modifier updater;
-    
+
     // private Adder adder;
     // private Searcher2 searcher;
 
@@ -70,9 +69,9 @@ public class InputDigestor extends JPanel implements ActionListener {
         contentPane.removeAll();
         contentPane.revalidate();
         // Searcher query = new Searcher(new JCheckBox(), Hopital.class, "hopital");
-        Searcher2 query = new Searcher2(Hopital.class, "hopital");
+        // Searcher2 query = new Searcher2(Hopital.class, "hopital");
         JScrollPane s = new JScrollPane();
-        s.getViewport().add(query);
+        // s.getViewport().add(query);
         this.add(s, BorderLayout.CENTER);
         // contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         // contentPane.add(query);
@@ -86,7 +85,6 @@ public class InputDigestor extends JPanel implements ActionListener {
         contentPane.repaint();
     }
 
-    
     public void reportMode() {
         PieChartTest.tst(App.hopital);
     }
@@ -97,16 +95,17 @@ public class InputDigestor extends JPanel implements ActionListener {
         switch (App.window.ACTION_MODE) {
         case ADD_MODE:
             try {
-                adder.buildEntity();
+                Object obj = adder.buildEntity();
+                App.hopital.insert(obj.getClass().getSimpleName(), obj);
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException
                     | InstantiationException e1) {
                 e1.printStackTrace();
             }
             break;
         case QUERY_MODE:
-            String str = query.buildQuery();
-            System.out.println("la requete : " + str);
-            parentWindow.displayQueryResult(str);
+            // String str = query.buildQuery();
+            // System.out.println("la requete : " + str);
+            // parentWindow.displayQueryResult(str);
             break;
         case UPDATE_MODE:
             parentWindow.displayTable(updater.getLaMap());

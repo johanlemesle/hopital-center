@@ -56,7 +56,7 @@ public class ListDisplayer {
                 if (e.getClickCount() == 2) {
                     int row = jTable.getSelectedRow();
                     Object obj = listElements.get(jTable.getValueAt(row, 0));
-                    EntityInputWindow euw = new EntityInputWindow(obj);
+                    EntityUpdateWindow euw = new EntityUpdateWindow(obj);
                     euw.setVisible(true);
                 }
             }

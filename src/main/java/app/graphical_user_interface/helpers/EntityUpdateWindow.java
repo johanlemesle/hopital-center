@@ -8,11 +8,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import app.App;
 import app.database_manager.Utils;
+import app.graphical_user_interface.ResultDisplayer;
 import app.graphical_user_interface.input_modes.EntityBuilder;
 
 /**
@@ -26,10 +27,12 @@ public class EntityUpdateWindow extends JFrame implements ActionListener {
 
     private static final long serialVersionUID = -19874262486299749L;
     private EntityBuilder adder;
-    private Object value = null;
+    private Object toUpdate;
 
-    public EntityUpdateWindow(Field field) {
+    public EntityUpdateWindow(Object o) {
         super("Prompt");
+
+        toUpdate = o;
 
         JButton okButton = new JButton("Ok");
         okButton.setActionCommand("ok");
@@ -40,12 +43,13 @@ public class EntityUpdateWindow extends JFrame implements ActionListener {
         this.add(contentPane);
         this.add(okButton, BorderLayout.SOUTH);
 
-        if (field.getType().isAssignableFrom(HashMap.class)) {
-            ListInput lInput = new ListInput(Utils.getTypeFromMap(field));
-            lInput.setVisible(true);
-            this.setContentPane(lInput);
+        if (o.getClass().isAssignableFrom(HashMap.class)) {
+            HashMap<?, ?> hm = (HashMap<?, ?>) o;
+            ResultDisplayer rd = new ResultDisplayer();
+            rd.displayTable(hm);
+            this.setContentPane(rd);
         } else {
-            adder = new EntityBuilder(contentPane, field.getType());
+            adder = new EntityBuilder(contentPane, o);
         }
 
         this.pack();
@@ -57,7 +61,8 @@ public class EntityUpdateWindow extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("ok")) {
             try {
-                value = adder.buildEntity();
+                Object obj = adder.buildEntity();
+                App.hopital.update(obj.getClass().getSimpleName(), toUpdate, obj);
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException
                     | InstantiationException e1) {
                 e1.printStackTrace();
@@ -66,7 +71,4 @@ public class EntityUpdateWindow extends JFrame implements ActionListener {
         }
     }
 
-    public Object getEntity() {
-        return value;
-    }
 }

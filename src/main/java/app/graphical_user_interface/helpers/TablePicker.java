@@ -1,6 +1,8 @@
 package app.graphical_user_interface.helpers;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.Field;
@@ -8,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,12 +26,18 @@ import app.database_manager.Utils;
 /**
  * TablePicker
  */
-public class TablePicker {
+public class TablePicker extends JFrame implements ActionListener {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = -5611374534443360251L;
+
+    private static Object theObject = null;
+    private static TablePicker tp;
 
     public static Object pickObject(HashMap<Integer, Object> hm) {
-        JFrame jf = new JFrame("Choisissez l'élement");
         JPanel jp = new JPanel();
-        jf.setContentPane(jp);
         if (!hm.isEmpty()) {
             Class<?> type = hm.entrySet().iterator().next().getValue().getClass();
 
@@ -39,23 +48,16 @@ public class TablePicker {
                 laList[i] = object;
                 ++i;
             }
-            TablePicker tb = new TablePicker(jp, type, laList);
-            jf.setVisible(true);
-            Object obj = tb.getObject();
-            jf.setVisible(false);
-            return obj;
+
+            tp = new TablePicker(jp, type, laList);
+            tp.setVisible(true);
+            return theObject;
         } else {
             JOptionPane.showMessageDialog(null, "La liste selectionnée est vide", "Info",
                     JOptionPane.INFORMATION_MESSAGE);
             return null;
         }
     }
-
-    /**
-     *
-     */
-
-    private Object theObject = null;
 
     private DefaultTableModel model = new DefaultTableModel() {
         /**
@@ -74,31 +76,30 @@ public class TablePicker {
     private HashMap<Integer, Object> listElements = new HashMap<>();
 
     public TablePicker(JPanel workingPane, Class<?> cls) {
+        super("Selectionner un élement");
+
         workingPane.removeAll();
         workingPane.revalidate();
         workingPane.setLayout(new BorderLayout());
         JScrollPane jsp = new JScrollPane(jTable);
         jTable.setFillsViewportHeight(true);
-        jTable.addMouseListener(new MouseAdapter() {
 
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
-                    int row = jTable.getSelectedRow();
-                    theObject = listElements.get(jTable.getValueAt(row, 0));
-                }
-            }
-        });
         jTable.getTableHeader().setReorderingAllowed(false);
 
         workingPane.add(infoText, BorderLayout.NORTH);
         workingPane.add(jsp);
-
+        JButton jb = new JButton("ok");
+        jb.addActionListener(this);
+        workingPane.add(jb, BorderLayout.SOUTH);
         model.addColumn("id");
         for (Field f : Utils.extractFields(cls)) {
             model.addColumn(Utils.normalizeCamelCase(f.getName()));
         }
         workingPane.repaint();
+        this.pack();
+        this.setSize(300, 300);
+        this.setLocationRelativeTo(null);
+        this.setContentPane(workingPane);
 
     }
 
@@ -130,5 +131,13 @@ public class TablePicker {
 
     public Object getObject() {
         return theObject;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // TODO Auto-generated method stub
+        int row = jTable.getSelectedRow();
+        theObject = listElements.get(jTable.getValueAt(row, 0));
+        this.setVisible(false);
     }
 }

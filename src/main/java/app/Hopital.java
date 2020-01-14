@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
 
 import app.database_manager.Utils;
 import app.database_manager.entities.Chambre;
@@ -37,6 +38,13 @@ public class Hopital implements Serializable {
 
     public void insert(String what, Object... args) {
         Utils.invokeFunction("add" + StringUtils.capitalize(what), this, args);
+    }
+
+    public void update(String what, Object old, Object newObject) throws IllegalAccessException {
+        HashMap<Integer, Object> hm = (HashMap<Integer, Object>) FieldUtils.readField(this, what.toLowerCase() + "s",
+                true);
+        hm.remove(old.hashCode(), old);
+        hm.put(newObject.hashCode(), newObject);
     }
 
     // adders
