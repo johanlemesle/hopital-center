@@ -52,7 +52,7 @@ public class EntityInputWindow extends JFrame implements ActionListener {
         this.add(contentPane);
         this.add(okButton, BorderLayout.SOUTH);
 
-        tableName = field.getType().getName().toLowerCase();
+        tableName = field.getType().getSimpleName().toLowerCase() + "s";
 
         if (field.getType().isAssignableFrom(HashMap.class)) {
             Class<?> cls = Utils.getTypeFromMap(field);
@@ -79,7 +79,8 @@ public class EntityInputWindow extends JFrame implements ActionListener {
 
         if (o.getClass().getCanonicalName().startsWith(EntityBuilder.ENTITIES_PACKAGES_PATH)) {
             JComboBox<String> jcbx = new JComboBox<>(
-                    new String[] { "Selectionner depuis les entites existantes", "Creer une nouvelle entite" });
+                    new String[] { "Creer une nouvelle entite", "Selectionner depuis les entites existantes" });
+            jcbx.setSelectedIndex(0);
             jcbx.addActionListener(this);
             this.add(jcbx, BorderLayout.NORTH);
         }
@@ -112,9 +113,10 @@ public class EntityInputWindow extends JFrame implements ActionListener {
             this.setVisible(false);
         } else if (e.getActionCommand().equals("set mode")) {
             int opt = ((JComboBox<?>) e.getSource()).getSelectedIndex();
-            if (opt == 0) {
+            if (opt == 1) {
                 try {
-                    TablePicker.pickObject((HashMap<Integer, Object>) FieldUtils.readField(App.hopital, tableName));
+                    TablePicker
+                            .pickObject((HashMap<Integer, Object>) FieldUtils.readField(App.hopital, tableName, true));
                 } catch (IllegalAccessException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
