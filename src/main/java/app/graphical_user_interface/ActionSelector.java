@@ -19,7 +19,7 @@ public class ActionSelector extends JPanel implements ActionListener {
     private static final long serialVersionUID = -1349720485385763778L;
 
     enum ActionMode {
-        ADD_MODE("Ajouter"), QUERY_MODE("Rechercher"), UPDATE_MODE("Modifier"), DELETE_MODE("Supprimer");
+        ADD_MODE("Ajouter"), QUERY_MODE("Rechercher"), UPDATE_MODE("Modifier"), DELETE_MODE("Supprimer"), REPORT_MODE("Reporting");
 
         private String action;
 
@@ -41,7 +41,8 @@ public class ActionSelector extends JPanel implements ActionListener {
         final JRadioButton add = new JRadioButton(ActionMode.ADD_MODE.toString()),
                 update = new JRadioButton(ActionMode.UPDATE_MODE.toString()),
                 delete = new JRadioButton(ActionMode.DELETE_MODE.toString()),
-                query = new JRadioButton(ActionMode.QUERY_MODE.toString());
+                query = new JRadioButton(ActionMode.QUERY_MODE.toString()),
+                report = new JRadioButton(ActionMode.REPORT_MODE.toString());
 
         ButtonGroup optionsGroup = new ButtonGroup();
 
@@ -49,16 +50,19 @@ public class ActionSelector extends JPanel implements ActionListener {
         optionsGroup.add(update);
         optionsGroup.add(delete);
         optionsGroup.add(query);
+        optionsGroup.add(report);
 
         this.add(add);
         this.add(update);
         this.add(delete);
         this.add(query);
+        this.add(report);
 
         add.addActionListener(this);
         update.addActionListener(this);
         delete.addActionListener(this);
         query.addActionListener(this);
+        report.addActionListener(this);
 
     }
 

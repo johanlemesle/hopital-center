@@ -70,6 +70,9 @@ public class Window extends JFrame {
         case QUERY_MODE:
             saisie.searchMode();
             break;
+        case REPORT_MODE:
+            saisie.reportMode();
+            break;
         default:
             break;
         }

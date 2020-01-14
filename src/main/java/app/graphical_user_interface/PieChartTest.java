@@ -65,86 +65,86 @@ public class PieChartTest extends ApplicationFrame {
       }
 
       public static void tst(Hopital hopital) {
-            Malade johan = new Malade("Lemesle", "Johan", "06 06 06 06 06",
-                        new Adresse("12", "de la Bretonne", "78220", "Viroflay", TypeVoie.rue), "MU", null, null);
-            Malade redoine = new Malade("Lahdiri", "Redoine", "0708070982",
-                        new Adresse("37", "de grenelle", "75015", "Juvisy sur Marne", TypeVoie.avenue), "MU", null,
-                        null);
+            // Malade johan = new Malade("Lemesle", "Johan", "06 06 06 06 06",
+            //             new Adresse("12", "de la Bretonne", "78220", "Viroflay", TypeVoie.rue), "MU", null, null);
+            // Malade redoine = new Malade("Lahdiri", "Redoine", "0708070982",
+            //             new Adresse("37", "de grenelle", "75015", "Juvisy sur Marne", TypeVoie.avenue), "MU", null,
+            //             null);
 
-            Malade john = new Malade("Dark", "John", "0353426153",
-                        new Adresse("26", "de grounelle", "75003", "Paris sur Orge", TypeVoie.boulevard), "MU", null,
-                        null);
+            // Malade john = new Malade("Dark", "John", "0353426153",
+            //             new Adresse("26", "de grounelle", "75003", "Paris sur Orge", TypeVoie.boulevard), "MU", null,
+            //             null);
 
-            Malade hermione = new Malade("Granger", "Hermione", "0023212322",
-                        new Adresse("21", "de poudlard", "91200", "Marseille sur Orge", TypeVoie.place), "MU", null,
-                        null);
-            Malade walid = new Malade("jabari", "walid", "0767248491",
-                        new Adresse("3", "Lazare Carnot", "78220", "Viroflay", TypeVoie.boulevard), "MU", null, null);
-            Malade jacques = new Malade("chirac", "jacques", "0767123491",
-                        new Adresse("2", "Laurent Blanc", "78220", "Viroflay", TypeVoie.rue), "MU", null, null);
+            // Malade hermione = new Malade("Granger", "Hermione", "0023212322",
+            //             new Adresse("21", "de poudlard", "91200", "Marseille sur Orge", TypeVoie.place), "MU", null,
+            //             null);
+            // Malade walid = new Malade("jabari", "walid", "0767248491",
+            //             new Adresse("3", "Lazare Carnot", "78220", "Viroflay", TypeVoie.boulevard), "MU", null, null);
+            // Malade jacques = new Malade("chirac", "jacques", "0767123491",
+            //             new Adresse("2", "Laurent Blanc", "78220", "Viroflay", TypeVoie.rue), "MU", null, null);
 
-            Docteur poulain = new Docteur("Poulain", "Philippe", "0102030405",
-                        new Adresse("10", "du Général Leclerc", "78140", "Vélizy Villacoublay", TypeVoie.avenue),
-                        Specialite.generaliste, null, null);
-            Docteur bibiche = new Docteur("Bibiche", "Ichli", "0165345321",
-                        new Adresse("9", "du Dassault Dassault", "78140", "Vélizy Villacoublay", TypeVoie.avenue),
-                        Specialite.generaliste, null, null);
+            // Docteur poulain = new Docteur("Poulain", "Philippe", "0102030405",
+            //             new Adresse("10", "du Général Leclerc", "78140", "Vélizy Villacoublay", TypeVoie.avenue),
+            //             Specialite.generaliste, null, null);
+            // Docteur bibiche = new Docteur("Bibiche", "Ichli", "0165345321",
+            //             new Adresse("9", "du Dassault Dassault", "78140", "Vélizy Villacoublay", TypeVoie.avenue),
+            //             Specialite.generaliste, null, null);
 
-            Service urgence = new Service("URG", "Urgences", 'B', poulain, null, null, null);
-            Service pediatrie = new Service("PED", "Pediatrie", 'B', poulain, null, null, null);
-            Service asile = new Service("ASL", "Asile", 'B', poulain, null, null, null);
-            Service radiologie = new Service("RAD", "Radiologie", 'A', bibiche, null, null, null);
+            // Service urgence = new Service("URG", "Urgences", 'B', poulain, null, null, null);
+            // Service pediatrie = new Service("PED", "Pediatrie", 'B', poulain, null, null, null);
+            // Service asile = new Service("ASL", "Asile", 'B', poulain, null, null, null);
+            // Service radiologie = new Service("RAD", "Radiologie", 'A', bibiche, null, null, null);
 
-            Infirmier marec = new Infirmier("Marec", "Affeli", "0670223410",
-                        new Adresse("12", "Lazare Carnot", "78220", "Viroflay", TypeVoie.avenue), asile, Rotation.Jour,
-                        1540.4, null);
+            // Infirmier marec = new Infirmier("Marec", "Affeli", "0670223410",
+            //             new Adresse("12", "Lazare Carnot", "78220", "Viroflay", TypeVoie.avenue), asile, Rotation.Jour,
+            //             1540.4, null);
 
-            Infirmier jamel = new Infirmier("Debbouze", "Jamel", "0654237612",
-                        new Adresse("11", "Lazare ", "78220", "Luciole", TypeVoie.avenue), asile, Rotation.Jour,
-                        1520.09, null);
-            Infirmier ramzi = new Infirmier("Kika", "Ramzi", "0654237612",
-                        new Adresse("11", "Lazare ", "78220", "Luciole", TypeVoie.boulevard), radiologie, Rotation.Jour,
-                        1520.1, null);
+            // Infirmier jamel = new Infirmier("Debbouze", "Jamel", "0654237612",
+            //             new Adresse("11", "Lazare ", "78220", "Luciole", TypeVoie.avenue), asile, Rotation.Jour,
+            //             1520.09, null);
+            // Infirmier ramzi = new Infirmier("Kika", "Ramzi", "0654237612",
+            //             new Adresse("11", "Lazare ", "78220", "Luciole", TypeVoie.boulevard), radiologie, Rotation.Jour,
+            //             1520.1, null);
 
-            Infirmier diane = new Infirmier("Vilandrau", "Diane", "0654237612",
-                        new Adresse("11", "Bleuet ", "78220", "Luciole", TypeVoie.avenue), pediatrie, Rotation.Jour,
-                        1520.4, null);
+            // Infirmier diane = new Infirmier("Vilandrau", "Diane", "0654237612",
+            //             new Adresse("11", "Bleuet ", "78220", "Luciole", TypeVoie.avenue), pediatrie, Rotation.Jour,
+            //             1520.4, null);
 
-            Chambre room205 = new Chambre(205, asile, marec, (byte) 5, null);
+            // Chambre room205 = new Chambre(205, asile, marec, (byte) 5, null);
 
-            // On ne peut pas faire deux hospitalisation différente sur un même Malade car
-            // même clé
+            // // On ne peut pas faire deux hospitalisation différente sur un même Malade car
+            // // même clé
 
-            Hospitalisation greffe = new Hospitalisation(walid, urgence, room205, 2, null, null);
-            Hospitalisation platre = new Hospitalisation(johan, urgence, room205, 1, null, null);
-            Hospitalisation piqure = new Hospitalisation(redoine, urgence, room205, 1, null, null);
-            Hospitalisation couture = new Hospitalisation(john, urgence, room205, 1, null, null);
-            Hospitalisation dechirure = new Hospitalisation(hermione, urgence, room205, 1, null, null);
-            Hospitalisation coupure = new Hospitalisation(jacques, radiologie, room205, 1, null, null);
+            // Hospitalisation greffe = new Hospitalisation(walid, urgence, room205, 2, null, null);
+            // Hospitalisation platre = new Hospitalisation(johan, urgence, room205, 1, null, null);
+            // Hospitalisation piqure = new Hospitalisation(redoine, urgence, room205, 1, null, null);
+            // Hospitalisation couture = new Hospitalisation(john, urgence, room205, 1, null, null);
+            // Hospitalisation dechirure = new Hospitalisation(hermione, urgence, room205, 1, null, null);
+            // Hospitalisation coupure = new Hospitalisation(jacques, radiologie, room205, 1, null, null);
 
-            hopital.insert("Malade", walid);
-            hopital.insert("Malade", johan);
-            hopital.insert("Malade", redoine);
-            hopital.insert("Malade", john);
-            hopital.insert("Malade", hermione);
-            hopital.insert("Malade", jacques);
-            hopital.insert("infirmier", marec);
-            hopital.insert("infirmier", jamel);
-            hopital.insert("infirmier", ramzi);
-            hopital.insert("infirmier", diane);
-            hopital.insert("docteur", poulain);
-            hopital.insert("docteur", bibiche);
-            hopital.insert("soin", new Soin(poulain, redoine, null));
-            hopital.insert("service", urgence);
-            hopital.insert("service", pediatrie);
-            hopital.insert("service", asile);
-            hopital.insert("service", radiologie);
-            hopital.insert("hospitalisation", greffe);
-            hopital.insert("hospitalisation", couture);
-            hopital.insert("hospitalisation", dechirure);
-            hopital.insert("hospitalisation", piqure);
-            hopital.insert("hospitalisation", platre);
-            hopital.insert("hospitalisation", coupure);
+            // hopital.insert("Malade", walid);
+            // hopital.insert("Malade", johan);
+            // hopital.insert("Malade", redoine);
+            // hopital.insert("Malade", john);
+            // hopital.insert("Malade", hermione);
+            // hopital.insert("Malade", jacques);
+            // hopital.insert("infirmier", marec);
+            // hopital.insert("infirmier", jamel);
+            // hopital.insert("infirmier", ramzi);
+            // hopital.insert("infirmier", diane);
+            // hopital.insert("docteur", poulain);
+            // hopital.insert("docteur", bibiche);
+            // hopital.insert("soin", new Soin(poulain, redoine, null));
+            // hopital.insert("service", urgence);
+            // hopital.insert("service", pediatrie);
+            // hopital.insert("service", asile);
+            // hopital.insert("service", radiologie);
+            // hopital.insert("hospitalisation", greffe);
+            // hopital.insert("hospitalisation", couture);
+            // hopital.insert("hospitalisation", dechirure);
+            // hopital.insert("hospitalisation", piqure);
+            // hopital.insert("hospitalisation", platre);
+            // hopital.insert("hospitalisation", coupure);
 
             // Ici, on get toutes les informations de l'hopital pour les stocker dans
             // résultat
