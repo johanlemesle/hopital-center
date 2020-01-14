@@ -158,12 +158,6 @@ public class PieChartTest extends JFrame {
             // hopital.insert("hospitalisation", platre);
             // hopital.insert("hospitalisation", coupure);
 
-            // Ici, on get toutes les informations de l'hopital pour les stocker dans
-            // résultat
-            ArrayList<Pair<String, Object>> resultat = Utils.get(
-                        "malades{*}&services{*}&docteurs{*}&infirmiers{*}&hospitalisations{*}&chambres{*}&employes{*}",
-                        hopital);
-
             // Récupérer le nom des services
             ArrayList<Pair<String, Object>> intermed1 = Utils.get("services{nom}", hopital);
             ArrayList<Pair<String, Object>> intermed2 = (ArrayList<Pair<String, Object>>) intermed1.get(0).getRight();

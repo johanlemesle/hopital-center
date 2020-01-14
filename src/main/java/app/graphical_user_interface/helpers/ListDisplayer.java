@@ -23,10 +23,6 @@ import app.database_manager.Utils;
  */
 public class ListDisplayer {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7680091293928844911L;
     private DefaultTableModel model = new DefaultTableModel() {
         /**
          *

@@ -7,7 +7,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -16,7 +15,6 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 
 import app.App;
 import app.database_manager.Utils;
-import app.graphical_user_interface.ResultDisplayer;
 import app.graphical_user_interface.input_modes.EntityBuilder;
 
 /**

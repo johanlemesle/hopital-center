@@ -3,7 +3,6 @@ package app.graphical_user_interface.helpers;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
@@ -12,7 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import app.App;
-import app.database_manager.Utils;
 import app.graphical_user_interface.ResultDisplayer;
 import app.graphical_user_interface.input_modes.EntityBuilder;
 
