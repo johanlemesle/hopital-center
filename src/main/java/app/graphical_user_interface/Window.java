@@ -63,14 +63,13 @@ public class Window extends JFrame {
             saisie.addMode();
             break;
         case DELETE_MODE:
+            saisie.deleteMode();
             break;
         case UPDATE_MODE:
             saisie.updateMode();
             break;
         case QUERY_MODE:
-            // saisie.searchMode();
-            resultats.displayQueryOutput(
-                    Utils.get("malades{nom&prenom&adresse&soins{docteur{nom&prenom}}}", App.hopital));
+            saisie.searchMode();
             break;
         case REPORT_MODE:
             saisie.reportMode();
@@ -86,6 +85,10 @@ public class Window extends JFrame {
 
     public void displayTable(HashMap<?, ?> hm) {
         resultats.displayTable(hm);
+    }
+
+    public void displayTable_delete(HashMap<?, ?> hm) {
+        resultats.displayTable_delete(hm);
     }
 
 }

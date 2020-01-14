@@ -13,8 +13,11 @@ import javax.swing.JScrollPane;
 import app.App;
 import app.Hopital;
 import app.graphical_user_interface.helpers.ListDialog;
+import app.graphical_user_interface.helpers.RechercheChoix;
 import app.graphical_user_interface.input_modes.EntityBuilder;
 import app.graphical_user_interface.input_modes.Modifier;
+import app.graphical_user_interface.input_modes.Searcher;
+import app.graphical_user_interface.input_modes.Deleter;
 
 /**
  * InputDigester
@@ -29,9 +32,11 @@ public class InputDigestor extends JPanel implements ActionListener {
     private final JButton executeButton = new JButton("Executer");
 
     private EntityBuilder adder;
-    // private Searcher2 query;
     private Modifier updater;
+    private Deleter deleter;
+    private Searcher searcher;
 
+    
     // private Adder adder;
     // private Searcher2 searcher;
 
@@ -68,13 +73,7 @@ public class InputDigestor extends JPanel implements ActionListener {
     public void searchMode() {
         contentPane.removeAll();
         contentPane.revalidate();
-        // Searcher query = new Searcher(new JCheckBox(), Hopital.class, "hopital");
-        // Searcher2 query = new Searcher2(Hopital.class, "hopital");
-        JScrollPane s = new JScrollPane();
-        // s.getViewport().add(query);
-        this.add(s, BorderLayout.CENTER);
-        // contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        // contentPane.add(query);
+        searcher = new Searcher(contentPane);
         contentPane.repaint();
     }
 
@@ -85,6 +84,14 @@ public class InputDigestor extends JPanel implements ActionListener {
         contentPane.repaint();
     }
 
+    public void deleteMode(){
+        contentPane.removeAll();
+        contentPane.revalidate();
+        deleter = new Deleter(contentPane);
+        contentPane.repaint();
+    }
+
+    
     public void reportMode() {
         PieChartTest.tst(App.hopital);
     }
@@ -103,14 +110,18 @@ public class InputDigestor extends JPanel implements ActionListener {
             }
             break;
         case QUERY_MODE:
-            // String str = query.buildQuery();
-            // System.out.println("la requete : " + str);
-            // parentWindow.displayQueryResult(str);
+            String str = searcher.parse();
+            System.out.println("la requete : " + str);
+            parentWindow.displayQueryResult(str);
             break;
         case UPDATE_MODE:
             parentWindow.displayTable(updater.getLaMap());
             break;
         case REPORT_MODE:
+            //
+            break;
+        case DELETE_MODE:
+            parentWindow.displayTable_delete(deleter.getLaMap());
             //
             break;
         default:
