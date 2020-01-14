@@ -6,12 +6,16 @@ import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
 import app.App;
+import app.Hopital;
 import app.graphical_user_interface.helpers.ListDialog;
 import app.graphical_user_interface.input_modes.Adder;
+import app.graphical_user_interface.input_modes.Seacher2;
 import app.graphical_user_interface.input_modes.Searcher;
 
 /**
@@ -27,7 +31,7 @@ public class InputDigestor extends JPanel implements ActionListener {
     private final JButton executeButton = new JButton("Executer");
 
     private Adder adder;
-    private Searcher query;
+    private Searcher searcher;
 
     private Window parentWindow;
 
@@ -62,7 +66,10 @@ public class InputDigestor extends JPanel implements ActionListener {
     public void searchMode() {
         contentPane.removeAll();
         contentPane.revalidate();
-        query = new Searcher(contentPane);
+        // Searcher query = new Searcher(new JCheckBox(), Hopital.class, "hopital");
+        Seacher2 query = new Seacher2(contentPane);
+        // contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        // contentPane.add(query);
         contentPane.repaint();
     }
 
@@ -78,7 +85,7 @@ public class InputDigestor extends JPanel implements ActionListener {
             }
             break;
         case QUERY_MODE:
-            String str = query.parse();
+            String str = searcher.buildQuery();
             System.out.println("la requete : " + str);
             parentWindow.displayResult(str);
             break;

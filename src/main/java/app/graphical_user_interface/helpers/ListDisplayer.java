@@ -55,7 +55,6 @@ public class ListDisplayer extends JPanel {
         for (Field f : Utils.extractFields(cls)) {
             model.addColumn(Utils.normalizeCamelCase(f.getName()));
         }
-
     }
 
     public ListDisplayer(Class<?> cls, Object initial[]) {
