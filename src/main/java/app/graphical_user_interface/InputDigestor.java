@@ -30,7 +30,7 @@ public class InputDigestor extends JPanel implements ActionListener {
     private EntityBuilder adder;
     private Searcher query;
     private Modifier updater;
-    private PieChartTest reporting;
+    
 
     private Window parentWindow;
 
@@ -78,9 +78,7 @@ public class InputDigestor extends JPanel implements ActionListener {
 
     
     public void reportMode() {
-        ///
         PieChartTest.tst(App.hopital);
-        //reporting = new PieChartTest(title, dataset1, chartTitle)
     }
 
     // catch l'exec

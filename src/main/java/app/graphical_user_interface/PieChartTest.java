@@ -3,6 +3,7 @@ package app.graphical_user_interface;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -40,7 +41,7 @@ Nombre de chambre dans un service ?
 
 */
 
-public class PieChartTest extends ApplicationFrame {
+public class PieChartTest extends JFrame {
 
       private static final long serialVersionUID = -7145470278665113308L;
 
@@ -48,6 +49,7 @@ public class PieChartTest extends ApplicationFrame {
       {
             super(title);
             setContentPane(createDemoPanel(dataset1, chartTitle));
+            
       }
 
       public static JFreeChart createChart(PieDataset dataset, String chartTitle) {
@@ -193,11 +195,13 @@ public class PieChartTest extends ApplicationFrame {
             PieChartTest chart1 = new PieChartTest("JABARI LEMESLE LAHDIRI", dataset,
                         "Nb hospitalisations par service");
             chart1.setSize(560, 360);
+            chart1.setDefaultCloseOperation(HIDE_ON_CLOSE);
             RefineryUtilities.centerFrameOnScreen(chart1);
             chart1.setVisible(true);
 
             PieChartTest chart2 = new PieChartTest("JABARI LEMESLE LAHDIRI", dataset1, "Nb infirmiers par service");
             chart2.setSize(560, 360);
+            chart2.setDefaultCloseOperation(HIDE_ON_CLOSE);
             RefineryUtilities.centerFrameOnScreen(chart2);
             chart2.setVisible(true);
 

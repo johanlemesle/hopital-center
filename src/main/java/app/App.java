@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 
 import app.database_manager.Utils;
+import app.graphical_user_interface.Login;
 import app.graphical_user_interface.Window;
 
 /**
@@ -16,10 +17,12 @@ import app.graphical_user_interface.Window;
 
 public class App {
 
-        public static final String PATH_TO_DB_FILE = "database.txt";
-        public static final Hopital hopital;
-        public static final Window window = new Window();
-        static {
+        public static String PATH_TO_DB_FILE = "database.txt";
+        public static Hopital hopital;
+        public static Window window;
+
+        public static void launch() {
+                window = new Window();
                 Hopital tmp = null;
                 try {
                         tmp = (Hopital) Utils.load(PATH_TO_DB_FILE);
@@ -56,7 +59,8 @@ public class App {
         }
 
         public static void main(String[] args) {
-                System.out.println("lol");
+                Login.initUsers();
+                new Login();
         }
 
 }
