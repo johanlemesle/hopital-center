@@ -86,7 +86,7 @@ public class EntityBuilder implements ActionListener {
      * Auto-generated catch block e1.printStackTrace(); } } }
      */
     public EntityBuilder(final JPanel workingPane, Object e) {
-        
+
         this.typeToAdd = e.getClass();
         workingPane.setBorder(BorderFactory.createTitledBorder("Saisie de : " + typeToAdd.getSimpleName()));
         List<Field> fields = Utils.extractFields(typeToAdd);
@@ -165,7 +165,7 @@ public class EntityBuilder implements ActionListener {
                 e1.printStackTrace();
             }
 
-        } 
+        }
     }
 
     public EntityBuilder(final JPanel workingPane, Class<?> typeToAdd) {
@@ -256,7 +256,7 @@ public class EntityBuilder implements ActionListener {
                     args[i] = ((JComboBox<?>) pair.getRight()).getSelectedItem();
                 } else if (pair.getLeft().isAssignableFrom(String.class)) {
                     args[i] = ((JTextField) pair.getRight()).getText();
-                } else if (pair.getLeft().isAssignableFrom(Integer.class)) {
+                } else if (pair.getLeft().isAssignableFrom(Double.class)) {
                     args[i] = NumberUtils.createInteger(((JTextField) pair.getRight()).getText());
                 } else if (pair.getLeft().isAssignableFrom(Byte.class)) {
                     args[i] = Byte.parseByte(((JTextField) pair.getRight()).getText());
@@ -273,12 +273,10 @@ public class EntityBuilder implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand()=="update")
-        {
+        if (e.getActionCommand() == "update") {
             ((EntityInputHelper) e.getSource()).getEntityUpdate();
-        }
-        else
-        ((EntityInputHelper) e.getSource()).getEntity();
+        } else
+            ((EntityInputHelper) e.getSource()).getEntity();
     }
 
 }

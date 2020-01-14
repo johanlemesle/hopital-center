@@ -59,8 +59,9 @@ public class App {
         }
 
         public static void main(String[] args) {
-                Login.initUsers();
-                new Login();
+                launch();
+                // Login.initUsers();
+                // new Login();
         }
 
 }

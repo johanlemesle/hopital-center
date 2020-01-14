@@ -12,6 +12,9 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
+
+import app.App;
 import app.database_manager.Utils;
 import app.graphical_user_interface.ResultDisplayer;
 import app.graphical_user_interface.input_modes.EntityBuilder;
@@ -28,6 +31,7 @@ public class EntityInputWindow extends JFrame implements ActionListener {
     private static final long serialVersionUID = -19874262486299749L;
     private EntityBuilder adder;
     private Object value = null;
+    private String tableName = "";
 
     public EntityInputWindow(Field field) {
         super("Prompt");
@@ -48,8 +52,11 @@ public class EntityInputWindow extends JFrame implements ActionListener {
         this.add(contentPane);
         this.add(okButton, BorderLayout.SOUTH);
 
+        tableName = field.getType().getName().toLowerCase();
+
         if (field.getType().isAssignableFrom(HashMap.class)) {
-            ListInput lInput = new ListInput(Utils.getTypeFromMap(field));
+            Class<?> cls = Utils.getTypeFromMap(field);
+            ListInput lInput = new ListInput(cls);
             lInput.setVisible(true);
             this.setContentPane(lInput);
         } else {
@@ -104,7 +111,15 @@ public class EntityInputWindow extends JFrame implements ActionListener {
             }
             this.setVisible(false);
         } else if (e.getActionCommand().equals("set mode")) {
-            
+            int opt = ((JComboBox<?>) e.getSource()).getSelectedIndex();
+            if (opt == 0) {
+                try {
+                    TablePicker.pickObject((HashMap<Integer, Object>) FieldUtils.readField(App.hopital, tableName));
+                } catch (IllegalAccessException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+            }
         }
     }
 

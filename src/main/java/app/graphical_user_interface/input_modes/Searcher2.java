@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JCheckBox;
@@ -18,10 +16,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreeCellRenderer;
-import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
-import app.Hopital;
 import app.database_manager.Utils;
 import app.graphical_user_interface.helpers.TreeNodeData;
 
