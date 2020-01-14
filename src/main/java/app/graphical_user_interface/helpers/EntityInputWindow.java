@@ -32,6 +32,7 @@ public class EntityInputWindow extends JFrame implements ActionListener {
     private EntityBuilder adder;
     private Object value = null;
     private String tableName = "";
+    private ListInput lInput;
 
     public EntityInputWindow(Field field) {
         super("Prompt");
@@ -42,9 +43,9 @@ public class EntityInputWindow extends JFrame implements ActionListener {
 
         if (field.getType().isAssignableFrom(HashMap.class)) {
             Class<?> cls = Utils.getTypeFromMap(field);
-            ListInput lInput = new ListInput(cls);
             lInput.setVisible(true);
             this.setContentPane(lInput);
+            lInput = new ListInput(cls);
         } else {
             adder = new EntityBuilder(contentPane, field.getType());
         }
@@ -62,6 +63,7 @@ public class EntityInputWindow extends JFrame implements ActionListener {
                 value = TablePicker
                         .pickObject((HashMap<Integer, Object>) FieldUtils.readField(App.hopital, tableName, true));
                 this.setVisible(false);
+                adder = null;
             } catch (IllegalAccessException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
@@ -70,13 +72,18 @@ public class EntityInputWindow extends JFrame implements ActionListener {
     }
 
     public Object getEntity() {
-        try {
-            return adder.buildEntity();
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException
-                | InstantiationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        if (adder != null)
+            try {
+                return adder.buildEntity();
+            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException
+                    | InstantiationException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        else if (value != null)
+            return value;
+        else if (lInput != null)
+            return lInput.getValue();
         return null;
     }
 }

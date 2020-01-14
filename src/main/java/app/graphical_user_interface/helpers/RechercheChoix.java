@@ -1,5 +1,6 @@
 package app.graphical_user_interface.helpers;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,6 +8,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -36,9 +38,8 @@ public class RechercheChoix extends JPanel implements ActionListener {
     private List<RechercheChoix> children = new ArrayList<>();
 
     public RechercheChoix(JCheckBox parent, Class<?> type, String name) {
-
         forChildren = new JFrame("Les enfants de " + name);
-        forChildren.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        forChildren.setSize(400, 400);
         this.parent = parent;
         this.type = type;
         this.name = name;
@@ -62,7 +63,9 @@ public class RechercheChoix extends JPanel implements ActionListener {
 
         System.out.println("je suis la");
         if (cbx.isSelected()) {
-            if (!Utils.isStandardType(type))
+            if (!Utils.isStandardType(type)) {
+                JPanel tmp = new JPanel();
+                tmp.setLayout(new BoxLayout(tmp, BoxLayout.Y_AXIS));
                 for (Field f : Utils.extractFields(type)) {
                     Class<?> cls;
                     String name = f.getName();
@@ -70,14 +73,27 @@ public class RechercheChoix extends JPanel implements ActionListener {
                     RechercheChoix t = new RechercheChoix(new JCheckBox(), cls, name);
                     t.parent.setSelected(true);
                     children.add(t);
-                    this.add(t);
+                    tmp.add(t);
                 }
-        } else {
-            for (RechercheChoix RechercheChoix : children) {
-                this.remove(RechercheChoix);
+                forChildren.setContentPane(tmp);
+                forChildren.setVisible(true);
             }
-            children.clear();
+
+        } else {
+            killChildren();
         }
+    }
+
+    public void killChildren() {
+        for (RechercheChoix child : children) {
+            if (child.children.size() > 0) {
+                child.killChildren();
+            } else {
+                child.parent.setSelected(false);
+                forChildren.setVisible(false);
+            }
+        }
+        children.clear();
     }
 
     public boolean isSelected() {

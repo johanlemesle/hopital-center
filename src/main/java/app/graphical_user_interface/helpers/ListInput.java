@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -24,6 +25,8 @@ public class ListInput extends JPanel implements ActionListener {
 
     private TableDeleter listDisplayer;
     private EntityBuilder adder;
+
+    private HashMap<Integer, Object> hm = new HashMap<>();
 
     public ListInput(Class<?> type) {
         this(type, new Object[] {});
@@ -51,12 +54,18 @@ public class ListInput extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            listDisplayer.addRow(adder.buildEntity());
+            Object elem = adder.buildEntity();
+            listDisplayer.addRow(elem);
+            hm.put(elem.hashCode(), elem);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException
                 | InstantiationException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
 
+    }
+
+    public HashMap<Integer, Object> getValue(){
+        return hm;
     }
 }
