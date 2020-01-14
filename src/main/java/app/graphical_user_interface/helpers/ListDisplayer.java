@@ -47,6 +47,7 @@ public class ListDisplayer extends JPanel {
         super(new BorderLayout());
         JScrollPane jsp = new JScrollPane(jTable);
         jTable.setFillsViewportHeight(true);
+        jTable.getTableHeader().setReorderingAllowed(false);
 
         this.add(infoText, BorderLayout.NORTH);
         this.add(jsp);

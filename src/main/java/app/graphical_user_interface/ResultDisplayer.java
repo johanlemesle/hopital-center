@@ -1,18 +1,17 @@
 package app.graphical_user_interface;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import org.apache.commons.lang3.tuple.Pair;
+
+import app.graphical_user_interface.display_modes.QueryResultDisplayer;
 
 /**
  * ResultDisplayer
  */
-public class ResultDisplayer extends JScrollPane {
+public class ResultDisplayer extends JPanel {
 
     /**
      *
@@ -24,7 +23,8 @@ public class ResultDisplayer extends JScrollPane {
     }
 
     public void displayQueryOutput(ArrayList<Pair<String, Object>> arrayList) {
-
+        QueryResultDisplayer qrd = new QueryResultDisplayer(this, arrayList);
+        
     }
 
 }

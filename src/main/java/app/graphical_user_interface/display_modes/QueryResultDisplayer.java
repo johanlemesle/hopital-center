@@ -36,6 +36,7 @@ public class QueryResultDisplayer {
     public QueryResultDisplayer(JPanel workingPane, ArrayList<Pair<String, Object>> arrayList) {
         JScrollPane jsp = new JScrollPane(jTable);
         jTable.setFillsViewportHeight(true);
+        jTable.getTableHeader().setReorderingAllowed(false);
 
         List<Pair<String, List<Object>>> theTables = new ArrayList<>();
         getColumns(arrayList, theTables);
