@@ -22,7 +22,7 @@ public class ListInput extends JPanel implements ActionListener {
 
     private static final long serialVersionUID = -1242654682815548515L;
 
-    private ListDisplayer listDisplayer;
+    private TableDeleter listDisplayer;
     private EntityBuilder adder;
 
     public ListInput(Class<?> type) {
@@ -33,7 +33,7 @@ public class ListInput extends JPanel implements ActionListener {
         super(new BorderLayout());
 
         JPanel listDisplayerPane = new JPanel();
-        listDisplayer = new ListDisplayer(listDisplayerPane, type, initial);
+        listDisplayer = new TableDeleter(listDisplayerPane, type, initial);
 
         JPanel inputPanel = new JPanel();
         JSplitPane jsp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, listDisplayerPane, inputPanel);

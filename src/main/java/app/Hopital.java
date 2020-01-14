@@ -39,6 +39,10 @@ public class Hopital implements Serializable {
         Utils.invokeFunction("add" + StringUtils.capitalize(what), this, args);
     }
 
+    public void delete(String what, Object... args) {
+        Utils.invokeFunction("supp" + StringUtils.capitalize(what), this, args);
+    }
+
     // adders
     public void addService(Service s) {
         services.put(s.hashCode(), s);
@@ -126,5 +130,56 @@ public class Hopital implements Serializable {
 
     public HashMap<Integer, Soin> getSoins() {
         return soins;
+    }
+
+    // supper
+
+    public void suppService(Service s) {
+
+        services.remove(s.hashCode(), s);
+
+        hospitalisations.remove(s.getHospitalisations().hashCode());
+
+        chambres.remove(s.getChambres().hashCode());
+        infirmiers.remove(s.getInfirmiers().hashCode());
+    }
+
+    public void suppInfirmier(Infirmier i) {
+        infirmiers.remove(i.hashCode(), i);
+
+        chambres.remove(i.getChambres().hashCode());
+    }
+
+    public void suppDocteur(Docteur d) {
+        docteurs.remove(d.hashCode(), d);
+
+        services.remove(d.getServicesGeres().hashCode());
+        soins.remove(d.getSoinsDonnes().hashCode());
+    }
+
+    public void suppMalade(Malade m) {
+        malades.remove(m.hashCode(), m);
+
+        hospitalisations.remove(m.getHospitalisations().hashCode());
+        soins.remove(m.getSoins().hashCode());
+    }
+
+    public void suppEmploye(Employe e) {
+        employes.remove(e.hashCode(), e);
+    }
+
+    public void suppChambre(Chambre c) {
+        chambres.remove(c.hashCode(), c);
+
+        hospitalisations.remove(c.getHospitalisations().hashCode());
+
+    }
+
+    public void suppHospitalisation(Hospitalisation h) {
+        hospitalisations.remove(h.hashCode(), h);
+    }
+
+    public void suppSoin(Soin s) {
+        soins.remove(s.hashCode(), s);
     }
 }
