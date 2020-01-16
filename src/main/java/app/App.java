@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 
 import app.database_manager.Utils;
+import app.graphical_user_interface.Login;
 import app.graphical_user_interface.Window;
 
 /**
@@ -58,9 +59,9 @@ public class App {
         }
 
         public static void main(String[] args) {
-                launch();
-                // Login.initUsers();
-                // new Login();
+                // launch();
+                Login.initUsers();
+                new Login();
         }
 
 }

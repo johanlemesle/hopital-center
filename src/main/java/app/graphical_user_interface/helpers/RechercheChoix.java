@@ -36,7 +36,7 @@ public class RechercheChoix extends JPanel implements ActionListener {
     private List<RechercheChoix> children = new ArrayList<>();
 
     public RechercheChoix(JCheckBox parent, Class<?> type, String name) {
-        forChildren = new JFrame("Les enfants de " + name);
+        forChildren = new JFrame("Les attributs de " + name);
         forChildren.setSize(400, 400);
         this.parent = parent;
         this.type = type;

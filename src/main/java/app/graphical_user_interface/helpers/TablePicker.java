@@ -33,31 +33,7 @@ public class TablePicker extends JFrame implements ActionListener {
      */
     private static final long serialVersionUID = -5611374534443360251L;
 
-    private static Object theObject = null;
-    private static TablePicker tp;
-
-    public static Object pickObject(HashMap<Integer, Object> hm) {
-        JPanel jp = new JPanel();
-        if (!hm.isEmpty()) {
-            Class<?> type = hm.entrySet().iterator().next().getValue().getClass();
-
-            Object laList[] = new Object[hm.size()];
-
-            int i = 0;
-            for (Object object : hm.values()) {
-                laList[i] = object;
-                ++i;
-            }
-
-            tp = new TablePicker(jp, type, laList);
-            tp.setVisible(true);
-            return theObject;
-        } else {
-            JOptionPane.showMessageDialog(null, "La liste selectionnée est vide", "Info",
-                    JOptionPane.INFORMATION_MESSAGE);
-            return null;
-        }
-    }
+    private Object theObject = null;
 
     private DefaultTableModel model = new DefaultTableModel() {
         /**
@@ -139,5 +115,9 @@ public class TablePicker extends JFrame implements ActionListener {
         int row = jTable.getSelectedRow();
         theObject = listElements.get(jTable.getValueAt(row, 0));
         this.setVisible(false);
+    }
+
+    public Object getValue() {
+        return theObject;
     }
 }

@@ -8,6 +8,8 @@ import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 
@@ -30,6 +32,7 @@ public class EntityInputHelper extends JButton implements ActionListener {
     private EntityUpdateWindow euw = null;
     private Object value;
     private JButton jButton = new JButton("ok");
+    private TablePicker tp;
 
     public EntityInputHelper(Field field) {
         super("Saisir " + Utils.normalizeCamelCase(field.getName()));
@@ -41,6 +44,7 @@ public class EntityInputHelper extends JButton implements ActionListener {
         super("Modifier " + Utils.normalizeCamelCase(field.getName()));
         this.field = field;
         this.objet = o;
+        this.value = o;
         jButton.addActionListener(this);
     }
 
@@ -56,17 +60,22 @@ public class EntityInputHelper extends JButton implements ActionListener {
             jcbx.addActionListener(this);
             eiw.add(jcbx, BorderLayout.NORTH);
         }
-
         eiw.setVisible(true);
     }
 
     public void updateEntity() {
+        if (objet == null) {
+            buildEntity();
+            return;
+        }
         euw = new EntityUpdateWindow(objet);
-        eiw.add(jButton, BorderLayout.SOUTH);
+        euw.add(jButton, BorderLayout.SOUTH);
         euw.setVisible(true);
     }
 
     public Object getEntity() {
+        if (tp != null)
+            return tp.getObject();
         return value;
     }
 
@@ -77,19 +86,38 @@ public class EntityInputHelper extends JButton implements ActionListener {
             if (opt == 0) {
                 try {
                     String tableName = field.getType().getSimpleName().toLowerCase() + "s";
-                    value = TablePicker
-                            .pickObject((HashMap<Integer, Object>) FieldUtils.readField(App.hopital, tableName, true));
+                    HashMap<?, ?> hm = (HashMap<Integer, Object>) FieldUtils.readField(App.hopital, tableName, true);
+                    JPanel jp = new JPanel();
+                    if (!hm.isEmpty()) {
+                        Class<?> type = hm.entrySet().iterator().next().getValue().getClass();
 
+                        Object laList[] = new Object[hm.size()];
+
+                        int i = 0;
+                        for (Object object : hm.values()) {
+                            laList[i] = object;
+                            ++i;
+                        }
+
+                        tp = new TablePicker(jp, type, laList);
+                        tp.setVisible(true);
+                        eiw.setVisible(false);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "La liste selectionnée est vide", "Info",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    }
                 } catch (IllegalAccessException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
             }
         } else {
+            System.out.println();
             if (eiw != null) {
                 value = eiw.getEntity();
                 eiw.setVisible(false);
             } else if (euw != null) {
+                value = euw.getEntity();
                 euw.setVisible(false);
             }
         }

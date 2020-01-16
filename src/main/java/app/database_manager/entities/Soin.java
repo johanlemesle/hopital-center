@@ -13,7 +13,7 @@ public class Soin implements Serializable {
      *
      */
     private static final long serialVersionUID = -8276439793583415702L;
-    
+
     private Docteur docteur;
     private Malade malade;
     private Date date;

@@ -59,32 +59,6 @@ public class EntityBuilder implements ActionListener {
 
     }
 
-    /*
-     * public EntityBuilder(final JPanel workingPane, Object e) {
-     * 
-     * this.typeToAdd = e.getClass();
-     * workingPane.setBorder(BorderFactory.createTitledBorder("Saisie de : " +
-     * typeToAdd.getSimpleName())); workingPane.setLayout(new BoxLayout(workingPane,
-     * BoxLayout.Y_AXIS)); if
-     * (typeToAdd.getCanonicalName().startsWith(EntityBuilder.ENTITIES_PACKAGES_PATH
-     * )) { idTextField.setEditable(false); JPanel jPanel = new JPanel(new
-     * GridLayout(1, 2));
-     * 
-     * jPanel.add(new JLabel("id de l'entite")); jPanel.add(idTextField);
-     * 
-     * workingPane.add(jPanel); } int i = 0; for (Field field :
-     * Utils.extractFields(e.getClass())) { Component inputField = null; try {
-     * Object obj = FieldUtils.readField(field, e, true); if
-     * (field.getType().isEnum()) { JComboBox<Object> jcb = new JComboBox<>(); for
-     * (Object item : field.getType().getEnumConstants()) { jcb.addItem(item); }
-     * inputField = jcb; } else{ inputField = new JTextField(obj.toString()); }
-     * inputFields.add(i, Pair.of(field.getType(), inputField)); JPanel jPanel = new
-     * JPanel(new GridLayout(1, 2)); jPanel.add(new
-     * JLabel(Utils.normalizeCamelCase(field.getName()))); jPanel.add(inputField);
-     * 
-     * workingPane.add(jPanel); i++; } catch (IllegalAccessException e1) { // TODO
-     * Auto-generated catch block e1.printStackTrace(); } } }
-     */
     public EntityBuilder(final JPanel workingPane, Object e) {
 
         this.typeToAdd = e.getClass();
@@ -260,11 +234,17 @@ public class EntityBuilder implements ActionListener {
                 } else if (pair.getLeft().isAssignableFrom(String.class)) {
                     args[i] = ((JTextField) pair.getRight()).getText();
                 } else if (pair.getLeft().isAssignableFrom(Double.class)) {
+                    args[i] = NumberUtils.createDouble(((JTextField) pair.getRight()).getText());
+                } else if (pair.getLeft().isAssignableFrom(Integer.class)) {
                     args[i] = NumberUtils.createInteger(((JTextField) pair.getRight()).getText());
                 } else if (pair.getLeft().isAssignableFrom(Byte.class)) {
                     args[i] = Byte.parseByte(((JTextField) pair.getRight()).getText());
                 } else if (pair.getLeft().isAssignableFrom(Character.class)) {
-                    args[i] = (Character) ((JTextField) pair.getRight()).getText().charAt(0);
+                    try {
+                        args[i] = (Character) ((JTextField) pair.getRight()).getText().charAt(0);
+                    } catch (Exception e) {
+                        args[i] = new Character('\0');
+                    }
                 } else {
                     args[i] = ((EntityInputHelper) pair.getRight()).getEntity();
                 }
@@ -280,8 +260,9 @@ public class EntityBuilder implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand() == "update") {
             ((EntityInputHelper) e.getSource()).updateEntity();
-        } else
+        } else {
             ((EntityInputHelper) e.getSource()).buildEntity();
+        }
     }
 
 }

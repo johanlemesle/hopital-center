@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
@@ -21,6 +22,8 @@ public class Searcher {
     private List<RechercheChoix> lesTotos = new ArrayList<>();
 
     public Searcher(final JPanel workingPane) {
+        workingPane.setBorder(BorderFactory.createTitledBorder("Veuillez formuler votre requete"));
+
         workingPane.setLayout(new BoxLayout(workingPane, BoxLayout.Y_AXIS));
         for (Field field : Utils.extractFields(Hopital.class)) {
             Class<?> cls;

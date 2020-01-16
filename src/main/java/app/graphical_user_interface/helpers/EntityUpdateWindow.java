@@ -26,6 +26,7 @@ public class EntityUpdateWindow extends JFrame implements ActionListener {
     private static final long serialVersionUID = -19874262486299749L;
     private EntityBuilder adder;
     private Object toUpdate;
+    private Object value;
 
     public EntityUpdateWindow(Object o) {
         super("Prompt");
@@ -59,8 +60,11 @@ public class EntityUpdateWindow extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("ok")) {
             try {
-                Object obj = adder.buildEntity();
-                App.hopital.update(obj.getClass().getSimpleName(), toUpdate, obj);
+                value = adder.buildEntity();
+                if (toUpdate.getClass().getCanonicalName().startsWith(EntityBuilder.ENTITIES_PACKAGES_PATH)) {
+                    App.hopital.delete(toUpdate.getClass().getSimpleName().toLowerCase(), toUpdate);
+                    App.hopital.insert(value.getClass().getSimpleName().toLowerCase(), value);
+                }
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException
                     | InstantiationException e1) {
                 e1.printStackTrace();
@@ -69,4 +73,7 @@ public class EntityUpdateWindow extends JFrame implements ActionListener {
         }
     }
 
+    public Object getEntity() {
+        return value;
+    }
 }
